@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Identidade Visual · Pantanal Saúde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/nohemi" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --azul-principal: #0c2b52;
+    --azul-destaque: #0a4681;
+    --verde-arara: #1b8b73;
+    --amarelo-arara: #f2c52f;
+    --branco: #ffffff;
+    --off-white: #f7f4ef;
+    --cinza-claro: #e8e4dd;
+    --cinza-texto: #6b6560;
+    --dark-hek: #1D1D1B;
+    --amber-hek: #EDB31E;
+    --off-white-hek: #F4EFE6;
+
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-hek: 'Nohemi', sans-serif;
+
+    --section-pad: 120px 48px;
+    --max-w: 1080px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--azul-principal);
+    background: var(--off-white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(247, 244, 239, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--cinza-claro);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: var(--font-hek);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dark-hek);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+
+  .nav-links a {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--azul-principal); }
+
+  /* ── CAPA ── */
+  #capa {
+    background: var(--dark-hek);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 120px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .capa-sparkle {
+    position: absolute;
+    top: 64px; right: 64px;
+    font-size: 48px;
+    color: var(--amber-hek);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .capa-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .capa-label {
+    font-family: var(--font-hek);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber-hek);
+    margin-bottom: 32px;
+  }
+
+  .capa-titulo {
+    font-family: var(--font-hek);
+    font-size: clamp(56px, 8vw, 112px);
+    font-weight: 700;
+    line-height: 0.9;
+    color: var(--off-white-hek);
+    text-wrap: balance;
+    margin-bottom: 48px;
+  }
+
+  .capa-titulo span { color: var(--amarelo-arara); }
+
+  .capa-meta {
+    display: flex;
+    gap: 64px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 32px;
+  }
+
+  .capa-meta-item { display: flex; flex-direction: column; gap: 4px; }
+
+  .capa-meta-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .capa-meta-value {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── DOBRA LOGO FULL (imagem full-bleed) ── */
+  #logo-full {
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    background: var(--azul-principal);
+  }
+
+  #logo-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .logo-full-placeholder {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 24px;
+  }
+
+  /* ── SEÇÕES GERAIS ── */
+  section { padding: var(--section-pad); scroll-margin-top: 56px; }
+
+  .container { max-width: var(--max-w); margin: 0 auto; }
+
+  .section-titulo {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--azul-principal);
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--cinza-texto);
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .divider { height: 1px; background: var(--cinza-claro); margin: 64px 0; }
+
+  /* ── A MARCA ── */
+  #marca { background: var(--branco); }
+
+  .marca-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 64px;
+  }
+
+  .marca-bloco h3 {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+    margin-bottom: 16px;
+  }
+
+  .marca-promessa {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--azul-principal);
+  }
+
+  .marca-palavras { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+
+  .palavra-tag {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--azul-destaque);
+    border: 1px solid var(--cinza-claro);
+    padding: 6px 14px;
+    border-radius: 2px;
+    background: var(--off-white);
+  }
+
+  .marca-valores { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+
+  .valor-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--azul-principal);
+  }
+
+  .valor-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amarelo-arara);
+    flex-shrink: 0;
+  }
+
+  /* ── LOGO ── */
+  #logo { background: var(--off-white); }
+
+  /* versões principais (claro / escuro) */
+  .logo-versoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .logo-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 48px;
+    gap: 24px;
+    min-height: 320px;
+  }
+
+  .logo-card.fundo-claro { background: var(--branco); }
+  .logo-card.fundo-escuro { background: var(--azul-principal); }
+
+  .logo-card img { max-width: 280px; max-height: 200px; object-fit: contain; }
+
+  .logo-card-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .fundo-claro .logo-card-label { color: var(--cinza-texto); }
+  .fundo-escuro .logo-card-label { color: rgba(255,255,255,0.4); }
+
+  .logo-placeholder {
+    width: 240px; height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed currentColor;
+    opacity: 0.25;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .fundo-claro .logo-placeholder { color: var(--azul-principal); }
+  .fundo-escuro .logo-placeholder { color: white; }
+
+  /* versões por produto */
+  .logo-produtos-titulo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--azul-principal);
+    margin-top: 64px;
+    margin-bottom: 8px;
+  }
+
+  .logo-produtos-desc {
+    font-size: 14px;
+    color: var(--cinza-texto);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+
+  .logo-produtos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .produto-card {
+    background: var(--branco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 48px 32px 36px;
+    gap: 20px;
+  }
+
+  .produto-mark {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .produto-mark img { max-width: 120px; max-height: 140px; object-fit: contain; }
+
+  .produto-mark-ph {
+    width: 110px; height: 110px;
+    border: 1px dashed var(--cinza-claro);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+    opacity: 0.5;
+    text-align: center;
+    padding: 8px;
+  }
+
+  .produto-info { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+
+  .produto-nome {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--azul-principal);
+    letter-spacing: 0.02em;
+  }
+
+  .produto-cor {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--cinza-texto);
+  }
+
+  .produto-cor-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .produto-uso { font-size: 12px; color: var(--cinza-texto); line-height: 1.5; }
+
+  /* não faça */
+  .logo-naofaca { margin-top: 64px; }
+
+  .logo-naofaca h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--azul-principal);
+    margin-bottom: 24px;
+  }
+
+  .naofaca-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .naofaca-item {
+    background: var(--branco);
+    padding: 32px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .naofaca-visual {
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--cinza-claro);
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--off-white);
+  }
+
+  .naofaca-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .naofaca-ph {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cinza-texto);
+    text-align: center;
+    padding: 8px;
+  }
+
+  .naofaca-desc { font-size: 12px; color: var(--cinza-texto); line-height: 1.5; }
+
+  .naofaca-desc strong {
+    display: block;
+    font-weight: 600;
+    color: #c0392b;
+    margin-bottom: 4px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── PALETA ── */
+  #paleta { background: var(--branco); }
+
+  .paleta-principal {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .swatch { display: flex; flex-direction: column; }
+  .swatch-cor { height: 200px; }
+
+  .swatch-info {
+    padding: 20px 24px;
+    background: var(--off-white);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .swatch-nome {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--azul-principal);
+  }
+
+  .swatch-uso { font-size: 12px; color: var(--cinza-texto); margin-bottom: 8px; }
+  .swatch-codigos { display: flex; flex-direction: column; gap: 2px; }
+
+  .swatch-codigo {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--cinza-texto);
+  }
+
+  .swatch-codigo span { color: var(--azul-destaque); font-weight: 600; }
+
+  .paleta-secundaria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 2px;
+  }
+
+  .swatch-cor-sm { height: 120px; }
+
+  /* proporção de cores */
+  .proporcao-titulo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--azul-principal);
+    margin-top: 64px;
+    margin-bottom: 8px;
+  }
+
+  .proporcao-desc {
+    font-size: 14px;
+    color: var(--cinza-texto);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 24px;
+  }
+
+  .proporcao-barra {
+    display: flex;
+    height: 80px;
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .proporcao-faixa {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  .proporcao-faixa span {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
+
+  /* ── TIPOGRAFIA ── */
+  #tipografia { background: var(--off-white); }
+
+  .tipo-bloco { margin-top: 48px; background: var(--branco); padding: 48px; }
+
+  .tipo-meta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--cinza-claro);
+  }
+
+  .tipo-info h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--azul-principal);
+    margin-bottom: 4px;
+  }
+
+  .tipo-info p { font-size: 12px; color: var(--cinza-texto); }
+
+  .tipo-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--azul-destaque);
+    border: 1px solid var(--cinza-claro);
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: var(--off-white);
+  }
+
+  .tipo-escala { display: flex; flex-direction: column; gap: 24px; }
+
+  .tipo-linha {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+
+  .tipo-linha-label {
+    font-size: 11px;
+    color: var(--cinza-texto);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+
+  .tipo-exemplo { color: var(--azul-principal); line-height: 1.2; }
+  .tipo-gap { height: 48px; }
+
+  .tipo-combinacao { margin-top: 48px; background: var(--azul-principal); padding: 56px 64px; }
+
+  .combo-titulo {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--branco);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    text-wrap: balance;
+  }
+
+  .combo-corpo {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    text-wrap: pretty;
+  }
+
+  /* ── APLICAÇÕES (dobra por peça) ── */
+  .aplicacao-dobra {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .aplicacao-dobra:nth-child(even) .aplicacao-texto { order: 2; }
+
+  .aplicacao-mockup-full {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    color: rgba(255,255,255,0.5);
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aplicacao-mockup-full img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .mockup-ph {
+    width: 60%;
+    aspect-ratio: 4 / 3;
+    border: 1.5px dashed currentColor;
+    border-radius: 4px;
+    opacity: 0.35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .aplicacao-texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px;
+    background: var(--branco);
+  }
+
+  .aplicacao-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--azul-destaque);
+    margin-bottom: 24px;
+  }
+
+  .aplicacao-titulo {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    color: var(--azul-principal);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-wrap: balance;
+  }
+
+  .aplicacao-corpo {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--cinza-texto);
+    max-width: 420px;
+    margin-bottom: 32px;
+    text-wrap: pretty;
+  }
+
+  .aplicacao-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .spec-linha {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--cinza-claro);
+  }
+
+  .spec-label {
+    color: var(--cinza-texto);
+    width: 100px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding-top: 2px;
+  }
+
+  .spec-valor { color: var(--azul-principal); font-weight: 500; }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--azul-principal);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--azul-principal);
+    padding-bottom: 2px;
+    width: fit-content;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .download-btn:hover { color: var(--azul-destaque); border-color: var(--azul-destaque); }
+
+  .aplicacoes-intro { background: var(--off-white); padding: var(--section-pad); }
+
+  /* ── DOWNLOADS ── */
+  #downloads { background: var(--azul-principal); }
+
+  #downloads .section-titulo { color: var(--branco); }
+  #downloads .section-desc { color: rgba(255,255,255,0.6); }
+
+  .downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .download-card {
+    background: var(--branco);
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .download-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .download-formato {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--azul-destaque);
+    letter-spacing: 0.06em;
+    background: var(--off-white);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .download-peso {
+    font-size: 11px;
+    color: var(--cinza-texto);
+    letter-spacing: 0.04em;
+  }
+
+  .download-nome {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--azul-principal);
+    line-height: 1.25;
+    margin-top: 8px;
+  }
+
+  .download-card-desc {
+    font-size: 13px;
+    color: var(--cinza-texto);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+
+  .download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--branco);
+    background: var(--azul-principal);
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 2px;
+    width: fit-content;
+    transition: background 0.2s;
+  }
+
+  .download-link:hover { background: var(--azul-destaque); }
+
+  .download-link svg { flex-shrink: 0; }
+
+  /* ── RODAPÉ ── */
+  footer { background: var(--dark-hek); padding: 80px 48px; }
+
+  .footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .footer-left { display: flex; flex-direction: column; gap: 8px; }
+
+  .footer-sparkle {
+    color: var(--amber-hek);
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .footer-assinatura {
+    font-family: var(--font-hek);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .footer-assinatura strong { color: var(--amber-hek); font-weight: 700; }
+
+  .footer-right { text-align: right; display: flex; flex-direction: column; gap: 4px; }
+
+  .footer-right p { font-size: 12px; color: rgba(255,255,255,0.25); letter-spacing: 0.06em; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #capa { padding: 100px 24px 48px; }
+    .marca-grid, .logo-versoes, .paleta-principal { grid-template-columns: 1fr; }
+    .logo-produtos { grid-template-columns: 1fr; }
+    .naofaca-grid { grid-template-columns: 1fr 1fr; }
+    .tipo-bloco { padding: 32px 24px; }
+    .tipo-linha { grid-template-columns: 80px 1fr; }
+    .tipo-combinacao { padding: 40px 32px; }
+    .footer-inner { flex-direction: column; gap: 32px; align-items: flex-start; }
+    .footer-right { text-align: left; }
+    .capa-meta { flex-wrap: wrap; gap: 32px; }
+    .paleta-secundaria { grid-template-columns: 1fr; }
+    .proporcao-faixa span { display: none; }
+    .proporcao-barra { height: 56px; }
+    .aplicacao-dobra { grid-template-columns: 1fr; }
+    .aplicacao-dobra:nth-child(even) .aplicacao-texto { order: 0; }
+    .aplicacao-texto { padding: 48px 24px; }
+    .aplicacao-mockup-full { min-height: 320px; }
+    .aplicacoes-intro { padding: 80px 24px; }
+    .downloads-grid { grid-template-columns: 1fr; }
+    .download-card { padding: 28px 24px; }
+    .combo-titulo { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <a href="#capa" class="nav-logo">hekbay</a>
+  <ul class="nav-links">
+    <li><a href="#marca">A marca</a></li>
+    <li><a href="#logo">Logo</a></li>
+    <li><a href="#paleta">Paleta</a></li>
+    <li><a href="#tipografia">Tipografia</a></li>
+    <li><a href="#aplicacoes">Aplicações</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+  </ul>
+</nav>
+
+<!-- ── CAPA ── -->
+<section id="capa">
+  <div class="capa-sparkle">✦</div>
+  <div class="capa-content">
+    <p class="capa-label">Manual de Identidade Visual</p>
+    <h1 class="capa-titulo">Pantanal<br><span>Saúde.</span></h1>
+    <div class="capa-meta">
+      <div class="capa-meta-item">
+        <span class="capa-meta-label">Cliente</span>
+        <span class="capa-meta-value">Pantanal Saúde</span>
+      </div>
+      <div class="capa-meta-item">
+        <span class="capa-meta-label">Produzido por</span>
+        <span class="capa-meta-value">hekbay · Henrique Corrêa da Costa</span>
+      </div>
+      <div class="capa-meta-item">
+        <span class="capa-meta-label">Ano</span>
+        <span class="capa-meta-value">2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DOBRA 2 · IMAGEM FULL-BLEED ── -->
+<section id="logo-full">
+  <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/logograd2.jpg" alt="Logo Pantanal Saúde" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+  <div class="logo-full-placeholder" style="display:none;">Imagem full-bleed · logo em fundo<br>(cobre a tela toda)</div>
+</section>
+
+<!-- ── A MARCA ── -->
+<section id="marca">
+  <div class="container">
+    <h2 class="section-titulo">Quem é a<br>Pantanal Saúde</h2>
+    <p class="section-desc">Uma operadora de saúde B2B que nasce com um compromisso diferente: cuidar das pessoas antes que o problema apareça. Saúde corporativa com a personalidade do Pantanal: próxima, resiliente e genuína.</p>
+
+    <div class="divider"></div>
+
+    <div class="marca-grid">
+      <div class="marca-bloco">
+        <h3>Promessa central</h3>
+        <p class="marca-promessa">Excelência começa de dentro. Quando sua equipe está bem, seu negócio cresce.</p>
+      </div>
+      <div class="marca-bloco">
+        <h3>Personalidade da marca</h3>
+        <div class="marca-palavras">
+          <span class="palavra-tag">Acolhedora</span>
+          <span class="palavra-tag">Segura</span>
+          <span class="palavra-tag">Direta</span>
+          <span class="palavra-tag">Atenciosa</span>
+          <span class="palavra-tag">Ágil</span>
+          <span class="palavra-tag">Confiável</span>
+          <span class="palavra-tag">Humana</span>
+          <span class="palavra-tag">Responsável</span>
+        </div>
+      </div>
+      <div class="marca-bloco">
+        <h3>Valores inegociáveis</h3>
+        <div class="marca-valores">
+          <div class="valor-item"><span class="valor-dot"></span>Comunicação clara e sem enrolação</div>
+          <div class="valor-item"><span class="valor-dot"></span>Dignidade humana acima de tudo</div>
+          <div class="valor-item"><span class="valor-dot"></span>Compromisso além do entregue</div>
+          <div class="valor-item"><span class="valor-dot"></span>Sigilo e responsabilidade</div>
+          <div class="valor-item"><span class="valor-dot"></span>Velocidade com meticulosidade</div>
+        </div>
+      </div>
+      <div class="marca-bloco">
+        <h3>Diferenciais reais</h3>
+        <div class="marca-valores">
+          <div class="valor-item"><span class="valor-dot"></span>Plantão psicológico 24h — inovação no MS</div>
+          <div class="valor-item"><span class="valor-dot"></span>NR1 com acompanhamento personalizado</div>
+          <div class="valor-item"><span class="valor-dot"></span>Atendimento em até 1h para qualquer sinistro</div>
+          <div class="valor-item"><span class="valor-dot"></span>Plano corporativo que reduz turnover</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LOGO ── -->
+<section id="logo">
+  <div class="container">
+    <h2 class="section-titulo">O símbolo<br>da marca</h2>
+    <p class="section-desc">A arara canindé dentro da cruz médica. Identidade regional e saúde em uma forma única, limpa e organizacional.</p>
+
+    <div class="logo-versoes">
+      <div class="logo-card fundo-claro">
+        <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/VERTICAL2.png" alt="Logo Pantanal Saúde — versão principal" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="logo-placeholder" style="display:none;">Logo principal</div>
+        <span class="logo-card-label">Versão principal · fundo claro</span>
+      </div>
+      <div class="logo-card fundo-escuro">
+        <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/VERTICALB.png" alt="Logo Pantanal Saúde — versão fundo escuro" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="logo-placeholder" style="display:none;">Logo versão clara</div>
+        <span class="logo-card-label">Versão clara · fundo escuro</span>
+      </div>
+    </div>
+
+    <h3 class="logo-produtos-titulo">Versões por produto</h3>
+    <p class="logo-produtos-desc">Cada frente de serviço recebe uma variação cromática do símbolo. A estrutura é sempre a mesma — muda apenas a cor da cruz, conectando o produto à sua identidade.</p>
+
+    <div class="logo-produtos">
+      <div class="produto-card">
+        <div class="produto-mark">
+          <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/PLANTAO.png" alt="Logo Plantão 24h" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="produto-mark-ph" style="display:none;">Plantão</div>
+        </div>
+        <div class="produto-info">
+          <span class="produto-nome">Plantão 24h</span>
+          <span class="produto-cor"><span class="produto-cor-dot" style="background:#f2c52f;"></span>#f2c52f</span>
+          <span class="produto-uso">Plantão psicológico · urgência acolhedora</span>
+        </div>
+      </div>
+      <div class="produto-card">
+        <div class="produto-mark">
+          <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/PLANOS.png" alt="Logo Planos" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="produto-mark-ph" style="display:none;">Planos</div>
+        </div>
+        <div class="produto-info">
+          <span class="produto-nome">Planos</span>
+          <span class="produto-cor"><span class="produto-cor-dot" style="background:#0a4681;"></span>#0a4681</span>
+          <span class="produto-uso">Planos assistenciais · âncora institucional</span>
+        </div>
+      </div>
+      <div class="produto-card">
+        <div class="produto-mark">
+          <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/NR1.png" alt="Logo NR1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="produto-mark-ph" style="display:none;">NR1</div>
+        </div>
+        <div class="produto-info">
+          <span class="produto-nome">NR1</span>
+          <span class="produto-cor"><span class="produto-cor-dot" style="background:#1b8b73;"></span>#1b8b73</span>
+          <span class="produto-uso">Saúde ocupacional · compliance</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo-naofaca">
+      <h3>Não faça isso</h3>
+      <div class="naofaca-grid">
+        <div class="naofaca-item">
+          <div class="naofaca-visual">
+            <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-distorcer1.png" alt="Exemplo: logo distorcido" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <span class="naofaca-ph" style="display:none;">Logo distorcido</span>
+          </div>
+          <div class="naofaca-desc">
+            <strong>✕ Não distorça</strong>
+            Nunca altere as proporções originais do logo.
+          </div>
+        </div>
+        <div class="naofaca-item">
+          <div class="naofaca-visual">
+            <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-recolorir1.png" alt="Exemplo: cor fora do sistema" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <span class="naofaca-ph" style="display:none;">Cor fora do sistema</span>
+          </div>
+          <div class="naofaca-desc">
+            <strong>✕ Não recolora</strong>
+            Use apenas as cores do sistema de identidade.
+          </div>
+        </div>
+        <div class="naofaca-item">
+          <div class="naofaca-visual">
+            <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-sombra1.png" alt="Exemplo: logo com sombra" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <span class="naofaca-ph" style="display:none;">Logo com sombra</span>
+          </div>
+          <div class="naofaca-desc">
+            <strong>✕ Sem sombras</strong>
+            O logo nunca recebe efeitos de sombra ou brilho.
+          </div>
+        </div>
+        <div class="naofaca-item">
+          <div class="naofaca-visual">
+            <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-fundo1.png" alt="Exemplo: logo sobre foto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            <span class="naofaca-ph" style="display:none;">Logo sobre foto</span>
+          </div>
+          <div class="naofaca-desc">
+            <strong>✕ Sem fundos complexos</strong>
+            Evite aplicar sobre fotos ou texturas sem área de proteção.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PALETA ── -->
+<section id="paleta">
+  <div class="container">
+    <h2 class="section-titulo">O sistema<br>de cores</h2>
+    <p class="section-desc">Cores flat com espaços negativos generosos. Duas cores primárias formam a âncora institucional; duas cores de produto entram apenas no contexto de cada frente de serviço.</p>
+
+    <div class="paleta-principal">
+      <div class="swatch">
+        <div class="swatch-cor" style="background:#0c2b52;"></div>
+        <div class="swatch-info">
+          <span class="swatch-nome">Principal</span>
+          <span class="swatch-uso">Cor dominante · tipografia · fundo escuro</span>
+          <div class="swatch-codigos">
+            <span class="swatch-codigo"><span>HEX</span> #0c2b52</span>
+            <span class="swatch-codigo"><span>RGB</span> 12, 43, 82</span>
+            <span class="swatch-codigo"><span>CMYK</span> 85, 48, 0, 68</span>
+          </div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background:#0a4681;"></div>
+        <div class="swatch-info">
+          <span class="swatch-nome">Destaques</span>
+          <span class="swatch-uso">Links · destaques · produto Planos</span>
+          <div class="swatch-codigos">
+            <span class="swatch-codigo"><span>HEX</span> #0a4681</span>
+            <span class="swatch-codigo"><span>RGB</span> 10, 70, 129</span>
+            <span class="swatch-codigo"><span>CMYK</span> 92, 46, 0, 49</span>
+          </div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor" style="background:#f7f4ef;"></div>
+        <div class="swatch-info">
+          <span class="swatch-nome">Off-white</span>
+          <span class="swatch-uso">Fundo principal · respiro visual</span>
+          <div class="swatch-codigos">
+            <span class="swatch-codigo"><span>HEX</span> #f7f4ef</span>
+            <span class="swatch-codigo"><span>RGB</span> 247, 244, 239</span>
+            <span class="swatch-codigo"><span>CMYK</span> 0, 1, 3, 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="paleta-secundaria">
+      <div class="swatch">
+        <div class="swatch-cor swatch-cor-sm" style="background:#1b8b73;"></div>
+        <div class="swatch-info">
+          <span class="swatch-nome">NR1</span>
+          <span class="swatch-uso">NR1 · saúde ocupacional</span>
+          <div class="swatch-codigos">
+            <span class="swatch-codigo"><span>HEX</span> #1b8b73</span>
+            <span class="swatch-codigo"><span>RGB</span> 27, 139, 115</span>
+          </div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor swatch-cor-sm" style="background:#f2c52f;"></div>
+        <div class="swatch-info">
+          <span class="swatch-nome">Plantão</span>
+          <span class="swatch-uso">Plantão 24h · urgência acolhedora</span>
+          <div class="swatch-codigos">
+            <span class="swatch-codigo"><span>HEX</span> #f2c52f</span>
+            <span class="swatch-codigo"><span>RGB</span> 242, 197, 47</span>
+          </div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-cor swatch-cor-sm" style="background:#ffffff; border: 1px solid #e8e4dd;"></div>
+        <div class="swatch-info">
+          <span class="swatch-nome">Branco</span>
+          <span class="swatch-uso">Cards · superfícies internas</span>
+          <div class="swatch-codigos">
+            <span class="swatch-codigo"><span>HEX</span> #ffffff</span>
+            <span class="swatch-codigo"><span>RGB</span> 255, 255, 255</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="proporcao-titulo">Proporção de uso</h3>
+    <p class="proporcao-desc">A distribuição cromática mantém o equilíbrio da marca: o off-white e o azul dominam, enquanto as cores de produto entram como acentos pontuais.</p>
+    <div class="proporcao-barra">
+      <div class="proporcao-faixa" style="width:42%; background:#f7f4ef;"><span style="color:#6b6560;">Off-white</span></div>
+      <div class="proporcao-faixa" style="width:28%; background:#0c2b52;"><span style="color:#fff;">Azul Principal</span></div>
+      <div class="proporcao-faixa" style="width:16%; background:#0a4681;"><span style="color:#fff;">Destaque</span></div>
+      <div class="proporcao-faixa" style="width:7%; background:#1b8b73;"><span style="color:#fff;">Verde</span></div>
+      <div class="proporcao-faixa" style="width:7%; background:#f2c52f;"><span style="color:#0c2b52;">Amarelo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TIPOGRAFIA ── -->
+<section id="tipografia">
+  <div class="container">
+    <h2 class="section-titulo">O sistema<br>tipográfico</h2>
+    <p class="section-desc">Sora para display e títulos | geométrica, moderna e presente no logo.<br>Inter para corpo de texto | neutra, legível, não compete.</p>
+
+    <div class="tipo-bloco">
+      <div class="tipo-meta">
+        <div class="tipo-info">
+          <h3>Sora</h3>
+          <p>Display · Títulos · Headlines · Logotipo</p>
+        </div>
+        <span class="tipo-badge">Fonte primária</span>
+      </div>
+      <div class="tipo-escala">
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">Display</span>
+          <span class="tipo-exemplo" style="font-family:'Sora',sans-serif; font-size: 56px; font-weight:800; line-height:1;">SAÚDE</span>
+        </div>
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">H1</span>
+          <span class="tipo-exemplo" style="font-family:'Sora',sans-serif; font-size: 40px; font-weight:700;">PANTANAL SAÚDE</span>
+        </div>
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">H2</span>
+          <span class="tipo-exemplo" style="font-family:'Sora',sans-serif; font-size: 28px; font-weight:700;">Planos de saúde corporativos</span>
+        </div>
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">H3</span>
+          <span class="tipo-exemplo" style="font-family:'Sora',sans-serif; font-size: 20px; font-weight:600;">Excelência começa de dentro</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tipo-gap"></div>
+
+    <div class="tipo-bloco">
+      <div class="tipo-meta">
+        <div class="tipo-info">
+          <h3>Inter</h3>
+          <p>Corpo de texto · Legendas · Interface · Dados</p>
+        </div>
+        <span class="tipo-badge">Fonte secundária</span>
+      </div>
+      <div class="tipo-escala">
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">Body L</span>
+          <span class="tipo-exemplo" style="font-size:18px; font-weight:400; line-height:1.7;">Quando sua equipe está bem cuidada, sua empresa cresce com mais consistência.</span>
+        </div>
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">Body</span>
+          <span class="tipo-exemplo" style="font-size:15px; font-weight:400; line-height:1.7;">Plantão psicológico 24 horas, NR1 com acompanhamento personalizado e planos assistenciais completos para sua empresa.</span>
+        </div>
+        <div class="tipo-linha">
+          <span class="tipo-linha-label">Caption</span>
+          <span class="tipo-exemplo" style="font-size:12px; font-weight:500; letter-spacing:0.04em; color: var(--cinza-texto);">Campo Grande, MS · Operadora de saúde B2B</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tipo-combinacao">
+      <h3 class="combo-titulo">Saúde corporativa que<br>começa antes do problema.</h3>
+      <p class="combo-corpo">A Pantanal Saúde oferece planos completos para empresas que entendem que cuidar das pessoas é o investimento de maior retorno. Do plantão psicológico 24h ao cumprimento da NR1, tudo em um único parceiro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── APLICAÇÕES ── -->
+<section id="aplicacoes" class="aplicacoes-intro">
+  <div class="container">
+    <h2 class="section-titulo">A marca<br>em uso</h2>
+    <p class="section-desc">Quatro peças prontas para uso comercial, construídas a partir do sistema visual. Cada uma com mockup, especificação e arquivo para download.</p>
+  </div>
+</section>
+
+<!-- Aplicação 1 · Cartão -->
+<div class="aplicacao-dobra">
+  <div class="aplicacao-mockup-full" style="background: var(--azul-principal);">
+    <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/mockup-cartao.png" alt="Mockup cartão de visita" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+  </div>
+  <div class="aplicacao-texto">
+    <p class="aplicacao-num">01 · Papelaria</p>
+    <h3 class="aplicacao-titulo">Cartão de visita</h3>
+    <p class="aplicacao-corpo">A primeira impressão física da marca. Frente com o símbolo isolado, verso com dados de contato em layout limpo e espaço negativo generoso.</p>
+    <div class="aplicacao-specs">
+      <div class="spec-linha"><span class="spec-label">Formato</span><span class="spec-valor">90 × 50 mm</span></div>
+      <div class="spec-linha"><span class="spec-label">Papel</span><span class="spec-valor">Off-white 300g · reserva UV no logo</span></div>
+      <div class="spec-linha"><span class="spec-label">Cores</span><span class="spec-valor">Azul principal + branco</span></div>
+    </div>
+    <a href="#downloads" class="download-btn">Baixar arquivo →</a>
+  </div>
+</div>
+
+<!-- Aplicação 2 · Banner -->
+<div class="aplicacao-dobra">
+  <div class="aplicacao-mockup-full" style="background: var(--verde-arara);">
+    <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/mockup-banner.png" alt="Mockup banner de site" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+  </div>
+  <div class="aplicacao-texto">
+    <p class="aplicacao-num">02 · Digital</p>
+    <h3 class="aplicacao-titulo">Banner de site</h3>
+    <p class="aplicacao-corpo">Hero institucional para o site da Pantanal Saúde. Headline em Sora, fundo flat com a cruz-arara como elemento âncora. Versões desktop e mobile.</p>
+    <div class="aplicacao-specs">
+      <div class="spec-linha"><span class="spec-label">Desktop</span><span class="spec-valor">1920 × 600 px</span></div>
+      <div class="spec-linha"><span class="spec-label">Mobile</span><span class="spec-valor">768 × 800 px</span></div>
+      <div class="spec-linha"><span class="spec-label">Formato</span><span class="spec-valor">PNG / JPG otimizado para web</span></div>
+    </div>
+    <a href="#downloads" class="download-btn">Baixar arquivo →</a>
+  </div>
+</div>
+
+<!-- Aplicação 3 · Folder -->
+<div class="aplicacao-dobra">
+  <div class="aplicacao-mockup-full" style="background: var(--azul-destaque);">
+    <img src="mockup-folder.png" alt="Mockup folder institucional" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+  </div>
+  <div class="aplicacao-texto">
+    <p class="aplicacao-num">03 · Impresso</p>
+    <h3 class="aplicacao-titulo">Folder institucional</h3>
+    <p class="aplicacao-corpo">Apresentação completa da operadora para reuniões comerciais. Folder A4 com três dobras, cada painel dedicado a uma frente de serviço com sua cor de produto.</p>
+    <div class="aplicacao-specs">
+      <div class="spec-linha"><span class="spec-label">Formato</span><span class="spec-valor">A4 · 3 dobras</span></div>
+      <div class="spec-linha"><span class="spec-label">Papel</span><span class="spec-valor">Couché fosco 150g</span></div>
+      <div class="spec-linha"><span class="spec-label">Cores</span><span class="spec-valor">Sistema completo · 4/4</span></div>
+    </div>
+    <a href="#downloads" class="download-btn">Baixar arquivo →</a>
+  </div>
+</div>
+
+<!-- Aplicação 4 · PDF -->
+<div class="aplicacao-dobra">
+  <div class="aplicacao-mockup-full" style="background: var(--dark-hek);">
+    <img src="mockup-pdf.png" alt="Mockup PDF das frentes de serviço" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="mockup-ph" style="display:flex;">Mockup PDF</div>
+  </div>
+  <div class="aplicacao-texto">
+    <p class="aplicacao-num">04 · Comercial</p>
+    <h3 class="aplicacao-titulo">PDF das frentes de serviço</h3>
+    <p class="aplicacao-corpo">Documento digital de apresentação dos três produtos: Planos assistenciais, NR1 e Psicológica 24h. Formato pronto para envio a prospects e decisores de RH.</p>
+    <div class="aplicacao-specs">
+      <div class="spec-linha"><span class="spec-label">Formato</span><span class="spec-valor">A4 · multipágina</span></div>
+      <div class="spec-linha"><span class="spec-label">Uso</span><span class="spec-valor">Digital · envio por e-mail / WhatsApp</span></div>
+      <div class="spec-linha"><span class="spec-label">Estrutura</span><span class="spec-valor">Capa + 3 frentes + contato</span></div>
+    </div>
+    <a href="#downloads" class="download-btn">Baixar arquivo →</a>
+  </div>
+</div>
+
+<!-- ── DOWNLOADS ── -->
+<section id="downloads">
+  <div class="container">
+    <h2 class="section-titulo">Arquivos<br>da marca</h2>
+    <p class="section-desc">Todos os arquivos finais, prontos para uso digital e gráfica. Baixe item por item conforme a necessidade.</p>
+
+    <div class="downloads-grid">
+
+      <!-- SUBSTITUA o href="#" pela URL do arquivo (cole a URL pública do seu servidor / Biblioteca de Mídia) -->
+      <div class="download-card">
+        <div class="download-card-top">
+          <span class="download-formato">.SVG · .AI</span>
+          <span class="download-peso">vetorial</span>
+        </div>
+        <span class="download-nome">Logo vetorial completo</span>
+        <p class="download-card-desc">Todas as versões em arquivo editável e escalável: principal, clara e as três variações por produto.</p>
+        <a href="#" class="download-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3.5 6.5M7 10l3.5-3.5M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Baixar
+        </a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-card-top">
+          <span class="download-formato">.PNG</span>
+          <span class="download-peso">alta resolução</span>
+        </div>
+        <span class="download-nome">Logo para digital</span>
+        <p class="download-card-desc">PNG com fundo transparente em 2x e 3x. Versão para fundo claro e fundo escuro, prontas para web e redes.</p>
+        <a href="#" class="download-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3.5 6.5M7 10l3.5-3.5M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Baixar
+        </a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-card-top">
+          <span class="download-formato">.PNG</span>
+          <span class="download-peso">por produto</span>
+        </div>
+        <span class="download-nome">Logos por produto</span>
+        <p class="download-card-desc">As três variações cromáticas: Plantão (amarelo), Planos (azul) e NR1 (verde), em alta resolução.</p>
+        <a href="#" class="download-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3.5 6.5M7 10l3.5-3.5M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Baixar
+        </a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-card-top">
+          <span class="download-formato">.PDF</span>
+          <span class="download-peso">impressão</span>
+        </div>
+        <span class="download-nome">Cartão de visita</span>
+        <p class="download-card-desc">Arquivo fechado para gráfica, frente e verso, com sangria e marcas de corte. Pronto para produção.</p>
+        <a href="#" class="download-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3.5 6.5M7 10l3.5-3.5M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Baixar
+        </a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-card-top">
+          <span class="download-formato">.PNG · .JPG</span>
+          <span class="download-peso">web</span>
+        </div>
+        <span class="download-nome">Banner de site</span>
+        <p class="download-card-desc">Versões desktop e mobile otimizadas para web, prontas para aplicar no site institucional.</p>
+        <a href="#" class="download-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3.5 6.5M7 10l3.5-3.5M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Baixar
+        </a>
+      </div>
+
+      <div class="download-card">
+        <div class="download-card-top">
+          <span class="download-formato">.PDF</span>
+          <span class="download-peso">impressão</span>
+        </div>
+        <span class="download-nome">Folder institucional</span>
+        <p class="download-card-desc">Folder A4 três dobras fechado para gráfica, com cada painel dedicado a uma frente de serviço.</p>
+        <a href="#" class="download-link">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9m0 0L3.5 6.5M7 10l3.5-3.5M1 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Baixar
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── RODAPÉ ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-sparkle">✦</span>
+      <p class="footer-assinatura">Produzido por <strong>hekbay</strong></p>
+      <p class="footer-assinatura">OBRIGADO PELA CONFIANÇA</p>
+    </div>
+    <div class="footer-right">
+      <p>Manual de Identidade Visual</p>
+      <p>Pantanal Saúde · 2026</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
