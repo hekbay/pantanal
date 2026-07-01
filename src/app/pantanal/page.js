@@ -97,9 +97,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="marca-bloco marca-card-large glass-light" style={{}}>
+          <div className="marca-bloco marca-card-large glass-light" style={{ gridColumn: '1 / -1' }}>
             <h3>Diferenciais Reais</h3>
-            <div className="marca-valores" style={{}}>
+            <div className="marca-valores" style={{ flexDirection: 'row', flexWrap: 'wrap', gap: '32px' }}>
               <div className="valor-item"><span className="valor-dot"></span>Plantão psicológico 24h</div>
               <div className="valor-item"><span className="valor-dot"></span>NR1 com acompanhamento</div>
               <div className="valor-item"><span className="valor-dot"></span>Atendimento em até 1h</div>
@@ -119,11 +119,11 @@ export default function Home() {
         <div className="logo-showcase">
           <div className="logo-card-main glass-light">
             <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/VERTICAL2.png" alt="Logo Principal" />
-            <span className="logo-card-label" style={{}}>Versão Principal · Fundo Claro</span>
+            <span className="logo-card-label" style={{ color: 'var(--azul-principal)' }}>Versão Principal · Fundo Claro</span>
           </div>
-          <div className="logo-card-sec glass-dark" style={{}}>
+          <div className="logo-card-sec glass-dark" style={{ borderRadius: '24px' }}>
             <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/VERTICALB.png" alt="Logo Secundário" />
-            <span className="logo-card-label" style={{}}>Versão Clara · Fundo Escuro</span>
+            <span className="logo-card-label" style={{ color: '#fff' }}>Versão Clara · Fundo Escuro</span>
           </div>
         </div>
 
@@ -133,19 +133,19 @@ export default function Home() {
             <div className="produto-mark"><img
                 src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/PLANTAO.png" alt="Plantão 24h" /></div>
             <div className="produto-nome">Plantão 24h</div>
-            <div className="produto-cor"><span className="produto-cor-dot" style={{}}></span>#f2c52f</div>
+            <div className="produto-cor"><span className="produto-cor-dot" style={{ background: '#f2c52f' }}></span>#f2c52f</div>
           </div>
           <div className="produto-card glass-light">
             <div className="produto-mark"><img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/PLANOS.png"
                 alt="Planos" /></div>
             <div className="produto-nome">Planos</div>
-            <div className="produto-cor"><span className="produto-cor-dot" style={{}}></span>#0a4681</div>
+            <div className="produto-cor"><span className="produto-cor-dot" style={{ background: '#0a4681' }}></span>#0a4681</div>
           </div>
           <div className="produto-card glass-light">
             <div className="produto-mark"><img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/NR1.png"
                 alt="NR1" /></div>
             <div className="produto-nome">NR1</div>
-            <div className="produto-cor"><span className="produto-cor-dot" style={{}}></span>#1b8b73</div>
+            <div className="produto-cor"><span className="produto-cor-dot" style={{ background: '#1b8b73' }}></span>#1b8b73</div>
           </div>
         </div>
 
@@ -221,49 +221,48 @@ export default function Home() {
 
         <div className="paleta-circulos">
           <div className="circulo-wrap">
-            <div className="swatch-circle" style={{}}>
+            <div className="swatch-circle" style={{ background: '#0c2b52' }}>
               <span className="swatch-nome">Azul Principal</span>
               <span className="swatch-hex">#0c2b52</span>
             </div>
-            <span className="swatch-uso" style={{}}>Cor dominante, tipografia, fundos</span>
+            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Cor dominante, tipografia, fundos</span>
           </div>
           <div className="circulo-wrap">
-            <div className="swatch-circle" style={{}}
-              className="swatch-circle light-text">
-              <span className="swatch-nome" style={{}}>Off-white</span>
-              <span className="swatch-hex" style={{}}>#f7f4ef</span>
+            <div className="swatch-circle light-text" style={{ background: '#f7f4ef', borderColor: 'rgba(12,43,82,0.1)' }}>
+              <span className="swatch-nome" style={{ color: '#0c2b52' }}>Off-white</span>
+              <span className="swatch-hex" style={{ color: '#0c2b52' }}>#f7f4ef</span>
             </div>
-            <span className="swatch-uso" style={{}}>Fundo principal, respiro visual</span>
+            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Fundo principal, respiro visual</span>
           </div>
           <div className="circulo-wrap">
-            <div className="swatch-circle" style={{}}>
+            <div className="swatch-circle" style={{ background: '#0a4681' }}>
               <span className="swatch-nome">Azul Destaque</span>
               <span className="swatch-hex">#0a4681</span>
             </div>
-            <span className="swatch-uso" style={{}}>Links, destaques, Planos</span>
+            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Links, destaques, Planos</span>
           </div>
           <div className="circulo-wrap">
-            <div className="swatch-circle" style={{}}>
+            <div className="swatch-circle" style={{ background: '#1b8b73' }}>
               <span className="swatch-nome">Verde NR1</span>
               <span className="swatch-hex">#1b8b73</span>
             </div>
-            <span className="swatch-uso" style={{}}>Saúde ocupacional, NR1</span>
+            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Saúde ocupacional, NR1</span>
           </div>
           <div className="circulo-wrap">
-            <div className="swatch-circle" style={{}}>
-              <span className="swatch-nome" style={{}}>Amarelo Plantão</span>
-              <span className="swatch-hex" style={{}}>#f2c52f</span>
+            <div className="swatch-circle" style={{ background: '#f2c52f' }}>
+              <span className="swatch-nome" style={{ color: '#0c2b52' }}>Amarelo Plantão</span>
+              <span className="swatch-hex" style={{ color: '#0c2b52' }}>#f2c52f</span>
             </div>
-            <span className="swatch-uso" style={{}}>Plantão 24h, urgência</span>
+            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Plantão 24h, urgência</span>
           </div>
         </div>
 
         <div className="paleta-barras">
-          <div className="barra-cor" style={{}}><span style={{}}>42%</span></div>
-          <div className="barra-cor" style={{}}><span style={{}}>28%</span></div>
-          <div className="barra-cor" style={{}}><span style={{}}>16%</span></div>
-          <div className="barra-cor" style={{}}><span style={{}}>7%</span></div>
-          <div className="barra-cor" style={{}}><span style={{}}>7%</span></div>
+          <div className="barra-cor" style={{ width: '42%', background: '#f7f4ef' }}><span style={{ color: '#6b6560' }}>42%</span></div>
+          <div className="barra-cor" style={{ width: '28%', background: '#0c2b52' }}><span style={{ color: '#fff' }}>28%</span></div>
+          <div className="barra-cor" style={{ width: '16%', background: '#0a4681' }}><span style={{ color: '#fff' }}>16%</span></div>
+          <div className="barra-cor" style={{ width: '7%', background: '#1b8b73' }}><span style={{ color: '#fff' }}>7%</span></div>
+          <div className="barra-cor" style={{ width: '7%', background: '#f2c52f' }}><span style={{ color: '#0c2b52' }}>7%</span></div>
         </div>
       </div>
     </section>
@@ -282,11 +281,11 @@ export default function Home() {
             </div>
             <div className="tipo-escala">
               <div className="tipo-linha"><span className="tipo-label">Display</span><span className="tipo-exemplo"
-                  style={{}}>SAÚDE</span></div>
+                  style={{ fontFamily: "'Sora', sans-serif", fontSize: '48px', fontWeight: 800 }}>SAÚDE</span></div>
               <div className="tipo-linha"><span className="tipo-label">H1</span><span className="tipo-exemplo"
-                  style={{}}>PANTANAL</span></div>
+                  style={{ fontFamily: "'Sora', sans-serif", fontSize: '32px', fontWeight: 700 }}>PANTANAL</span></div>
               <div className="tipo-linha"><span className="tipo-label">H2</span><span className="tipo-exemplo"
-                  style={{}}>Planos de saúde corporativos</span></div>
+                  style={{ fontFamily: "'Sora', sans-serif", fontSize: '24px', fontWeight: 700 }}>Planos de saúde corporativos</span></div>
             </div>
           </div>
 
@@ -297,13 +296,13 @@ export default function Home() {
             </div>
             <div className="tipo-escala">
               <div className="tipo-linha"><span className="tipo-label">Body L</span><span className="tipo-exemplo"
-                  style={{}}>Quando sua equipe está bem
+                  style={{ fontSize: '18px', fontWeight: 400, color: 'var(--text-light-muted)' }}>Quando sua equipe está bem
                   cuidada.</span></div>
               <div className="tipo-linha"><span className="tipo-label">Body</span><span className="tipo-exemplo"
-                  style={{}}>Plantão psicológico 24 horas,
+                  style={{ fontSize: '15px', fontWeight: 400, color: 'var(--text-light-muted)' }}>Plantão psicológico 24 horas,
                   NR1.</span></div>
               <div className="tipo-linha"><span className="tipo-label">Caption</span><span className="tipo-exemplo"
-                  style={{}}>Campo Grande, MS · Operadora
+                  style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-light-muted)' }}>Campo Grande, MS · Operadora
                   B2B</span></div>
             </div>
           </div>
@@ -357,8 +356,8 @@ export default function Home() {
 
   {/* ── BLOCO DARK INFERIOR ── */}
   <div className="dark-wrap">
-    <div className="blob blob-dark-1" style={{}}></div>
-    <div className="blob blob-dark-3" style={{}}></div>
+    <div className="blob blob-dark-1" style={{ bottom: '-10%', top: 'auto' }}></div>
+    <div className="blob blob-dark-3" style={{ left: '10%', right: 'auto' }}></div>
 
     <section id="downloads">
       <div className="container">
