@@ -622,6 +622,71 @@
       border-radius: 50%;
     }
 
+    /* ── QUEBRA DE GRID: LOGO (NÃO FAÇA) ── */
+    .logo-naofaca {
+      margin-top: 100px;
+    }
+
+    .logo-naofaca h3 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--azul-principal);
+      margin-bottom: 32px;
+    }
+
+    .naofaca-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .naofaca-item {
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .naofaca-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .naofaca-visual {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(12, 43, 82, 0.1);
+    }
+
+    .naofaca-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .naofaca-desc {
+      font-size: 14px;
+      color: var(--text-light-muted);
+      line-height: 1.5;
+    }
+
+    .naofaca-desc strong {
+      display: block;
+      font-weight: 700;
+      color: #ef4444;
+      margin-bottom: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
     /* ── QUEBRA DE GRID: PALETA ── */
     .paleta-circulos {
       display: flex;
@@ -1037,6 +1102,7 @@
 
       .marca-masonry,
       .logo-showcase,
+      .naofaca-grid,
       .tipo-grid,
       .app-row,
       .downloads-grid {
@@ -1221,6 +1287,68 @@
                 alt="NR1"></div>
             <div class="produto-nome">NR1</div>
             <div class="produto-cor"><span class="produto-cor-dot" style="background:#1b8b73;"></span>#1b8b73</div>
+          </div>
+        </div>
+
+        <div class="logo-naofaca">
+          <h3>Não faça isso</h3>
+          <div class="naofaca-grid">
+            <div class="naofaca-item glass-light">
+              <div class="naofaca-visual">
+                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-distorcer1.png"
+                  alt="Exemplo: logo distorcido"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <span class="naofaca-ph"
+                  style="display:none; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-light-muted);">Logo
+                  distorcido</span>
+              </div>
+              <div class="naofaca-desc">
+                <strong>✕ Não distorça</strong>
+                Nunca altere as proporções originais do logo.
+              </div>
+            </div>
+            <div class="naofaca-item glass-light">
+              <div class="naofaca-visual">
+                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-recolorir1.png"
+                  alt="Exemplo: cor fora do sistema"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <span class="naofaca-ph"
+                  style="display:none; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-light-muted);">Cor
+                  fora do sistema</span>
+              </div>
+              <div class="naofaca-desc">
+                <strong>✕ Não recolora</strong>
+                Use apenas as cores do sistema de identidade.
+              </div>
+            </div>
+            <div class="naofaca-item glass-light">
+              <div class="naofaca-visual">
+                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-sombra1.png"
+                  alt="Exemplo: logo com sombra"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <span class="naofaca-ph"
+                  style="display:none; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-light-muted);">Logo
+                  com sombra</span>
+              </div>
+              <div class="naofaca-desc">
+                <strong>✕ Sem sombras</strong>
+                O logo nunca recebe efeitos de sombra ou brilho.
+              </div>
+            </div>
+            <div class="naofaca-item glass-light">
+              <div class="naofaca-visual">
+                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-fundo1.png"
+                  alt="Exemplo: logo sobre foto"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                <span class="naofaca-ph"
+                  style="display:none; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-light-muted);">Logo
+                  sobre foto</span>
+              </div>
+              <div class="naofaca-desc">
+                <strong>✕ Sem fundos complexos</strong>
+                Evite aplicar sobre texturas sem área de proteção.
+              </div>
+            </div>
           </div>
         </div>
       </div>
