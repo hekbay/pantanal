@@ -484,7 +484,7 @@ document.querySelectorAll('.tab').forEach(t=>{
 });
 
 // BG
-const DEFAULT_BG='';
+const DEFAULT_BG='https://teacherana.com.br/wp-content/uploads/teste/assets/varakos.png';
 function setBg(url){document.getElementById('bgArt').style.backgroundImage=url?`url(${url})`:'none';state.bg=url||null;}
 function restoreDefaultBg(){setBg(DEFAULT_BG);saveSheet();}
 document.getElementById('bgInput').addEventListener('change',e=>{
