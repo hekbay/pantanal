@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kael Thas — Ficha</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&display=swap');
+
+  :root{
+    /* Paleta marcial — Kael Thas: dourado-âmbar, couro, cobre, safira do ki */
+    --void:#0a0806; --stone:#151009; --panel:#1a1510; --panel-hi:#211a14;
+    --acc:#d4a04a; --acc-dim:#7a5a20; --acc-bright:#f2c877;
+    --acc-glow:rgba(212,160,74,0.18);
+    --leather:#3a2a1a; --leather-hi:#4a3624;
+    --ash:#c9c0ac; --ash-dim:#7a705f;
+    --blood:#5a1610; --blood-bright:#c8583a;
+    --line:#2a2018; --amber:#e8a838;
+    --ki:#4a8ec8; --ki-bright:#8fcfff; --ki-dim:#2a5680;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--void); color:var(--ash);
+    font-family:'IM Fell English',serif;
+    min-height:100vh; padding:32px 18px 110px;
+    position:relative; -webkit-font-smoothing:antialiased;
+  }
+
+  /* fundo — textura de tramas de couro/pergaminho */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0px, transparent 14px, rgba(212,160,74,0.028) 14px, rgba(212,160,74,0.028) 15px),
+      repeating-linear-gradient(-45deg, transparent 0px, transparent 14px, rgba(232,168,56,0.02) 14px, rgba(232,168,56,0.02) 15px);
+  }
+  .bg-art{position:fixed;inset:0;z-index:0;background-image:var(--bg-art-url);background-size:cover;background-position:center 25%;background-attachment:fixed;}
+  .bg-art::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(180deg,rgba(10,8,6,0.75),rgba(10,8,6,0.88) 45%,rgba(10,8,6,0.94)),
+    radial-gradient(ellipse at 50% 30%,rgba(212,160,74,0.10),rgba(10,8,6,0.85) 72%);}
+  body::after{content:"";position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,0.02) 3px 4px);pointer-events:none;z-index:1;mix-blend-mode:overlay;}
+  .vignette{position:fixed;inset:0;box-shadow:inset 0 0 280px 90px rgba(0,0,0,0.9);pointer-events:none;z-index:2;}
+  .sheet{max-width:1180px;margin:0 auto;position:relative;z-index:3;}
+
+  /* cabeçalho */
+  .crest{text-align:center;margin-bottom:6px;}
+  .crest .sigil{color:var(--acc-dim);letter-spacing:0.6em;font-size:0.65rem;text-transform:uppercase;font-family:'Cinzel',serif;}
+  h1.name{
+    font-family:'Uncial Antiqua',serif;
+    font-size:clamp(2rem,5.5vw,3.4rem);
+    text-align:center;color:var(--acc-bright);
+    letter-spacing:0.06em;
+    text-shadow:0 0 50px rgba(212,160,74,0.35), 0 0 16px rgba(242,200,119,0.25), 0 2px 0 #000;
+    line-height:1.1;
+  }
+  .subtitle{
+    text-align:center;font-family:'Cinzel',serif;font-weight:600;
+    color:var(--acc);letter-spacing:0.18em;font-size:0.8rem;
+    text-transform:uppercase;margin-top:8px;
+  }
+  .subtitle .sep{color:var(--ash-dim);margin:0 8px;}
+  .divider{text-align:center;color:var(--acc-dim);font-size:0.7rem;letter-spacing:0.5em;margin:6px 0;opacity:0.6;}
+
+  .bg-controls{display:flex;justify-content:center;gap:10px;margin:14px 0 0;}
+  .bg-controls button{font-family:'Cinzel',serif;background:rgba(21,16,9,0.7);border:1px solid var(--acc-dim);color:var(--acc);padding:5px 14px;font-size:0.64rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all .18s;backdrop-filter:blur(3px);}
+  .bg-controls button:hover{background:var(--acc-dim);color:var(--void);}
+
+  /* TABS */
+  .tabs{display:flex;justify-content:center;gap:6px;margin:22px 0 20px;flex-wrap:wrap;}
+  .tab{
+    font-family:'Cinzel',serif;font-weight:600;font-size:0.8rem;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ash-dim);background:rgba(21,16,9,0.8);
+    border:1px solid var(--line);padding:11px 26px;cursor:pointer;transition:all .2s;
+    backdrop-filter:blur(3px);position:relative;
+  }
+  .tab::after{content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--acc);transition:width .2s;}
+  .tab:hover{color:var(--acc);border-color:var(--acc-dim);}
+  .tab:hover::after{width:60%;}
+  .tab.active{color:var(--void);background:var(--acc);border-color:var(--acc);box-shadow:0 0 22px rgba(212,160,74,0.30);}
+  .tab.active::after{display:none;}
+
+  .view{display:none;}
+  .view.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .grid2{display:grid;grid-template-columns:1fr 1.5fr;gap:18px;}
+  .grid1{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr;}}
+  .col-stack{display:flex;flex-direction:column;gap:18px;}
+
+  /* PANEL */
+  .panel{
+    background:linear-gradient(160deg,rgba(33,26,20,0.94),rgba(26,21,16,0.97));
+    border:1px solid var(--line);border-radius:1px;padding:20px;position:relative;
+    backdrop-filter:blur(4px);
+    box-shadow:inset 0 1px 0 rgba(212,160,74,0.07),0 8px 28px rgba(0,0,0,0.7);
+  }
+  .panel::before{content:"";position:absolute;inset:5px;border:1px solid rgba(212,160,74,0.06);pointer-events:none;}
+  .panel::after{content:"";position:absolute;top:0;left:0;width:16px;height:16px;border-top:2px solid var(--acc-dim);border-left:2px solid var(--acc-dim);pointer-events:none;}
+
+  .panel h2{
+    font-family:'Cinzel',serif;font-weight:700;font-size:0.86rem;color:var(--acc);
+    text-transform:uppercase;letter-spacing:0.18em;margin-bottom:16px;
+    padding-bottom:9px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:9px;
+  }
+  .panel h2::before{content:"✦";color:var(--acc-dim);font-size:0.68rem;}
+  .panel h2 .addbtn{
+    margin-left:auto;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.1em;
+    background:transparent;border:1px solid var(--acc-dim);color:var(--acc);
+    padding:4px 9px;cursor:pointer;text-transform:uppercase;transition:all .15s;
+  }
+  .panel h2 .addbtn:hover{background:var(--acc-dim);color:var(--void);}
+
+  /* stat lines */
+  .statline{display:flex;justify-content:space-between;align-items:baseline;padding:7px 4px;border-bottom:1px dotted var(--line);}
+  .statline:last-child{border-bottom:none;}
+  .statline .k{font-family:'Cinzel',serif;letter-spacing:0.06em;color:var(--ash-dim);font-size:0.78rem;text-transform:uppercase;}
+  .statline .v{font-family:'IM Fell English',serif;color:var(--acc);font-weight:400;font-size:0.98rem;}
+  .statline .v.auto{color:var(--acc-bright);}
+  .statline input.inl{width:70px;background:transparent;border:none;border-bottom:1px solid var(--line);text-align:right;color:var(--acc-bright);font-family:'IM Fell English',serif;font-size:0.95rem;outline:none;}
+  .statline input.inl:focus{border-bottom-color:var(--acc-dim);}
+
+  /* attrs */
+  .attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .attr{
+    background:var(--stone);border:1px solid var(--line);text-align:center;
+    padding:12px 4px 10px;position:relative;
+  }
+  .attr::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40%;height:1px;background:var(--acc-dim);}
+  .attr .lbl{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.14em;color:var(--ash-dim);text-transform:uppercase;}
+  .attr input.score{width:100%;background:transparent;border:none;text-align:center;font-family:'Uncial Antiqua',serif;font-size:1.6rem;color:var(--acc-bright);outline:none;margin:2px 0;}
+  .attr .mod{font-size:0.82rem;color:var(--ash-dim);font-style:italic;background:var(--void);border:1px solid var(--line);display:inline-block;padding:1px 10px;}
+
+  /* skills */
+  .skill-row{cursor:pointer;user-select:none;}
+  .skill-row .dot{display:inline-block;width:9px;height:9px;border:1px solid var(--acc-dim);transform:rotate(45deg);margin-right:8px;vertical-align:middle;transition:all .15s;}
+  .skill-row.prof .dot{background:var(--acc);box-shadow:0 0 6px rgba(212,160,74,0.5);}
+  .skill-row.expert .dot{background:var(--acc-bright);border-color:var(--acc-bright);box-shadow:0 0 8px rgba(242,200,119,0.6);}
+
+  /* HP */
+  .hp-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .hp-top .lbl{font-family:'Cinzel',serif;letter-spacing:0.1em;text-transform:uppercase;color:var(--blood-bright);font-size:0.72rem;}
+  .hp-nums{font-family:'IM Fell English',serif;color:var(--ash);}
+  .hp-nums input{width:50px;background:transparent;border:none;text-align:center;font-family:'Uncial Antiqua',serif;color:var(--acc-bright);font-size:1.05rem;outline:none;}
+  .hp-nums .mx{color:var(--acc);}
+  .hp-bar{height:12px;background:#0a0605;border:1px solid var(--blood);position:relative;overflow:hidden;}
+  .hp-fill{position:absolute;inset:0;background:linear-gradient(180deg,#c8583a,#5a1610);box-shadow:0 0 10px rgba(200,88,58,0.5) inset;transition:width .4s ease;}
+  .hp-note{font-size:0.72rem;color:var(--ash-dim);font-style:italic;margin-top:6px;}
+
+  /* KI pool */
+  .ki-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .ki-top .lbl{font-family:'Cinzel',serif;letter-spacing:0.1em;text-transform:uppercase;color:var(--ki-bright);font-size:0.72rem;}
+  .ki-nums{font-family:'IM Fell English',serif;color:var(--ash);}
+  .ki-nums input{width:50px;background:transparent;border:none;text-align:center;font-family:'Uncial Antiqua',serif;color:var(--ki-bright);font-size:1.05rem;outline:none;}
+  .ki-nums .mx{color:var(--ki);}
+  .ki-bar{height:12px;background:#04070a;border:1px solid var(--ki-dim);position:relative;overflow:hidden;}
+  .ki-fill{position:absolute;inset:0;background:linear-gradient(180deg,var(--ki-bright),var(--ki));box-shadow:0 0 10px rgba(74,142,200,0.5) inset;transition:width .4s ease;}
+  .ki-pips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .ki-pip{width:22px;height:22px;border:1px solid var(--ki-dim);border-radius:50%;cursor:pointer;transition:all .15s;background:var(--stone);}
+  .ki-pip.on{background:radial-gradient(circle at 35% 30%,var(--ki-bright),var(--ki) 60%,var(--ki-dim));border-color:var(--ki-bright);box-shadow:0 0 10px rgba(74,142,200,0.7);}
+
+  /* death */
+  .deathbox{display:flex;gap:24px;}
+  .deathcol{flex:1;}
+  .deathcol .lbl{font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ash-dim);margin-bottom:7px;}
+  .pips{display:flex;gap:8px;}
+  .pip{width:18px;height:18px;border:1px solid var(--ash-dim);border-radius:50%;cursor:pointer;transition:all .15s;}
+  .pip.on.succ{background:var(--acc);border-color:var(--acc);box-shadow:0 0 7px rgba(212,160,74,0.6);}
+  .pip.on.fail{background:var(--blood-bright);border-color:var(--blood-bright);box-shadow:0 0 7px rgba(200,88,58,0.6);}
+
+  /* entries */
+  .entry{padding:11px 0;border-bottom:1px solid var(--line);position:relative;}
+  .entry:last-child{border-bottom:none;}
+  .entry .title{font-family:'Cinzel',serif;color:var(--acc);font-size:0.9rem;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .entry .title .tag{font-family:'IM Fell English',serif;font-size:0.64rem;color:var(--void);background:var(--acc-dim);padding:1px 7px;letter-spacing:0.04em;text-transform:uppercase;font-style:normal;}
+  .entry .desc{font-size:0.89rem;line-height:1.55;color:var(--ash);}
+  .entry .del{position:absolute;top:9px;right:0;background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.88rem;opacity:0;transition:opacity .15s;padding:2px 6px;}
+  .entry:hover .del{opacity:1;}
+  .entry .del:hover{color:var(--blood-bright);}
+
+  /* ataques */
+  .atk-row{display:grid;grid-template-columns:1.5fr 0.7fr 1.1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--line);}
+  .atk-head{color:var(--ash-dim);font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:0.1em;font-size:0.66rem;border-bottom:1px solid var(--line);padding-bottom:6px;}
+  .atk-row input{background:transparent;border:none;color:var(--ash);font-family:'IM Fell English',serif;font-size:0.89rem;width:100%;outline:none;border-bottom:1px solid transparent;padding:2px 0;}
+  .atk-row input.nm{color:var(--acc);font-family:'Cinzel',serif;font-size:0.84rem;}
+  .atk-row input:focus{border-bottom:1px solid var(--acc-dim);}
+  .atk-row .del{background:transparent;border:none;color:var(--ash-dim);cursor:pointer;opacity:0;transition:.15s;}
+  .atk-row:hover .del{opacity:1;}
+  .atk-row .del:hover{color:var(--blood-bright);}
+
+  /* combos */
+  .combo{background:var(--stone);border:1px solid var(--line);border-left:3px solid var(--acc-dim);padding:12px 14px;margin-bottom:10px;position:relative;}
+  .combo.ki{border-left-color:var(--ki);}
+  .combo .cname{font-family:'Cinzel',serif;color:var(--acc);font-size:0.82rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .combo.ki .cname{color:var(--ki-bright);}
+  .combo .cname .cost{background:var(--ki);color:var(--void);padding:2px 8px;font-size:0.62rem;letter-spacing:0.08em;font-family:'IM Fell English',serif;}
+  .combo .cseq{font-size:0.94rem;color:var(--ash);line-height:1.55;}
+  .combo .ctotal{margin-top:8px;padding-top:8px;border-top:1px dotted var(--line);font-family:'Cinzel',serif;font-size:0.78rem;color:var(--acc-bright);letter-spacing:0.08em;}
+  .combo.ki .ctotal{color:var(--ki-bright);}
+  .combo .cname[contenteditable],.combo .cseq[contenteditable],.combo .ctotal[contenteditable]{outline:none;}
+
+  /* summary */
+  .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+  .sumcard{background:var(--stone);border:1px solid var(--line);text-align:center;padding:14px 6px;position:relative;}
+  .sumcard::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--acc-dim);}
+  .sumcard .l{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.12em;color:var(--ash-dim);text-transform:uppercase;}
+  .sumcard .v{font-family:'Uncial Antiqua',serif;font-size:1.6rem;color:var(--acc-bright);margin-top:3px;}
+  .sumcard.hp .v{color:var(--blood-bright);}
+  .sumcard.ki .v{color:var(--ki-bright);}
+  .sumcard.ki::after{background:var(--ki-dim);}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:var(--stone);border:1px solid var(--line);padding:6px 11px;font-size:0.84rem;color:var(--ash);display:flex;align-items:center;gap:6px;}
+  .chip .del{background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.78rem;}
+  .chip .del:hover{color:var(--blood-bright);}
+
+  /* edit */
+  .edit{outline:none;transition:background .15s,box-shadow .15s;cursor:text;border-radius:1px;}
+  .edit:hover{background:rgba(212,160,74,0.06);}
+  .edit:focus{background:rgba(212,160,74,0.1);box-shadow:0 0 0 1px var(--acc-dim);}
+  [data-empty]:empty::before{content:attr(data-empty);color:var(--ash-dim);font-style:italic;opacity:0.5;}
+
+  /* TALENTOS/features accordion */
+  .feat-item{border-bottom:1px solid var(--line);position:relative;}
+  .feat-item:last-child{border-bottom:none;}
+  .feat-header{display:flex;align-items:center;gap:10px;padding:11px 4px;padding-right:28px;}
+  .feat-toggle{background:transparent;border:none;cursor:pointer;color:var(--acc-dim);font-size:0.7rem;transition:transform .22s ease;flex-shrink:0;padding:0;line-height:1;}
+  .feat-item.open .feat-toggle{transform:rotate(90deg);}
+  .feat-name{font-family:'Cinzel',serif;font-size:0.88rem;font-weight:600;color:var(--acc);outline:none;flex:1;min-width:0;border-radius:1px;}
+  .feat-name:hover{background:rgba(212,160,74,0.06);}
+  .feat-name:focus{background:rgba(212,160,74,0.1);box-shadow:0 0 0 1px var(--acc-dim);}
+  .feat-src{font-family:'IM Fell English',serif;font-size:0.64rem;color:var(--void);background:var(--acc-dim);padding:1px 7px;letter-spacing:0.04em;text-transform:uppercase;font-style:normal;flex-shrink:0;outline:none;cursor:text;border-radius:1px;}
+  .feat-src:focus{background:var(--acc);color:var(--void);}
+  .feat-body{display:none;padding:0 4px 12px 22px;font-size:0.88rem;line-height:1.55;color:var(--ash);border-left:2px solid var(--acc-dim);margin-left:8px;outline:none;border-radius:1px;}
+  .feat-body[data-empty]:empty::before{content:attr(data-empty);color:var(--ash-dim);font-style:italic;opacity:0.5;}
+  .feat-body:hover{background:rgba(212,160,74,0.03);}
+  .feat-body:focus{background:rgba(212,160,74,0.07);}
+  .feat-item.open .feat-body{display:block;animation:fade .18s ease;}
+  .feat-del{position:absolute;top:9px;right:2px;background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.88rem;opacity:0;transition:opacity .15s;padding:2px 6px;}
+  .feat-item:hover .feat-del{opacity:1;}
+  .feat-del:hover{color:var(--blood-bright)!important;}
+
+  /* TOOLBAR */
+  .toolbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:10px;background:rgba(14,10,6,0.95);border:1px solid var(--acc-dim);padding:10px 14px;backdrop-filter:blur(8px);box-shadow:0 8px 32px rgba(0,0,0,0.8),0 0 0 1px rgba(212,160,74,0.05);}
+  .toolbar button{font-family:'Cinzel',serif;background:transparent;border:1px solid var(--acc-dim);color:var(--acc);padding:7px 16px;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;cursor:pointer;transition:all .2s;}
+  .toolbar button:hover{background:var(--acc-dim);color:var(--void);}
+  .toolbar .saved{color:var(--ash-dim);font-size:0.7rem;align-self:center;font-style:italic;min-width:80px;}
+  .hint{text-align:center;color:var(--ash-dim);font-style:italic;font-size:0.8rem;margin:10px 0 0;opacity:0.6;}
+  .footnote{text-align:center;margin-top:28px;color:var(--ash-dim);font-family:'Cinzel',serif;letter-spacing:0.2em;font-size:0.65rem;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="bg-art" id="bgArt"></div>
+<div class="vignette"></div>
+
+<div class="sheet">
+
+  <div class="crest"><span class="sigil">✦ Caminho da Misericórdia ✦</span></div>
+  <h1 class="name"><span class="edit" contenteditable="true">Kael Thas</span></h1>
+  <div class="subtitle">
+    <span class="edit" contenteditable="true">Monge 5</span>
+    <span class="sep">·</span>
+    <span class="edit" contenteditable="true">Leonin · Eremita</span>
+  </div>
+  <div class="divider">— ✦ —</div>
+
+  <div class="bg-controls">
+    <button onclick="document.getElementById('bgInput').click()">Definir arte de fundo</button>
+    <button onclick="restoreDefaultBg()">Remover arte</button>
+    <input type="file" id="bgInput" accept="image/*" style="display:none">
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-v="base">Ficha Base</div>
+    <div class="tab" data-v="pericias">Perícias & Traços</div>
+    <div class="tab" data-v="combate">Combate</div>
+    <div class="tab" data-v="classe">Habilidades</div>
+  </div>
+
+  <!-- FICHA BASE -->
+  <div class="view active" id="v-base">
+    <div class="grid2">
+      <div class="col-stack">
+
+        <div class="panel">
+          <h2>Identidade</h2>
+          <div class="statline"><span class="k">Nome</span><span class="v edit" contenteditable="true">Kael Thas</span></div>
+          <div class="statline"><span class="k">Jogador</span><span class="v edit" contenteditable="true">Diogo</span></div>
+          <div class="statline"><span class="k">Raça</span><span class="v edit" contenteditable="true">Leonin</span></div>
+          <div class="statline"><span class="k">Classe</span><span class="v" id="idClasse">Monge 5</span></div>
+          <div class="statline"><span class="k">Nível</span><span><input class="inl" type="number" id="lvlMng" value="5" min="0" max="20"></span></div>
+          <div class="statline"><span class="k">Antecedente</span><span class="v edit" contenteditable="true">Eremita</span></div>
+          <div class="statline"><span class="k">Tendência</span><span class="v edit" contenteditable="true">Leal e Bom</span></div>
+          <div class="statline"><span class="k">Experiência (XP)</span><span><input class="inl" type="number" id="xp" value="0" min="0"></span></div>
+          <div class="statline"><span class="k">Inspiração</span><span><input class="inl" type="number" id="insp" value="1" min="0"></span></div>
+        </div>
+
+        <div class="panel">
+          <h2>Aparência</h2>
+          <div class="statline"><span class="k">Idade</span><span class="v edit" contenteditable="true">—</span></div>
+          <div class="statline"><span class="k">Altura</span><span class="v edit" contenteditable="true">—</span></div>
+          <div class="statline"><span class="k">Peso</span><span class="v edit" contenteditable="true">—</span></div>
+          <div class="statline"><span class="k">Olhos</span><span class="v edit" contenteditable="true">—</span></div>
+          <div class="statline"><span class="k">Pele</span><span class="v edit" contenteditable="true">—</span></div>
+          <div class="statline"><span class="k">Cabelo / Juba</span><span class="v edit" contenteditable="true">—</span></div>
+        </div>
+
+        <div class="panel">
+          <h2>Atributos</h2>
+          <div class="attrs" id="attrGrid"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Combate Base</h2>
+          <div class="statline"><span class="k">Classe de Armadura</span><span class="v auto" id="acVal">—</span></div>
+          <div class="statline"><span class="k">Iniciativa</span><span class="v auto" id="initVal">+0</span></div>
+          <div class="statline"><span class="k">Bônus de Proficiência</span><span class="v auto" id="profVal">+3</span></div>
+          <div class="statline"><span class="k">Deslocamento</span><span class="v" id="speedVal">16 m</span></div>
+          <div class="hp-note">Deslocamento (m): <span class="edit" contenteditable="true" id="speedInput" oninput="updateSpeed()">16</span> m · CA = 10 + Des + Sab (Defesa sem Armadura)</div>
+        </div>
+
+        <div class="panel">
+          <h2>Vitalidade</h2>
+          <div class="hp-top">
+            <span class="lbl">Pontos de Vida</span>
+            <span class="hp-nums"><input type="number" id="hpcur" value="50"> / <span class="mx" id="hpmax">50</span></span>
+          </div>
+          <div class="hp-bar"><div class="hp-fill" id="hpfill"></div></div>
+          <div class="statline" style="margin-top:12px"><span class="k">PV Temporários</span><span><input class="inl" type="number" id="hptmp" value="0" min="0"></span></div>
+          <div class="statline"><span class="k">Dado de Vida</span><span class="v">d8 × <span id="hdMax">5</span></span></div>
+          <div class="hp-note">HP máx = 8 + (nível−1)×5 + CON × nível.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Ki</h2>
+          <div class="ki-top">
+            <span class="lbl">Pontos de Ki</span>
+            <span class="ki-nums"><input type="number" id="kicur" value="5"> / <span class="mx" id="kimax">5</span></span>
+          </div>
+          <div class="ki-bar"><div class="ki-fill" id="kifill"></div></div>
+          <div class="ki-pips" id="kiPips"></div>
+          <div class="hp-note">Ki total = nível de Monge. Recupera tudo em descanso curto. Clique nos pontos para gastar/recuperar.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Salvaguardas contra Morte</h2>
+          <div class="deathbox">
+            <div class="deathcol"><div class="lbl">Sucessos</div><div class="pips" id="deathS"></div></div>
+            <div class="deathcol"><div class="lbl">Falhas</div><div class="pips" id="deathF"></div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Talentos <button class="addbtn" onclick="addFeat()">+ talento</button></h2>
+          <div id="featList"></div>
+        </div>
+
+      </div>
+
+      <div class="col-stack">
+
+        <div class="panel">
+          <h2>Salvaguardas</h2>
+          <div id="savesList"></div>
+          <div class="hp-note" style="margin-top:9px">◆ proficiente (Monge: For e Des). Clique para alternar.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Perícias <span class="v auto" style="margin-left:auto;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em">PP: <span id="passivePerc">—</span></span></h2>
+          <div id="skillsList"></div>
+          <div class="hp-note" style="margin-top:9px">Clique: proficiência → especialização → limpa.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Idiomas & Proficiências <button class="addbtn" onclick="addChip('langChips','novo idioma')">+ idioma</button></h2>
+          <div class="chips" id="langChips">
+            <span class="chip"><span class="edit" contenteditable="true">Comum</span><button class="del" onclick="this.parentElement.remove()">✕</button></span>
+            <span class="chip"><span class="edit" contenteditable="true">Leonin</span><button class="del" onclick="this.parentElement.remove()">✕</button></span>
+          </div>
+          <div class="hp-note" style="margin-top:10px">Armas: simples, espada curta. Ferramentas: kit de artesão ou instrumento (Monge). Pergaminho (Eremita).</div>
+        </div>
+
+        <div class="panel">
+          <h2>Notas de Sessão</h2>
+          <div class="desc edit" contenteditable="true" data-empty="Anotações da campanha..." style="min-height:100px;display:block;line-height:1.6"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PERÍCIAS & TRAÇOS -->
+  <div class="view" id="v-pericias">
+    <div class="grid2">
+      <div class="col-stack">
+
+        <div class="panel">
+          <h2>Traços Raciais — Leonin <button class="addbtn" onclick="addEntry('raceList','Novo traço','Leonin','Descrição...')">+ traço</button></h2>
+          <div id="raceList"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Equipamento <button class="addbtn" onclick="addEntry('invList','Novo item','Item','Descrição...')">+ item</button></h2>
+          <div id="invList"></div>
+        </div>
+
+      </div>
+
+      <div class="col-stack">
+
+        <div class="panel">
+          <h2>Traços de Personalidade</h2>
+          <div class="desc edit" contenteditable="true" data-empty="Traços que definem seu comportamento..." style="min-height:60px;display:block;line-height:1.6"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Ideais</h2>
+          <div class="desc edit" contenteditable="true" data-empty="O que você acredita profundamente..." style="min-height:60px;display:block;line-height:1.6"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Ligações</h2>
+          <div class="desc edit" contenteditable="true" data-empty="Pessoas, lugares, coisas que importam..." style="min-height:60px;display:block;line-height:1.6"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Defeitos</h2>
+          <div class="desc edit" contenteditable="true" data-empty="Fraquezas e vícios..." style="min-height:60px;display:block;line-height:1.6"></div>
+        </div>
+
+        <div class="panel">
+          <h2>História</h2>
+          <div class="desc edit" contenteditable="true" data-empty="A jornada do Kael como eremita e monge..." style="min-height:120px;display:block;line-height:1.6"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBATE -->
+  <div class="view" id="v-combate">
+    <div class="grid1">
+
+      <div class="summary">
+        <div class="sumcard"><div class="l">CA</div><div class="v" id="sumCA">—</div></div>
+        <div class="sumcard"><div class="l">Iniciativa</div><div class="v" id="sumInit">—</div></div>
+        <div class="sumcard hp"><div class="l">PV</div><div class="v" id="sumHP">—</div></div>
+        <div class="sumcard ki"><div class="l">Ki</div><div class="v" id="sumKi">—</div></div>
+      </div>
+
+      <div class="panel">
+        <h2>Ataques <button class="addbtn" onclick="addAttack()">+ ataque</button></h2>
+        <div class="atk-row atk-head">
+          <div>Nome</div><div>Bônus</div><div>Dano / Tipo</div><div></div>
+        </div>
+        <div id="atkList"></div>
+        <div class="hp-note" style="margin-top:8px">Dano de golpe desarmado / arma monástica no nível 5: <b style="color:var(--acc)">1d6</b> (Artes Marciais).</div>
+      </div>
+
+      <div class="panel">
+        <h2>Combos de Turno <button class="addbtn" onclick="addCombo()">+ combo</button></h2>
+        <div id="comboList"></div>
+        <div class="hp-note">Combos padrão: sem gastar Ki, com Rajada de Golpes (1 Ki), e turno máximo com Mãos da Injúria (2 Ki total).</div>
+      </div>
+
+      <div class="panel">
+        <h2>Ataque Atordoante — Nível 5</h2>
+        <div class="entry"><div class="desc">Gaste <b style="color:var(--ki-bright)">1 Ki</b> ao acertar um ataque corpo a corpo com arma. O alvo faz um teste de resistência de <b>Constituição CD <span id="stunDC">14</span></b>; falhando, fica <b>atordoado até o fim do seu próximo turno</b>.</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HABILIDADES -->
+  <div class="view" id="v-classe">
+    <div class="grid1">
+
+      <div class="panel">
+        <h2>Perfil de Classe — Monge</h2>
+        <div class="statline"><span class="k">Habilidade Chave</span><span class="v">Sabedoria</span></div>
+        <div class="statline"><span class="k">CD dos Testes de Ki</span><span class="v auto" id="kiDC">—</span></div>
+        <div class="statline"><span class="k">Bônus de Ataque com Ki</span><span class="v auto" id="kiAtk">—</span></div>
+        <div class="statline"><span class="k">Golpe Desarmado</span><span class="v">1d6 + Des (nv 5)</span></div>
+        <div class="statline"><span class="k">Ki disponível</span><span class="v auto" id="kiTotal">5</span></div>
+        <div class="hp-note">CD = 8 + prof + Sab · Ataque = prof + Sab.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Habilidades de Monge <button class="addbtn" onclick="addEntry('classList','Nova habilidade','Monge','Descrição...')">+ habilidade</button></h2>
+        <div id="classList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Caminho da Misericórdia (Tasha) <button class="addbtn" onclick="addEntry('pathList','Nova habilidade','Misericórdia','Descrição...')">+ habilidade</button></h2>
+        <div id="pathList"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toolbar">
+  <button onclick="saveSheet(true)">Salvar</button>
+  <button onclick="resetSheet()">Restaurar</button>
+  <span class="saved" id="savedmsg"></span>
+</div>
+
+<div class="footnote"><span id="foot">Kael Thas · Monge 5 · Leonin</span></div>
+
+<script>
+// TABS
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('v-'+t.dataset.v).classList.add('active');
+  });
+});
+
+// BG
+const DEFAULT_BG='https://teacherana.com.br/wp-content/uploads/teste/assets/KAEL.jpeg';
+function setBg(url){document.getElementById('bgArt').style.backgroundImage=url?`url(${url})`:'none';state.bg=url||null;}
+function restoreDefaultBg(){setBg(DEFAULT_BG);saveSheet();}
+document.getElementById('bgInput').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{setBg(ev.target.result);saveSheet();};r.readAsDataURL(f);
+});
+
+// CORE
+const KEY='kael_sheet_v1';
+const ATTRS=[['for','Força'],['des','Destreza'],['con','Constituição'],['int','Inteligência'],['sab','Sabedoria'],['car','Carisma']];
+const SKILLS=[['Acrobacia','des'],['Arcanismo','int'],['Atletismo','for'],['Atuação','car'],['Blefar','car'],['Furtividade','des'],['História','int'],['Intimidação','car'],['Intuição','sab'],['Investigação','int'],['Lidar c/ Animais','sab'],['Medicina','sab'],['Natureza','int'],['Percepção','sab'],['Persuasão','car'],['Prestidigitação','des'],['Religião','int'],['Sobrevivência','sab']];
+const DEF_SCORES={for:14,des:20,con:15,int:12,sab:17,car:11};
+const DEF_SAVEPROF={for:true,des:true};
+const DEF_SKILLPROF={'Acrobacia':1,'Atletismo':1,'Intimidação':1,'Intuição':1,'Medicina':1,'Percepção':1,'Religião':1,'Sobrevivência':1};
+
+let state={scores:{...DEF_SCORES},saveProf:{...DEF_SAVEPROF},skillProf:{...DEF_SKILLPROF},lvlMng:5,deathS:0,deathF:0,kiCur:5,bg:null};
+
+function mod(s){return Math.floor((s-10)/2);}
+function fmt(n){return (n>=0?'+':'')+n;}
+function profBonus(t){return Math.ceil(t/4)+1;}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function cssId(s){return s.replace(/[^a-zA-Z0-9]/g,'_');}
+function calcMaxHP(){const t=state.lvlMng;return 8+(t-1)*5 + mod(state.scores.con)*t;}
+function calcAC(){return 10 + mod(state.scores.des) + mod(state.scores.sab);}
+function martialDie(l){if(l>=17)return '1d10';if(l>=11)return '1d8';if(l>=5)return '1d6';return '1d4';}
+
+function updateSpeed(){
+  const m=parseFloat((document.getElementById('speedInput').textContent||'').replace(',','.'))||0;
+  document.getElementById('speedVal').textContent=m+' m';
+  const s=document.getElementById('sumSpeed');if(s)s.textContent=m+' m';
+}
+
+function recalc(){
+  const lvl=state.lvlMng;
+  document.getElementById('idNivel')?.textContent;
+  document.getElementById('idClasse').textContent='Monge '+lvl;
+  const pb=profBonus(lvl);
+  document.getElementById('profVal').textContent=fmt(pb);
+
+  ATTRS.forEach(([k])=>{const e=document.getElementById('mod_'+k);if(e)e.textContent=fmt(mod(state.scores[k]));});
+  document.getElementById('initVal').textContent=fmt(mod(state.scores.des));
+
+  const ac=calcAC();
+  document.getElementById('acVal').textContent=ac;
+
+  ATTRS.forEach(([k])=>{
+    const m=mod(state.scores[k]),prof=!!state.saveProf[k],tot=m+(prof?pb:0);
+    const v=document.getElementById('save_'+k);if(v)v.textContent=fmt(tot);
+    const r=document.getElementById('saverow_'+k);if(r)r.classList.toggle('prof',prof);
+  });
+  SKILLS.forEach(([name,ab])=>{
+    const lv=state.skillProf[name]||0,m=mod(state.scores[ab]);
+    const tot=m+(lv===1?pb:lv===2?pb*2:0);
+    const v=document.getElementById('skv_'+cssId(name));if(v)v.textContent=fmt(tot);
+    const r=document.getElementById('skr_'+cssId(name));if(r){r.classList.toggle('prof',lv===1);r.classList.toggle('expert',lv===2);}
+  });
+
+  const maxhp=calcMaxHP();
+  document.getElementById('hpmax').textContent=maxhp;
+  document.getElementById('hdMax').textContent=lvl;
+  const cur=document.getElementById('hpcur');
+  if(cur.dataset.synced!=='1'||parseInt(cur.value)>maxhp){cur.value=maxhp;cur.dataset.synced='1';}
+  updateHPbar();
+
+  // Ki
+  document.getElementById('kimax').textContent=lvl;
+  document.getElementById('kiTotal').textContent=lvl;
+  if(state.kiCur>lvl)state.kiCur=lvl;
+  document.getElementById('kicur').value=state.kiCur;
+  updateKiBar();
+  buildKiPips();
+
+  // Ki DC & atk (Wis-based)
+  const wm=mod(state.scores.sab);
+  document.getElementById('kiDC').textContent=8+pb+wm;
+  document.getElementById('kiAtk').textContent=fmt(pb+wm);
+  document.getElementById('stunDC').textContent=8+pb+wm;
+
+  // Passive perception
+  const pp=10 + (mod(state.scores.sab)) + ((state.skillProf['Percepção']||0)===1?pb:(state.skillProf['Percepção']||0)===2?pb*2:0);
+  document.getElementById('passivePerc').textContent=pp;
+
+  document.getElementById('sumCA').textContent=ac;
+  document.getElementById('sumInit').textContent=fmt(mod(state.scores.des));
+  document.getElementById('sumHP').textContent=document.getElementById('hpcur').value+' / '+maxhp;
+  document.getElementById('sumKi').textContent=state.kiCur+' / '+lvl;
+  document.getElementById('foot').textContent='Kael Thas · Monge '+lvl+' · Leonin';
+  updateSpeed();
+}
+
+function updateHPbar(){
+  const c=parseInt(document.getElementById('hpcur').value)||0;
+  const m=parseInt(document.getElementById('hpmax').textContent)||1;
+  document.getElementById('hpfill').style.width=Math.max(0,Math.min(100,(c/m)*100))+'%';
+  const sm=document.getElementById('sumHP');if(sm)sm.textContent=c+' / '+m;
+}
+function updateKiBar(){
+  const c=parseInt(document.getElementById('kicur').value)||0;
+  const m=parseInt(document.getElementById('kimax').textContent)||1;
+  document.getElementById('kifill').style.width=Math.max(0,Math.min(100,(c/m)*100))+'%';
+  const s=document.getElementById('sumKi');if(s)s.textContent=c+' / '+m;
+}
+function buildKiPips(){
+  const c=document.getElementById('kiPips');c.innerHTML='';
+  const total=state.lvlMng;
+  for(let i=0;i<total;i++){
+    const p=document.createElement('div');
+    p.className='ki-pip'+(i<state.kiCur?' on':'');
+    p.addEventListener('click',()=>{
+      // clicando alterna: se está aceso, apaga a partir dele; se apagado, acende até ele
+      if(i<state.kiCur){state.kiCur=i;}else{state.kiCur=i+1;}
+      document.getElementById('kicur').value=state.kiCur;
+      updateKiBar();buildKiPips();saveSheet();
+    });
+    c.appendChild(p);
+  }
+}
+document.getElementById('hpcur').addEventListener('input',()=>{document.getElementById('hpcur').dataset.synced='1';updateHPbar();});
+document.getElementById('kicur').addEventListener('input',()=>{
+  const v=parseInt(document.getElementById('kicur').value)||0;
+  state.kiCur=Math.max(0,Math.min(state.lvlMng,v));
+  document.getElementById('kicur').value=state.kiCur;
+  updateKiBar();buildKiPips();saveSheet();
+});
+
+function buildAttrs(){
+  const g=document.getElementById('attrGrid');g.innerHTML='';
+  ATTRS.forEach(([k,label])=>{
+    const d=document.createElement('div');d.className='attr';
+    d.innerHTML=`<div class="lbl">${label}</div><input class="score" type="number" id="sc_${k}" value="${state.scores[k]}" min="1" max="30"><div class="mod" id="mod_${k}">${fmt(mod(state.scores[k]))}</div>`;
+    d.querySelector('input').addEventListener('input',e=>{state.scores[k]=parseInt(e.target.value)||10;recalc();saveSheet();});
+    g.appendChild(d);
+  });
+}
+
+function buildSaves(){
+  const c=document.getElementById('savesList');c.innerHTML='';
+  ATTRS.forEach(([k,label])=>{
+    const pb=profBonus(state.lvlMng),m=mod(state.scores[k]),tot=m+(state.saveProf[k]?pb:0);
+    const r=document.createElement('div');
+    r.className='statline skill-row'+(state.saveProf[k]?' prof':'');r.id='saverow_'+k;
+    r.innerHTML=`<span class="k"><span class="dot"></span>${label}</span><span class="v" id="save_${k}">${fmt(tot)}</span>`;
+    r.addEventListener('click',()=>{state.saveProf[k]=!state.saveProf[k];recalc();saveSheet();});
+    c.appendChild(r);
+  });
+}
+
+function buildSkills(){
+  const c=document.getElementById('skillsList');c.innerHTML='';
+  const pb=profBonus(state.lvlMng);
+  SKILLS.forEach(([name,ab])=>{
+    const lv=state.skillProf[name]||0,m=mod(state.scores[ab]),tot=m+(lv===1?pb:lv===2?pb*2:0);
+    const r=document.createElement('div');
+    r.className='statline skill-row'+(lv===1?' prof':lv===2?' expert':'');r.id='skr_'+cssId(name);
+    r.innerHTML=`<span class="k"><span class="dot"></span>${name} <small style="color:var(--ash-dim)">(${ab})</small></span><span class="v" id="skv_${cssId(name)}">${fmt(tot)}</span>`;
+    r.addEventListener('click',()=>{const cur=(state.skillProf[name]||0);state.skillProf[name]=(cur+1)%3;recalc();saveSheet();});
+    c.appendChild(r);
+  });
+}
+
+function buildDeath(){
+  ['deathS','deathF'].forEach(id=>{
+    const c=document.getElementById(id);c.innerHTML='';
+    for(let i=0;i<3;i++){
+      const p=document.createElement('div');
+      const type=id==='deathS'?'succ':'fail';
+      const on=id==='deathS'?i<state.deathS:i<state.deathF;
+      p.className='pip'+(on?' on '+type:'');
+      p.addEventListener('click',()=>{
+        if(id==='deathS')state.deathS=(state.deathS===i+1?i:i+1);
+        else state.deathF=(state.deathF===i+1?i:i+1);
+        buildDeath();saveSheet();
+      });
+      c.appendChild(p);
+    }
+  });
+}
+
+// entries
+function makeEntry(t,tag,d){
+  const e=document.createElement('div');e.className='entry';
+  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${esc(t)}</span><span class="tag edit" contenteditable="true">${esc(tag)}</span></div><div class="desc edit" contenteditable="true" data-empty="Descrição...">${esc(d)}</div><button class="del" onclick="this.closest('.entry').remove();saveSheet();">✕</button>`;
+  return e;
+}
+function addEntry(id,t,tag,d){const l=document.getElementById(id);l.appendChild(makeEntry(t,tag,d));l.lastChild.querySelector('.edit').focus();saveSheet();}
+
+// ataques
+function makeAttack(nm,bon,dmg){
+  const r=document.createElement('div');r.className='atk-row';
+  r.innerHTML=`<input class="nm" value="${esc(nm)}" placeholder="Golpe Desarmado"><input value="${esc(bon)}" placeholder="+8"><input value="${esc(dmg)}" placeholder="1d6+5"><button class="del" onclick="this.closest('.atk-row').remove();saveSheet();">✕</button>`;
+  r.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>saveSheet()));
+  return r;
+}
+function addAttack(){document.getElementById('atkList').appendChild(makeAttack('','',''));saveSheet();}
+
+// combos
+function makeCombo(nm,seq,total,ki,cost){
+  const c=document.createElement('div');c.className='combo'+(ki?' ki':'');
+  const costHtml=cost?`<span class="cost">${esc(cost)}</span>`:'';
+  c.innerHTML=`<div class="cname"><span class="edit" contenteditable="true" data-empty="Nome do combo">${esc(nm)}</span>${costHtml}</div><div class="cseq edit" contenteditable="true" data-empty="Sequência de ações...">${esc(seq)}</div><div class="ctotal edit" contenteditable="true" data-empty="Total de dano...">${esc(total||'')}</div><button class="del" style="position:absolute;top:8px;right:8px;background:transparent;border:none;color:var(--ash-dim);cursor:pointer;opacity:0;font-size:.88rem;transition:.15s" onclick="this.closest('.combo').remove();saveSheet();">✕</button>`;
+  c.addEventListener('mouseover',()=>c.querySelector('.del').style.opacity='1');
+  c.addEventListener('mouseout',()=>c.querySelector('.del').style.opacity='0');
+  return c;
+}
+function addCombo(){document.getElementById('comboList').appendChild(makeCombo('Novo Combo','','',false,''));saveSheet();}
+
+// chips
+function addChip(id,placeholder){
+  const c=document.getElementById(id);
+  const s=document.createElement('span');s.className='chip';
+  s.innerHTML=`<span class="edit" contenteditable="true">${placeholder}</span><button class="del" onclick="this.parentElement.remove();saveSheet();">✕</button>`;
+  c.appendChild(s);s.querySelector('.edit').focus();saveSheet();
+}
+
+// TALENTOS
+const FEATS_DEFAULT=[
+  ['Mobilidade','Talento','Deslocamento +1,5m. Correr não provoca terreno difícil. Quando ataca uma criatura corpo a corpo no turno, você não provoca ataques de oportunidade dela até o fim do turno.'],
+];
+
+function makeFeat(name,src,desc,expanded){
+  const item=document.createElement('div');
+  item.className='feat-item'+(expanded?' open':'');
+  item.innerHTML=`<div class="feat-header"><button class="feat-toggle" onclick="toggleFeat(this)" title="Expandir/recolher">▶</button><span class="feat-name" contenteditable="true" data-empty="Nome do talento">${esc(name)}</span><span class="feat-src" contenteditable="true" data-empty="Fonte">${esc(src)}</span></div><div class="feat-body" contenteditable="true" data-empty="Descreva o que este talento concede...">${esc(desc)}</div><button class="feat-del" onclick="this.closest('.feat-item').remove();saveSheet();" title="Remover">✕</button>`;
+  return item;
+}
+function toggleFeat(btn){btn.closest('.feat-item').classList.toggle('open');}
+function addFeat(){const l=document.getElementById('featList');const item=makeFeat('Novo Talento','','',true);l.appendChild(item);item.querySelector('.feat-name').focus();saveSheet();}
+function seedFeats(){const l=document.getElementById('featList');if(!l||l.children.length>0)return;FEATS_DEFAULT.forEach(f=>l.appendChild(makeFeat(...f)));}
+
+// SEED DEFAULTS
+function seedDefaults(){
+  // Traços Leonin
+  addEntry('raceList','Garras','Leonin','Ataque desarmado com garras: 1d4 + For (ou 1d6 pelo dado marcial no nv 5).');
+  addEntry('raceList','Rugido Duplo','Leonin','Como ação bônus, todas as criaturas à sua escolha em 3m devem passar num teste de Sabedoria (CD = 8 + prof + CON) ou ficam amedrontadas até o fim do seu próximo turno.');
+  addEntry('raceList','Instintos Aguçados','Leonin','Proficiência em Percepção.');
+  addEntry('raceList','Bravura','Leonin','Vantagem em testes de resistência contra a condição amedrontado.');
+  // Equipamento
+  addEntry('invList','Vestes de Monge','Item','Sem armadura (necessário para Defesa sem Armadura e velocidade extra).');
+  addEntry('invList','Garras (naturais)','Arma Natural','1d6 + 5 (nv 5). Ataque corpo a corpo com Des.');
+  addEntry('invList','Kit de Eremita','Antecedente','Rolo de pergaminho com anotações filosóficas, cobertor de lã, roupas comuns, kit de herbalismo, 5 po.');
+  addEntry('invList','Dardos ×10','Arma Simples','1d4 + Des. Alcance 6/18 m (arremesso).');
+  // Habilidades de Monge
+  addEntry('classList','Defesa sem Armadura','Nível 1','Sem armadura ou escudo, CA = 10 + Des + Sab.');
+  addEntry('classList','Artes Marciais','Nível 1','Pode usar Des em vez de For em ataques desarmados e armas monásticas. Dado marcial no nv 5: 1d6. Como ação bônus após ataque desarmado, um ataque desarmado extra.');
+  addEntry('classList','Ki','Nível 2','Total = nível de Monge (5 no momento). Recupera em descanso curto. CD = 8 + prof + Sab.');
+  addEntry('classList','Movimento sem Armadura','Nível 2','+3m de deslocamento enquanto não usa armadura ou escudo.');
+  addEntry('classList','Rajada de Golpes','Nível 2','Gasta 1 Ki após ação de Atacar para fazer 2 ataques desarmados como ação bônus.');
+  addEntry('classList','Defesa Paciente','Nível 2','Gasta 1 Ki para usar Esquivar como ação bônus.');
+  addEntry('classList','Passo do Vento','Nível 2','Gasta 1 Ki para Disparada ou Recuar como ação bônus. Deslocamento dobrado até o fim do turno.');
+  addEntry('classList','Defletir Projéteis','Nível 3','Reação: reduz dano de ataque à distância em 1d10 + Des + nível de Monge. Se reduzir a 0, pode devolver como arma monástica (custa 1 Ki, ataque com Des+prof).');
+  addEntry('classList','Queda Lenta','Nível 4','Reação: reduz dano de queda em (nível × 5) = 25.');
+  addEntry('classList','Ataque Extra','Nível 5','Pode atacar duas vezes com a ação Atacar.');
+  addEntry('classList','Ataque Atordoante','Nível 5','1 Ki ao acertar corpo a corpo: alvo faz save CON (CD = 8 + prof + Sab). Falha = atordoado até o fim do próximo turno seu.');
+  // Caminho da Misericórdia
+  addEntry('pathList','Implementos da Misericórdia','Nível 3','Proficiência em kit de herbalismo e Medicina. Ganha uma máscara de misericordioso (pode conjurar Detectar Mortos-Vivos, etc — consulte manual).');
+  addEntry('pathList','Mão do Curador','Nível 3','Ação: gasta 1 Ki para cura por toque = 1d6 + nível de Monge (1d6 + 5) PVs.');
+  addEntry('pathList','Mão do Ferimento','Nível 3','Ação bônus após ataque desarmado: gasta 1 Ki para causar 2d6 dano necrótico extra + alvo não pode recuperar PV até o início do seu próximo turno.');
+  // Talentos base
+  document.getElementById('atkList').appendChild(makeAttack('Golpe Desarmado / Garras','+8','1d6+5 contundente'));
+  document.getElementById('atkList').appendChild(makeAttack('Dardo','+8','1d4+5 perfurante · 6/18m'));
+  // Combos
+  document.getElementById('comboList').appendChild(makeCombo(
+    'Turno sem Ki',
+    '1 Ataque (ação) + 1 Ataque Extra + 1 Ataque desarmado (ação bônus, Artes Marciais). 3 ataques a +8.',
+    'Dano máximo: 3d6 + 15',
+    false,'0 Ki'
+  ));
+  document.getElementById('comboList').appendChild(makeCombo(
+    'Turno com Rajada de Golpes',
+    'Ação Atacar (1) + Ataque Extra (2) + Rajada de Golpes como ação bônus (3 e 4). 4 ataques a +8.',
+    'Dano máximo: 4d6 + 20',
+    true,'1 Ki'
+  ));
+  document.getElementById('comboList').appendChild(makeCombo(
+    'Turno Máximo (Rajada + Ferimento)',
+    'Ataque + Ataque Extra + Rajada de Golpes (2 ataques) + Mão do Ferimento após um golpe (2d6 necrótico + veta cura). 4 ataques + Mão do Ferimento.',
+    'Dano máximo: 4d6 + 20 + 2d6 necrótico = 6d6 + 20',
+    true,'2 Ki'
+  ));
+  // seed spent ki count = 0
+  state.kiCur=state.lvlMng;
+  document.getElementById('kicur').value=state.kiCur;
+}
+
+// ─── SUPABASE CONFIG ────────────────────────────────────────
+const SB_URL  = 'https://tvxxkvoamgxblaehnlhf.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2eHhrdm9hbWd4YmxhZWhubGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODg5MTEsImV4cCI6MjA5NTk2NDkxMX0.hDEj28pF_4B8B6asQlfEuPcuVy-2u9dXlJrKlOw6API';
+const SHEET_ID = 'kael-thas-leonin';
+
+function serial(id){return [...document.getElementById(id).children].map(e=>({t:e.querySelector('.title .edit')?.innerHTML||e.querySelector('.cname .edit')?.innerHTML||'',tag:e.querySelector('.tag')?.innerHTML||'',d:e.querySelector('.desc')?.innerHTML||''}));}
+
+function collect(){
+  return {state,
+    name:document.querySelector('h1.name .edit').innerHTML,
+    sub:[...document.querySelectorAll('.subtitle .edit')].map(e=>e.innerHTML),
+    ident:[...document.querySelectorAll('#v-base .panel:first-child .statline .v.edit')].map(e=>e.innerHTML),
+    appear:[...document.querySelectorAll('#v-base .panel:nth-child(2) .statline .v.edit')].map(e=>e.innerHTML),
+    speed:document.getElementById('speedInput').textContent,
+    xp:document.getElementById('xp').value,insp:document.getElementById('insp').value,
+    hpcur:document.getElementById('hpcur').value,hptmp:document.getElementById('hptmp').value,
+    kicur:document.getElementById('kicur').value,
+    atks:[...document.querySelectorAll('#atkList .atk-row')].map(r=>[...r.querySelectorAll('input')].map(i=>i.value)),
+    combos:[...document.querySelectorAll('#comboList .combo')].map(c=>({
+      nm:c.querySelector('.cname .edit')?.innerHTML||'',
+      seq:c.querySelector('.cseq')?.innerHTML||'',
+      tot:c.querySelector('.ctotal')?.innerHTML||'',
+      ki:c.classList.contains('ki'),
+      cost:c.querySelector('.cname .cost')?.innerHTML||''
+    })),
+    classL:serial('classList'),pathL:serial('pathList'),race_:serial('raceList'),inv:serial('invList'),
+    langs:[...document.querySelectorAll('#langChips .edit')].map(e=>e.innerHTML),
+    notes:document.querySelector('#v-base .panel:last-child .desc.edit')?.innerHTML||'',
+    personality:[...document.querySelectorAll('#v-pericias .desc.edit')].map(e=>e.innerHTML),
+    feats:[...document.querySelectorAll('#featList .feat-item')].map(item=>({
+      n:item.querySelector('.feat-name')?.innerHTML||'',
+      s:item.querySelector('.feat-src')?.innerHTML||'',
+      d:item.querySelector('.feat-body')?.innerHTML||'',
+      open:item.classList.contains('open')
+    }))
+  };
+}
+
+function applyData(d){
+  if(!d)return false;
+  state=Object.assign(state,d.state||{});
+  document.getElementById('lvlMng').value=state.lvlMng;
+  buildAttrs();buildSaves();buildSkills();buildDeath();
+  if(d.name)document.querySelector('h1.name .edit').innerHTML=d.name;
+  if(d.sub){const s=document.querySelectorAll('.subtitle .edit');d.sub.forEach((v,i)=>{if(s[i])s[i].innerHTML=v;});}
+  if(d.ident){const ed=document.querySelectorAll('#v-base .panel:first-child .statline .v.edit');d.ident.forEach((v,i)=>{if(ed[i])ed[i].innerHTML=v;});}
+  if(d.appear){const ed=document.querySelectorAll('#v-base .panel:nth-child(2) .statline .v.edit');d.appear.forEach((v,i)=>{if(ed[i])ed[i].innerHTML=v;});}
+  if(d.speed)document.getElementById('speedInput').textContent=d.speed;
+  if(d.xp)document.getElementById('xp').value=d.xp;
+  if(d.insp)document.getElementById('insp').value=d.insp;
+  if(d.hptmp)document.getElementById('hptmp').value=d.hptmp;
+  if(d.kicur){document.getElementById('kicur').value=d.kicur;state.kiCur=parseInt(d.kicur)||state.lvlMng;}
+  document.getElementById('atkList').innerHTML='';
+  (d.atks||[]).forEach(a=>document.getElementById('atkList').appendChild(makeAttack(...a)));
+  document.getElementById('comboList').innerHTML='';
+  (d.combos||[]).forEach(c=>document.getElementById('comboList').appendChild(makeCombo(c.nm,c.seq,c.tot,c.ki,c.cost)));
+  function rebuild(id,arr,fn){if(!arr)return;const c=document.getElementById(id);c.innerHTML='';arr.forEach(o=>c.appendChild(fn(o)));}
+  rebuild('classList',d.classL,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('pathList',d.pathL,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('raceList',d.race_,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('invList',d.inv,o=>makeEntry(o.t,o.tag,o.d));
+  if(d.langs){const c=document.getElementById('langChips');c.innerHTML='';d.langs.forEach(l=>{const s=document.createElement('span');s.className='chip';s.innerHTML=`<span class="edit" contenteditable="true">${l}</span><button class="del" onclick="this.parentElement.remove();saveSheet();">✕</button>`;c.appendChild(s);});}
+  if(d.feats){const fl=document.getElementById('featList');fl.innerHTML='';d.feats.forEach(f=>fl.appendChild(makeFeat(f.n,f.s,f.d,f.open)));}
+  if(d.notes){const n=document.querySelector('#v-base .panel:last-child .desc.edit');if(n)n.innerHTML=d.notes;}
+  if(d.personality){const ps=document.querySelectorAll('#v-pericias .desc.edit');d.personality.forEach((v,i)=>{if(ps[i])ps[i].innerHTML=v;});}
+  if(d.hpcur){document.getElementById('hpcur').value=d.hpcur;document.getElementById('hpcur').dataset.synced='1';}
+  setBg(d.state?.bg||DEFAULT_BG);
+  return true;
+}
+
+// SAVE / LOAD
+let _saveTimer=null;
+function saveSheet(immediate=false){
+  const data=collect();
+  try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+  if(immediate){_push(data);return;}
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(()=>_push(data),1200);
+}
+async function _push(data){
+  flash('Salvando…',false);
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/character_sheets`,{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({sheet_id:SHEET_ID,data,updated_at:new Date().toISOString()})
+    });
+    if(!res.ok)throw new Error(await res.text());
+    flash('Salvo ✓');
+  }catch(e){flash('⚠ Erro ao salvar');console.error('[SB]',e.message||e);}
+}
+async function loadSheet(){
+  try{
+    const rows=await (await fetch(`${SB_URL}/rest/v1/character_sheets?sheet_id=eq.${SHEET_ID}&select=data&limit=1`,{headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}})).json();
+    if(rows&&rows.length>0&&rows[0].data){applyData(rows[0].data);try{localStorage.setItem(KEY,JSON.stringify(rows[0].data));}catch(e){}return true;}
+  }catch(e){console.warn('SB offline, usando localStorage');}
+  try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d){applyData(d);return true;}}catch(e){}
+  return false;
+}
+function resetSheet(){if(confirm('Restaurar a ficha original?')){localStorage.removeItem(KEY);fetch(`${SB_URL}/rest/v1/character_sheets?sheet_id=eq.${SHEET_ID}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}}).catch(()=>{});location.reload();}}
+function flash(m,fade=true){const x=document.getElementById('savedmsg');x.textContent=m;if(fade)setTimeout(()=>x.textContent='',2500);}
+
+document.getElementById('lvlMng').addEventListener('input',e=>{state.lvlMng=parseInt(e.target.value)||0;recalc();});
+document.addEventListener('blur',e=>{if(e.target.closest&&e.target.closest('.sheet'))saveSheet();},true);
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveSheet(true);}});
+
+(async()=>{
+  buildAttrs();buildSaves();buildSkills();buildDeath();
+  const loaded=await loadSheet();
+  if(!loaded){seedDefaults();setBg(DEFAULT_BG);}
+  seedFeats();
+  recalc();
+})();
+</script>
+</body>
+</html>
