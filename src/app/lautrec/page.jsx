@@ -239,7 +239,7 @@ const htmlContent = `
 
 </div>
 
-  <div class="view" id="v-lore" style="display:none">
+  <div class="view" id="v-lore">
     <div class="grid1">
       <div class="panel" style="grid-column: 1 / -1;">
         <h2>Mundo & Cidades</h2>
