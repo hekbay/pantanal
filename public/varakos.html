@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varakos (Kos) — Ficha</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English:ital@0;1&family=Cinzel:wght@400;600;700&display=swap');
+
+  :root{
+    --void:#060a07; --stone:#0d130e; --panel:#111a12; --panel-hi:#172019;
+    --venom:#4a9e6b; --venom-dim:#2a5c3e; --venom-bright:#7fd4a0;
+    --venom-glow:rgba(74,158,107,0.18);
+    --scale:#1a2b1c; --scale-hi:#223624;
+    --ash:#b8cbb9; --ash-dim:#607a63;
+    --blood:#6e1a1a; --blood-bright:#c0422f;
+    --line:#1e3020; --amber:#c88c2a;
+    --serpent:#8fba6a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--void); color:var(--ash);
+    font-family:'IM Fell English',serif;
+    min-height:100vh; padding:32px 18px 110px;
+    position:relative; -webkit-font-smoothing:antialiased;
+  }
+
+  /* fundo — escamas */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      repeating-linear-gradient(60deg, transparent 0px, transparent 11px, rgba(74,158,107,0.04) 11px, rgba(74,158,107,0.04) 12px),
+      repeating-linear-gradient(-60deg, transparent 0px, transparent 11px, rgba(74,158,107,0.04) 11px, rgba(74,158,107,0.04) 12px);
+  }
+  .bg-art{position:fixed;inset:0;z-index:0;background-image:var(--bg-art-url);background-size:cover;background-position:center 20%;background-attachment:fixed;}
+  .bg-art::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(180deg,rgba(6,10,7,0.78),rgba(6,10,7,0.88) 45%,rgba(6,10,7,0.94)),
+    radial-gradient(ellipse at 50% 28%,rgba(6,10,7,0.2),rgba(6,10,7,0.85) 72%);}
+  body::after{content:"";position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,0.02) 3px 4px);pointer-events:none;z-index:1;mix-blend-mode:overlay;}
+  .vignette{position:fixed;inset:0;box-shadow:inset 0 0 280px 90px rgba(0,0,0,0.9);pointer-events:none;z-index:2;}
+  .sheet{max-width:1180px;margin:0 auto;position:relative;z-index:3;}
+
+  /* cabeçalho */
+  .crest{text-align:center;margin-bottom:6px;}
+  .crest .sigil{color:var(--venom-dim);letter-spacing:0.6em;font-size:0.65rem;text-transform:uppercase;font-family:'Cinzel',serif;}
+  h1.name{
+    font-family:'Uncial Antiqua',serif;
+    font-size:clamp(2rem,5.5vw,3.4rem);
+    text-align:center;color:var(--venom-bright);
+    letter-spacing:0.06em;
+    text-shadow:0 0 40px rgba(74,158,107,0.35), 0 2px 0 #000;
+    line-height:1.1;
+  }
+  .subtitle{
+    text-align:center;font-family:'Cinzel',serif;font-weight:600;
+    color:var(--venom);letter-spacing:0.18em;font-size:0.8rem;
+    text-transform:uppercase;margin-top:8px;
+  }
+  .subtitle .sep{color:var(--ash-dim);margin:0 8px;}
+
+  /* serpent divider */
+  .divider{text-align:center;color:var(--venom-dim);font-size:0.7rem;letter-spacing:0.5em;margin:6px 0;opacity:0.6;}
+
+  .bg-controls{display:flex;justify-content:center;gap:10px;margin:14px 0 0;}
+  .bg-controls button{font-family:'Cinzel',serif;background:rgba(13,19,14,0.7);border:1px solid var(--venom-dim);color:var(--venom);padding:5px 14px;font-size:0.64rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all .18s;backdrop-filter:blur(3px);}
+  .bg-controls button:hover{background:var(--venom-dim);color:var(--void);}
+
+  /* TABS */
+  .tabs{display:flex;justify-content:center;gap:6px;margin:22px 0 20px;flex-wrap:wrap;}
+  .tab{
+    font-family:'Cinzel',serif;font-weight:600;font-size:0.8rem;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ash-dim);background:rgba(13,19,14,0.8);
+    border:1px solid var(--line);padding:11px 26px;cursor:pointer;transition:all .2s;
+    backdrop-filter:blur(3px);position:relative;
+  }
+  .tab::after{content:"";position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:0;height:2px;background:var(--venom);transition:width .2s;}
+  .tab:hover{color:var(--venom);border-color:var(--venom-dim);}
+  .tab:hover::after{width:60%;}
+  .tab.active{color:var(--void);background:var(--venom);border-color:var(--venom);box-shadow:0 0 20px rgba(74,158,107,0.25);}
+  .tab.active::after{display:none;}
+
+  .view{display:none;}
+  .view.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .grid2{display:grid;grid-template-columns:1fr 1.5fr;gap:18px;}
+  .grid1{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr;}}
+  .col-stack{display:flex;flex-direction:column;gap:18px;}
+
+  /* PANEL */
+  .panel{
+    background:linear-gradient(160deg,rgba(23,32,25,0.95),rgba(17,26,18,0.97));
+    border:1px solid var(--line);border-radius:1px;padding:20px;position:relative;
+    backdrop-filter:blur(4px);
+    box-shadow:inset 0 1px 0 rgba(74,158,107,0.07),0 8px 28px rgba(0,0,0,0.7);
+  }
+  .panel::before{content:"";position:absolute;inset:5px;border:1px solid rgba(74,158,107,0.06);pointer-events:none;}
+  /* corner accent */
+  .panel::after{content:"";position:absolute;top:0;left:0;width:16px;height:16px;border-top:2px solid var(--venom-dim);border-left:2px solid var(--venom-dim);pointer-events:none;}
+
+  .panel h2{
+    font-family:'Cinzel',serif;font-weight:700;font-size:0.86rem;color:var(--venom);
+    text-transform:uppercase;letter-spacing:0.18em;margin-bottom:16px;
+    padding-bottom:9px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:9px;
+  }
+  .panel h2::before{content:"⬡";color:var(--venom-dim);font-size:0.58rem;}
+  .panel h2 .addbtn{
+    margin-left:auto;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.1em;
+    background:transparent;border:1px solid var(--venom-dim);color:var(--venom);
+    padding:4px 9px;cursor:pointer;text-transform:uppercase;transition:all .15s;
+  }
+  .panel h2 .addbtn:hover{background:var(--venom-dim);color:var(--void);}
+
+  /* stat lines */
+  .statline{display:flex;justify-content:space-between;align-items:baseline;padding:7px 4px;border-bottom:1px dotted var(--line);}
+  .statline:last-child{border-bottom:none;}
+  .statline .k{font-family:'Cinzel',serif;letter-spacing:0.06em;color:var(--ash-dim);font-size:0.78rem;text-transform:uppercase;}
+  .statline .v{font-family:'IM Fell English',serif;color:var(--venom);font-weight:400;font-size:0.98rem;}
+  .statline .v.auto{color:var(--venom-bright);}
+  .statline input.inl{width:70px;background:transparent;border:none;border-bottom:1px solid var(--line);text-align:right;color:var(--venom-bright);font-family:'IM Fell English',serif;font-size:0.95rem;outline:none;}
+  .statline input.inl:focus{border-bottom-color:var(--venom-dim);}
+
+  /* attrs */
+  .attrs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .attr{
+    background:var(--stone);border:1px solid var(--line);text-align:center;
+    padding:12px 4px 10px;position:relative;
+  }
+  .attr::after{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40%;height:1px;background:var(--venom-dim);}
+  .attr .lbl{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.14em;color:var(--ash-dim);text-transform:uppercase;}
+  .attr input.score{width:100%;background:transparent;border:none;text-align:center;font-family:'Uncial Antiqua',serif;font-size:1.6rem;color:var(--venom-bright);outline:none;margin:2px 0;}
+  .attr .mod{font-size:0.82rem;color:var(--ash-dim);font-style:italic;background:var(--void);border:1px solid var(--line);display:inline-block;padding:1px 10px;}
+
+  /* skills */
+  .skill-row{cursor:pointer;user-select:none;}
+  .skill-row .dot{display:inline-block;width:9px;height:9px;border:1px solid var(--venom-dim);transform:rotate(45deg);margin-right:8px;vertical-align:middle;transition:all .15s;}
+  .skill-row.prof .dot{background:var(--venom);box-shadow:0 0 6px rgba(74,158,107,0.5);}
+  .skill-row.expert .dot{background:var(--serpent);border-color:var(--serpent);box-shadow:0 0 8px rgba(143,186,106,0.6);}
+
+  /* HP */
+  .hp-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .hp-top .lbl{font-family:'Cinzel',serif;letter-spacing:0.1em;text-transform:uppercase;color:var(--blood-bright);font-size:0.72rem;}
+  .hp-nums{font-family:'IM Fell English',serif;color:var(--ash);}
+  .hp-nums input{width:50px;background:transparent;border:none;text-align:center;font-family:'Uncial Antiqua',serif;color:var(--venom-bright);font-size:1.05rem;outline:none;}
+  .hp-nums .mx{color:var(--venom);}
+  .hp-bar{height:12px;background:#080d08;border:1px solid var(--blood);position:relative;overflow:hidden;}
+  .hp-fill{position:absolute;inset:0;background:linear-gradient(180deg,#c0432f,#6e1a1a);box-shadow:0 0 10px rgba(192,67,47,0.5) inset;transition:width .4s ease;}
+  .hp-note{font-size:0.72rem;color:var(--ash-dim);font-style:italic;margin-top:6px;}
+
+  /* pact pool */
+  .pool-bar{height:12px;background:#060a07;border:1px solid var(--venom-dim);position:relative;overflow:hidden;margin-top:5px;}
+  .pool-fill{position:absolute;inset:0;background:linear-gradient(180deg,var(--venom),var(--venom-dim));transition:width .4s ease;}
+
+  /* death */
+  .deathbox{display:flex;gap:24px;}
+  .deathcol{flex:1;}
+  .deathcol .lbl{font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ash-dim);margin-bottom:7px;}
+  .pips{display:flex;gap:8px;}
+  .pip{width:18px;height:18px;border:1px solid var(--ash-dim);border-radius:50%;cursor:pointer;transition:all .15s;}
+  .pip.on.succ{background:var(--venom);border-color:var(--venom);box-shadow:0 0 7px rgba(74,158,107,0.6);}
+  .pip.on.fail{background:var(--blood-bright);border-color:var(--blood-bright);box-shadow:0 0 7px rgba(192,67,47,0.6);}
+
+  /* entries */
+  .entry{padding:11px 0;border-bottom:1px solid var(--line);position:relative;}
+  .entry:last-child{border-bottom:none;}
+  .entry .title{font-family:'Cinzel',serif;color:var(--venom);font-size:0.9rem;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .entry .title .tag{font-family:'IM Fell English',serif;font-size:0.64rem;color:var(--void);background:var(--venom-dim);padding:1px 7px;letter-spacing:0.04em;text-transform:uppercase;font-style:normal;}
+  .entry .desc{font-size:0.89rem;line-height:1.55;color:var(--ash);}
+  .entry .del{position:absolute;top:9px;right:0;background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.88rem;opacity:0;transition:opacity .15s;padding:2px 6px;}
+  .entry:hover .del{opacity:1;}
+  .entry .del:hover{color:var(--blood-bright);}
+
+  /* ataques */
+  .atk-row{display:grid;grid-template-columns:1.5fr 0.7fr 1.1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--line);}
+  .atk-head{color:var(--ash-dim);font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:0.1em;font-size:0.66rem;border-bottom:1px solid var(--line);padding-bottom:6px;}
+  .atk-row input{background:transparent;border:none;color:var(--ash);font-family:'IM Fell English',serif;font-size:0.89rem;width:100%;outline:none;border-bottom:1px solid transparent;padding:2px 0;}
+  .atk-row input.nm{color:var(--venom);font-family:'Cinzel',serif;font-size:0.84rem;}
+  .atk-row input:focus{border-bottom:1px solid var(--venom-dim);}
+  .atk-row .del{background:transparent;border:none;color:var(--ash-dim);cursor:pointer;opacity:0;transition:.15s;}
+  .atk-row:hover .del{opacity:1;}
+  .atk-row .del:hover{color:var(--blood-bright);}
+
+  /* combos */
+  .combo{background:var(--stone);border:1px solid var(--line);border-left:3px solid var(--venom-dim);padding:12px 14px;margin-bottom:10px;}
+  .combo .cname{font-family:'Cinzel',serif;color:var(--venom);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
+  .combo .cseq{font-size:0.95rem;color:var(--ash);line-height:1.5;}
+  .combo .cname[contenteditable],.combo .cseq[contenteditable]{outline:none;}
+
+  /* spell */
+  .spelltier{font-family:'Cinzel',serif;color:var(--serpent);letter-spacing:0.14em;font-size:0.72rem;text-transform:uppercase;margin:16px 0 4px;padding-bottom:4px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  .spelltier:first-of-type{margin-top:0;}
+  .spelltier .slots{color:var(--ash-dim);font-family:'IM Fell English',serif;letter-spacing:0.04em;}
+  .spell-warn{background:rgba(110,26,26,0.3);border:1px solid var(--blood);color:var(--blood-bright);font-size:0.8rem;padding:9px 13px;margin:8px 0;font-style:italic;display:none;}
+  .spell-warn.show{display:block;}
+
+  /* summary */
+  .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+  .sumcard{background:var(--stone);border:1px solid var(--line);text-align:center;padding:14px 6px;position:relative;}
+  .sumcard::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--venom-dim);}
+  .sumcard .l{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.12em;color:var(--ash-dim);text-transform:uppercase;}
+  .sumcard .v{font-family:'Uncial Antiqua',serif;font-size:1.6rem;color:var(--venom-bright);margin-top:3px;}
+  .sumcard.hp .v{color:var(--blood-bright);}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:var(--stone);border:1px solid var(--line);padding:6px 11px;font-size:0.84rem;color:var(--ash);display:flex;align-items:center;gap:6px;}
+  .chip .del{background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.78rem;}
+  .chip .del:hover{color:var(--blood-bright);}
+
+  /* edit */
+  .edit{outline:none;transition:background .15s,box-shadow .15s;cursor:text;border-radius:1px;}
+  .edit:hover{background:rgba(74,158,107,0.06);}
+  .edit:focus{background:rgba(74,158,107,0.1);box-shadow:0 0 0 1px var(--venom-dim);}
+  [data-empty]:empty::before{content:attr(data-empty);color:var(--ash-dim);font-style:italic;opacity:0.5;}
+
+  /* TALENTOS */
+  .feat-item{border-bottom:1px solid var(--line);position:relative;}
+  .feat-item:last-child{border-bottom:none;}
+  .feat-header{display:flex;align-items:center;gap:10px;padding:11px 4px;padding-right:28px;}
+  .feat-toggle{background:transparent;border:none;cursor:pointer;color:var(--venom-dim);font-size:0.7rem;transition:transform .22s ease;flex-shrink:0;padding:0;line-height:1;}
+  .feat-item.open .feat-toggle{transform:rotate(90deg);}
+  .feat-name{font-family:'Cinzel',serif;font-size:0.88rem;font-weight:600;color:var(--venom);outline:none;flex:1;min-width:0;border-radius:1px;}
+  .feat-name:hover{background:rgba(74,158,107,0.06);}
+  .feat-name:focus{background:rgba(74,158,107,0.1);box-shadow:0 0 0 1px var(--venom-dim);}
+  .feat-src{font-family:'IM Fell English',serif;font-size:0.64rem;color:var(--void);background:var(--venom-dim);padding:1px 7px;letter-spacing:0.04em;text-transform:uppercase;font-style:normal;flex-shrink:0;outline:none;cursor:text;border-radius:1px;}
+  .feat-src:focus{background:var(--venom);color:var(--void);}
+  .feat-body{display:none;padding:0 4px 12px 22px;font-size:0.88rem;line-height:1.55;color:var(--ash);border-left:2px solid var(--venom-dim);margin-left:8px;outline:none;border-radius:1px;}
+  .feat-body[data-empty]:empty::before{content:attr(data-empty);color:var(--ash-dim);font-style:italic;opacity:0.5;}
+  .feat-body:hover{background:rgba(74,158,107,0.03);}
+  .feat-body:focus{background:rgba(74,158,107,0.07);}
+  .feat-item.open .feat-body{display:block;animation:fade .18s ease;}
+  .feat-del{position:absolute;top:9px;right:2px;background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.88rem;opacity:0;transition:opacity .15s;padding:2px 6px;}
+  .feat-item:hover .feat-del{opacity:1;}
+  .feat-del:hover{color:var(--blood-bright)!important;}
+
+  /* TOOLBAR */
+  .toolbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:10px;background:rgba(10,15,11,0.95);border:1px solid var(--venom-dim);padding:10px 14px;backdrop-filter:blur(8px);box-shadow:0 8px 32px rgba(0,0,0,0.8),0 0 0 1px rgba(74,158,107,0.05);}
+  .toolbar button{font-family:'Cinzel',serif;background:transparent;border:1px solid var(--venom-dim);color:var(--venom);padding:7px 16px;letter-spacing:0.1em;text-transform:uppercase;font-size:0.7rem;cursor:pointer;transition:all .2s;}
+  .toolbar button:hover{background:var(--venom-dim);color:var(--void);}
+  .toolbar .saved{color:var(--ash-dim);font-size:0.7rem;align-self:center;font-style:italic;min-width:80px;}
+  .hint{text-align:center;color:var(--ash-dim);font-style:italic;font-size:0.8rem;margin:10px 0 0;opacity:0.6;}
+  .footnote{text-align:center;margin-top:28px;color:var(--ash-dim);font-family:'Cinzel',serif;letter-spacing:0.2em;font-size:0.65rem;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="bg-art" id="bgArt"></div>
+<div class="vignette"></div>
+
+<div class="sheet">
+
+  <div class="crest"><span class="sigil">⬡ Patrono das Sombras ⬡</span></div>
+  <h1 class="name"><span class="edit" contenteditable="true">Varakos (Kos)</span></h1>
+  <div class="subtitle">
+    <span class="edit" contenteditable="true">Bruxo · Corruptor 5</span>
+    <span class="sep">·</span>
+    <span class="edit" contenteditable="true">Yuan-Ti · Viajante Distante</span>
+  </div>
+  <div class="divider">— ⬡ —</div>
+
+  <div class="bg-controls">
+    <button onclick="document.getElementById('bgInput').click()">Trocar fundo</button>
+    <button onclick="restoreDefaultBg()">Restaurar arte</button>
+    <input type="file" id="bgInput" accept="image/*" style="display:none">
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-v="base">Ficha Base</div>
+    <div class="tab" data-v="classe">Pacto & Classe</div>
+    <div class="tab" data-v="combate">Combate</div>
+    <div class="tab" data-v="magia">Magia</div>
+  </div>
+
+  <!-- FICHA BASE -->
+  <div class="view active" id="v-base">
+    <div class="grid2">
+      <div class="col-stack">
+
+        <div class="panel">
+          <h2>Identidade</h2>
+          <div class="statline"><span class="k">Nome</span><span class="v edit" contenteditable="true">Varakos (Kos)</span></div>
+          <div class="statline"><span class="k">Raça</span><span class="v edit" contenteditable="true">Yuan-Ti</span></div>
+          <div class="statline"><span class="k">Classe</span><span class="v" id="idClasse">Bruxo / Corruptor 5</span></div>
+          <div class="statline"><span class="k">Nível Total</span><span class="v auto" id="idNivel">5</span></div>
+          <div class="statline"><span class="k">Nível Bruxo</span><span><input class="inl" type="number" id="lvlBrx" value="5" min="0" max="20"></span></div>
+          <div class="statline"><span class="k">Antecedente</span><span class="v edit" contenteditable="true">Viajante Distante</span></div>
+          <div class="statline"><span class="k">Alinhamento</span><span class="v edit" contenteditable="true">Neutro</span></div>
+          <div class="statline"><span class="k">Experiência (XP)</span><span><input class="inl" type="number" id="xp" value="0" min="0"></span></div>
+          <div class="statline"><span class="k">Inspiração</span><span><input class="inl" type="number" id="insp" value="0" min="0"></span></div>
+        </div>
+
+        <div class="panel">
+          <h2>Atributos</h2>
+          <div class="attrs" id="attrGrid"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Combate Base</h2>
+          <div class="statline"><span class="k">Classe de Armadura</span><span class="v edit" contenteditable="true">12</span></div>
+          <div class="statline"><span class="k">Iniciativa</span><span class="v auto" id="initVal">+0</span></div>
+          <div class="statline"><span class="k">Bônus de Proficiência</span><span class="v auto" id="profVal">+3</span></div>
+          <div class="statline"><span class="k">Deslocamento</span><span class="v" id="speedVal">9 m (6 quadrados)</span></div>
+          <div class="hp-note">Deslocamento (m): <span class="edit" contenteditable="true" id="speedInput" oninput="updateSpeed()">9</span> m</div>
+        </div>
+
+        <div class="panel">
+          <h2>Vitalidade</h2>
+          <div class="hp-top">
+            <span class="lbl">Pontos de Vida</span>
+            <span class="hp-nums"><input type="number" id="hpcur" value="55"> / <span class="mx" id="hpmax">55</span></span>
+          </div>
+          <div class="hp-bar"><div class="hp-fill" id="hpfill"></div></div>
+          <div class="statline" style="margin-top:12px"><span class="k">PV Temporários</span><span><input class="inl" type="number" id="hptmp" value="0" min="0"></span></div>
+          <div class="hp-note">HP máx recalcula automaticamente.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Salvaguardas contra Morte</h2>
+          <div class="deathbox">
+            <div class="deathcol"><div class="lbl">Sucessos</div><div class="pips" id="deathS"></div></div>
+            <div class="deathcol"><div class="lbl">Falhas</div><div class="pips" id="deathF"></div></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Talentos <button class="addbtn" onclick="addFeat()">+ talento</button></h2>
+          <div id="featList"></div>
+        </div>
+
+      </div>
+
+      <div class="col-stack">
+
+        <div class="panel">
+          <h2>Salvaguardas</h2>
+          <div id="savesList"></div>
+          <div class="hp-note" style="margin-top:9px">◆ proficiente (Bruxo: Sab e Car). Clique para alternar.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Perícias</h2>
+          <div id="skillsList"></div>
+          <div class="hp-note" style="margin-top:9px">Clique: proficiência → especialização → limpa.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Idiomas <button class="addbtn" onclick="addChip('langChips','novo idioma')">+ idioma</button></h2>
+          <div class="chips" id="langChips">
+            <span class="chip"><span class="edit" contenteditable="true">Comum</span><button class="del" onclick="this.parentElement.remove()">✕</button></span>
+            <span class="chip"><span class="edit" contenteditable="true">Abissal</span><button class="del" onclick="this.parentElement.remove()">✕</button></span>
+            <span class="chip"><span class="edit" contenteditable="true">Dracônico</span><button class="del" onclick="this.parentElement.remove()">✕</button></span>
+            <span class="chip"><span class="edit" contenteditable="true">Umbral</span><button class="del" onclick="this.parentElement.remove()">✕</button></span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Traços Raciais — Yuan-Ti <button class="addbtn" onclick="addEntry('raceList','Novo traço','Yuan-Ti','Descrição...')">+ traço</button></h2>
+          <div id="raceList"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Equipamento <button class="addbtn" onclick="addEntry('invList','Novo item','Item','Descrição...')">+ item</button></h2>
+          <div id="invList"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Notas de Sessão</h2>
+          <div class="desc edit" contenteditable="true" data-empty="Anotações..." style="min-height:80px;display:block;line-height:1.6"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PACTO & CLASSE -->
+  <div class="view" id="v-classe">
+    <div class="grid1">
+
+      <div class="panel">
+        <h2>Conjuração — Bruxo</h2>
+        <div class="statline"><span class="k">Atributo de Conjuração</span><span class="v">Carisma</span></div>
+        <div class="statline"><span class="k">CD das Magias</span><span class="v auto" id="spellDC">—</span></div>
+        <div class="statline"><span class="k">Mod. de Ataque Mágico</span><span class="v auto" id="spellAtk">—</span></div>
+        <div class="statline"><span class="k">Nível dos Espaços de Magia</span><span class="v auto" id="pactSlotLvl">—</span></div>
+        <div class="statline"><span class="k">Espaços de Magia (Pacto)</span><span class="v auto" id="pactSlotCount">—</span></div>
+
+        <div style="margin-top:16px">
+          <div class="hp-top">
+            <span class="lbl" style="color:var(--venom)">Espaços de Pacto</span>
+            <span class="hp-nums"><input type="number" id="pactcur" value="2"> / <span class="mx" id="pactmax">2</span></span>
+          </div>
+          <div class="pool-bar"><div class="pool-fill" id="pactfill"></div></div>
+          <div class="hp-note">Recupera todos no descanso curto. Edite o atual conforme usa.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Habilidades de Classe <button class="addbtn" onclick="addEntry('classList','Nova habilidade','Classe','Descrição...')">+ habilidade</button></h2>
+        <div id="classList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Invocações Místicas <button class="addbtn" onclick="addEntry('invocList','Nova invocação','Invocação','Descrição...')">+ invocação</button></h2>
+        <div id="invocList"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMBATE -->
+  <div class="view" id="v-combate">
+    <div class="summary">
+      <div class="sumcard"><div class="l">Classe Armadura</div><div class="v" id="sumCA">12</div></div>
+      <div class="sumcard hp"><div class="l">Pontos de Vida</div><div class="v" id="sumHP">55</div></div>
+      <div class="sumcard"><div class="l">Iniciativa</div><div class="v" id="sumInit">+1</div></div>
+      <div class="sumcard"><div class="l">Deslocamento</div><div class="v" id="sumSpeed" style="font-size:1.1rem">9 m</div></div>
+    </div>
+
+    <div class="grid1">
+      <div class="panel">
+        <h2>Ataques <button class="addbtn" onclick="addAttack()">+ ataque</button></h2>
+        <div class="atk-row atk-head"><div>Arma / Magia</div><div>Acerto</div><div>Dano</div><div></div></div>
+        <div id="atkList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Combos Salvos</h2>
+        <div id="comboList"></div>
+        <button class="addbtn" style="margin-top:6px;position:static" onclick="addCombo()">+ combo</button>
+      </div>
+
+      <div class="panel">
+        <h2>Bônus & Modificadores <button class="addbtn" onclick="addEntry('bonusList','Novo bônus','','Descrição...')">+ bônus</button></h2>
+        <div id="bonusList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Habilidades de Combate <button class="addbtn" onclick="addEntry('cabilList','Nova habilidade','','Descrição...')">+ habilidade</button></h2>
+        <div id="cabilList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAGIA -->
+  <div class="view" id="v-magia">
+    <div class="grid1">
+
+      <div class="panel">
+        <h2>Magias Conhecidas <button class="addbtn" onclick="addSpell()">+ magia</button></h2>
+        <div class="spelltier"><span>Truques</span></div>
+        <div id="spell0"></div>
+        <div class="spelltier"><span>Magias de Pacto</span><span class="slots" id="slot1">— espaços</span></div>
+        <div class="spell-warn" id="warn1"></div>
+        <div id="spell1"></div>
+        <div class="spelltier"><span>Rituais (Livro dos Segredos)</span></div>
+        <div id="spellR"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="footnote" id="foot">Varakos (Kos) · Nível 5 · Corruptor</p>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <button onclick="saveSheet(true)">Salvar</button>
+  <button onclick="resetSheet()">Restaurar</button>
+  <span class="saved" id="savedmsg"></span>
+</div>
+
+<script>
+// TABS
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('v-'+t.dataset.v).classList.add('active');
+  });
+});
+
+// BG
+const DEFAULT_BG='';
+function setBg(url){document.getElementById('bgArt').style.backgroundImage=url?`url(${url})`:'none';state.bg=url||null;}
+function restoreDefaultBg(){setBg(DEFAULT_BG);saveSheet();}
+document.getElementById('bgInput').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{setBg(ev.target.result);saveSheet();};r.readAsDataURL(f);
+});
+
+// CORE
+const KEY='varakos_sheet_v1';
+const ATTRS=[['for','Força'],['des','Destreza'],['con','Constituição'],['int','Inteligência'],['sab','Sabedoria'],['car','Carisma']];
+const SKILLS=[['Acrobacia','des'],['Arcanismo','int'],['Atletismo','for'],['Atuação','car'],['Enganação','car'],['Furtividade','des'],['História','int'],['Intimidação','car'],['Intuição','sab'],['Investigação','int'],['Lidar c/ Animais','sab'],['Medicina','sab'],['Natureza','int'],['Percepção','sab'],['Persuasão','car'],['Prestidigitação','des'],['Religião','int'],['Sobrevivência','sab']];
+const DEF_SCORES={for:13,des:13,con:16,int:14,sab:18,car:20};
+const DEF_SAVEPROF={sab:true,car:true};
+const DEF_SKILLPROF={'Arcanismo':1,'Persuasão':1,'Intuição':1,'Percepção':1};
+
+let state={scores:{...DEF_SCORES},saveProf:{...DEF_SAVEPROF},skillProf:{...DEF_SKILLPROF},lvlBrx:5,deathS:0,deathF:0,bg:null};
+
+function mod(s){return Math.floor((s-10)/2);}
+function fmt(n){return (n>=0?'+':'')+n;}
+function profBonus(t){return Math.ceil(t/4)+1;}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function cssId(s){return s.replace(/[^a-zA-Z0-9]/g,'_');}
+function calcMaxHP(){const t=state.lvlBrx;return 8+(t-1)*5 + mod(state.scores.con)*t;}
+
+// Pact slots por nível de bruxo
+function pactSlots(l){
+  const T={1:[1,1],2:[1,2],3:[2,2],4:[2,2],5:[2,3],6:[2,3],7:[2,4],8:[2,4],9:[2,5],10:[2,5],11:[3,5],12:[3,5],13:[3,5],14:[3,5],15:[3,5],16:[3,5],17:[4,5],18:[4,5],19:[4,5],20:[4,5]};
+  const r=T[Math.min(l,20)]||[1,1];return {count:r[0],level:r[1]};
+}
+
+function updateSpeed(){
+  const m=parseFloat((document.getElementById('speedInput').textContent||'').replace(',','.'))||0;
+  const sq=Math.round(m/1.5);
+  document.getElementById('speedVal').textContent=m+' m ('+sq+' quadrados)';
+  document.getElementById('sumSpeed').textContent=m+' m';
+}
+
+function recalc(){
+  const brx=state.lvlBrx;
+  document.getElementById('idNivel').textContent=brx;
+  document.getElementById('idClasse').textContent='Bruxo / Corruptor '+brx;
+  const pb=profBonus(brx);
+  document.getElementById('profVal').textContent=fmt(pb);
+
+  ATTRS.forEach(([k])=>{const e=document.getElementById('mod_'+k);if(e)e.textContent=fmt(mod(state.scores[k]));});
+  document.getElementById('initVal').textContent=fmt(mod(state.scores.des));
+
+  ATTRS.forEach(([k])=>{
+    const m=mod(state.scores[k]),prof=!!state.saveProf[k],tot=m+(prof?pb:0);
+    const v=document.getElementById('save_'+k);if(v)v.textContent=fmt(tot);
+    const r=document.getElementById('saverow_'+k);if(r)r.classList.toggle('prof',prof);
+  });
+  SKILLS.forEach(([name,ab])=>{
+    const lvl=state.skillProf[name]||0,m=mod(state.scores[ab]);
+    const tot=m+(lvl===1?pb:lvl===2?pb*2:0);
+    const v=document.getElementById('skv_'+cssId(name));if(v)v.textContent=fmt(tot);
+    const r=document.getElementById('skr_'+cssId(name));if(r){r.classList.toggle('prof',lvl===1);r.classList.toggle('expert',lvl===2);}
+  });
+
+  const maxhp=calcMaxHP();
+  document.getElementById('hpmax').textContent=maxhp;
+  const cur=document.getElementById('hpcur');
+  if(cur.dataset.synced!=='1'||parseInt(cur.value)>maxhp){cur.value=maxhp;cur.dataset.synced='1';}
+  updateHPbar();
+
+  const cm=mod(state.scores.car);
+  document.getElementById('spellDC').textContent=8+pb+cm;
+  document.getElementById('spellAtk').textContent=fmt(pb+cm);
+
+  const ps=pactSlots(brx);
+  document.getElementById('pactSlotCount').textContent=ps.count+' espaço(s)';
+  document.getElementById('pactSlotLvl').textContent=ps.level+'º círculo';
+  document.getElementById('pactmax').textContent=ps.count;
+  updatePactBar();
+
+  document.getElementById('sumCA').textContent=document.querySelectorAll('#v-base .statline .v.edit')[0]?.textContent||'12';
+  document.getElementById('sumInit').textContent=fmt(mod(state.scores.des));
+  document.getElementById('sumHP').textContent=document.getElementById('hpcur').value+' / '+maxhp;
+  document.getElementById('foot').textContent='Varakos (Kos) · Nível '+brx+' · Corruptor';
+  updateSpeed();
+}
+
+function updateHPbar(){
+  const c=parseInt(document.getElementById('hpcur').value)||0;
+  const m=parseInt(document.getElementById('hpmax').textContent)||1;
+  document.getElementById('hpfill').style.width=Math.max(0,Math.min(100,(c/m)*100))+'%';
+  const sm=document.getElementById('sumHP');if(sm)sm.textContent=c+' / '+m;
+}
+function updatePactBar(){
+  const c=parseInt(document.getElementById('pactcur').value)||0;
+  const m=parseInt(document.getElementById('pactmax').textContent)||1;
+  document.getElementById('pactfill').style.width=Math.max(0,Math.min(100,(c/m)*100))+'%';
+}
+document.getElementById('hpcur').addEventListener('input',()=>{document.getElementById('hpcur').dataset.synced='1';updateHPbar();});
+document.getElementById('pactcur').addEventListener('input',()=>{updatePactBar();saveSheet();});
+
+function buildAttrs(){
+  const g=document.getElementById('attrGrid');g.innerHTML='';
+  ATTRS.forEach(([k,label])=>{
+    const d=document.createElement('div');d.className='attr';
+    d.innerHTML=`<div class="lbl">${label}</div><input class="score" type="number" id="sc_${k}" value="${state.scores[k]}" min="1" max="30"><div class="mod" id="mod_${k}">${fmt(mod(state.scores[k]))}</div>`;
+    d.querySelector('input').addEventListener('input',e=>{state.scores[k]=parseInt(e.target.value)||10;recalc();saveSheet();});
+    g.appendChild(d);
+  });
+}
+
+function buildSaves(){
+  const c=document.getElementById('savesList');c.innerHTML='';
+  ATTRS.forEach(([k,label])=>{
+    const pb=profBonus(state.lvlBrx),m=mod(state.scores[k]),tot=m+(state.saveProf[k]?pb:0);
+    const r=document.createElement('div');
+    r.className='statline skill-row'+(state.saveProf[k]?' prof':'');r.id='saverow_'+k;
+    r.innerHTML=`<span class="k"><span class="dot"></span>${label}</span><span class="v" id="save_${k}">${fmt(tot)}</span>`;
+    r.addEventListener('click',()=>{state.saveProf[k]=!state.saveProf[k];recalc();saveSheet();});
+    c.appendChild(r);
+  });
+}
+
+function buildSkills(){
+  const c=document.getElementById('skillsList');c.innerHTML='';
+  const pb=profBonus(state.lvlBrx);
+  SKILLS.forEach(([name,ab])=>{
+    const lvl=state.skillProf[name]||0,m=mod(state.scores[ab]),tot=m+(lvl===1?pb:lvl===2?pb*2:0);
+    const r=document.createElement('div');
+    r.className='statline skill-row'+(lvl===1?' prof':lvl===2?' expert':'');r.id='skr_'+cssId(name);
+    r.innerHTML=`<span class="k"><span class="dot"></span>${name} <small style="color:var(--ash-dim)">(${ab})</small></span><span class="v" id="skv_${cssId(name)}">${fmt(tot)}</span>`;
+    r.addEventListener('click',()=>{const c=(state.skillProf[name]||0);state.skillProf[name]=(c+1)%3;recalc();saveSheet();});
+    c.appendChild(r);
+  });
+}
+
+function buildDeath(){
+  ['deathS','deathF'].forEach(id=>{
+    const c=document.getElementById(id);c.innerHTML='';
+    for(let i=0;i<3;i++){
+      const p=document.createElement('div');
+      const type=id==='deathS'?'succ':'fail';
+      const on=id==='deathS'?i<state.deathS:i<state.deathF;
+      p.className='pip'+(on?' on '+type:'');
+      p.addEventListener('click',()=>{
+        if(id==='deathS')state.deathS=(state.deathS===i+1?i:i+1);
+        else state.deathF=(state.deathF===i+1?i:i+1);
+        buildDeath();saveSheet();
+      });
+      c.appendChild(p);
+    }
+  });
+}
+
+// entries
+function makeEntry(t,tag,d){
+  const e=document.createElement('div');e.className='entry';
+  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${esc(t)}</span><span class="tag edit" contenteditable="true">${esc(tag)}</span></div><div class="desc edit" contenteditable="true" data-empty="Descrição...">${esc(d)}</div><button class="del" onclick="this.closest('.entry').remove();saveSheet();">✕</button>`;
+  return e;
+}
+function makeSpell(t,d){
+  const e=document.createElement('div');e.className='entry';
+  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${esc(t)}</span></div><div class="desc edit" contenteditable="true" data-empty="Efeito da magia...">${esc(d)}</div><button class="del" onclick="this.closest('.entry').remove();saveSheet();">✕</button>`;
+  return e;
+}
+function addEntry(id,t,tag,d){const l=document.getElementById(id);l.appendChild(makeEntry(t,tag,d));l.lastChild.querySelector('.edit').focus();saveSheet();}
+function addSpell(){
+  const cur=document.querySelector('.tab.active').dataset.v==='magia';
+  document.getElementById('spell1').appendChild(makeSpell('Nova Magia',''));
+  document.getElementById('spell1').lastChild.querySelector('.edit').focus();
+  saveSheet();
+}
+
+// ataques
+function makeAttack(nm,bon,dmg){
+  const r=document.createElement('div');r.className='atk-row';
+  r.innerHTML=`<input class="nm" value="${esc(nm)}" placeholder="Foco Arcano"><input value="${esc(bon)}" placeholder="+5"><input value="${esc(dmg)}" placeholder="1d10+5 arcano"><button class="del" onclick="this.closest('.atk-row').remove();saveSheet();">✕</button>`;
+  r.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>saveSheet()));
+  return r;
+}
+function addAttack(){document.getElementById('atkList').appendChild(makeAttack('','',''));saveSheet();}
+
+// combos
+function makeCombo(nm,seq){
+  const c=document.createElement('div');c.className='combo';
+  c.innerHTML=`<div class="cname edit" contenteditable="true" data-empty="Nome do combo">${esc(nm)}</div><div class="cseq edit" contenteditable="true" data-empty="Sequência de ações...">${esc(seq)}</div><button class="del" style="position:absolute;top:8px;right:8px;background:transparent;border:none;color:var(--ash-dim);cursor:pointer;opacity:0;font-size:.88rem;transition:.15s" onclick="this.closest('.combo').remove();saveSheet();">✕</button>`;
+  c.style.position='relative';
+  c.addEventListener('mouseover',()=>c.querySelector('.del').style.opacity='1');
+  c.addEventListener('mouseout',()=>c.querySelector('.del').style.opacity='0');
+  return c;
+}
+function addCombo(){document.getElementById('comboList').appendChild(makeCombo('Novo Combo',''));saveSheet();}
+
+// chips
+function addChip(id,placeholder){
+  const c=document.getElementById(id);
+  const s=document.createElement('span');s.className='chip';
+  s.innerHTML=`<span class="edit" contenteditable="true">${placeholder}</span><button class="del" onclick="this.parentElement.remove();saveSheet();">✕</button>`;
+  c.appendChild(s);s.querySelector('.edit').focus();saveSheet();
+}
+
+// TALENTOS
+const FEATS_DEFAULT=[
+  ['Rajada de Veneno','Yuan-Ti','Como ação bônus, você pode forçar uma criatura que você acertou neste turno a fazer um save de Constituição (CD Magia). Falha: 2d10 de veneno.'],
+  ['Sugestão','Yuan-Ti','1× por dia, como magia Sugestão (CD Magia) sem gastar espaço de magia.'],
+  ['Armadura de Sombra','Invocação','Sua CA se torna 13 + mod. Des enquanto não usa armadura.'],
+  ['Armadura Arcana a Vontade','Invocação','Você pode conjurar Armor of Agathys sem gastar espaço de magia uma vez por descanso longo.'],
+  ['Explosão Agonizante','Invocação','Adicione o mod. de Carisma ao dano da Rajada Mística.'],
+  ['Livro dos Segredos Antigos','Invocação','Acesso a 2 rituais de nível 1 que podem ser conjurados como rituais.'],
+];
+
+function makeFeat(name,src,desc,expanded){
+  const item=document.createElement('div');
+  item.className='feat-item'+(expanded?' open':'');
+  item.innerHTML=`<div class="feat-header"><button class="feat-toggle" onclick="toggleFeat(this)" title="Expandir/recolher">▶</button><span class="feat-name" contenteditable="true" data-empty="Nome do talento">${esc(name)}</span><span class="feat-src" contenteditable="true" data-empty="Fonte">${esc(src)}</span></div><div class="feat-body" contenteditable="true" data-empty="Descreva o que este talento concede...">${esc(desc)}</div><button class="feat-del" onclick="this.closest('.feat-item').remove();saveSheet();" title="Remover">✕</button>`;
+  return item;
+}
+function toggleFeat(btn){btn.closest('.feat-item').classList.toggle('open');}
+function addFeat(){const l=document.getElementById('featList');const item=makeFeat('Novo Talento','','',true);l.appendChild(item);item.querySelector('.feat-name').focus();saveSheet();}
+function seedFeats(){const l=document.getElementById('featList');if(!l||l.children.length>0)return;FEATS_DEFAULT.forEach(f=>l.appendChild(makeFeat(...f)));}
+
+// SEED DEFAULTS
+function seedDefaults(){
+  addEntry('raceList','Visão no Escuro','Yuan-Ti','18 metros (6 quadrados). Você enxerga em escuridão como se fosse luz difusa.');
+  addEntry('raceList','Amizade Animal — Cobras','Yuan-Ti','Você pode se comunicar com cobras e elas não atacam você por instinto.');
+  addEntry('raceList','Resistência Mágica','Yuan-Ti','Vantagem em saves contra magias e outros efeitos mágicos.');
+  addEntry('raceList','Imune a Veneno','Yuan-Ti','Você é imune ao dano de veneno e à condição envenenado.');
+  addEntry('raceList','Olhos em Mim (Antecedente)','Viajante','Bênção do Obscuro: adicione seu nível de bruxo como bônus de VT ao Carisma.');
+  addEntry('invList','Armadura de couro','Item','CA base 11 + Des.');
+  addEntry('invList','2 Adagas','Item','1d4 + Des. Corpo a corpo ou arremesso (6/18 m).');
+  addEntry('invList','Foco Arcano','Item','Necessário para conjurar. Bônus de ataque mágico +3.');
+  addEntry('invList','Selo da Linhagem','Item','Objeto ritual ligado ao seu patrono.');
+  addEntry('invList','Joia da Terra Natal','Item','Pertence às suas origens como Yuan-Ti.');
+  addEntry('invList','15 po','Moeda','Bolsa de ouro padrão.');
+  addEntry('classList','Pacto do Tomo — Corruptor','Classe','Você possui um Livro das Sombras. Ganhe 3 truques adicionais de qualquer lista.');
+  addEntry('classList','Benção do Escuro (Bênção)','Classe','Quando você reduz um inimigo a 0 PV, ganhe PVs temporários iguais a Car + nível de bruxo.');
+  addEntry('classList','Forma Sinistra','Classe','Você pode gastar um espaço de Pacto para transformar-se. Consulte o livro do patrono.');
+  addEntry('invocList','Armadura de Sombra','Invocação','CA 13 + mod. Des enquanto sem armadura. Calculada automaticamente se não usar escudo.');
+  addEntry('invocList','Armadura Arcana a Vontade','Invocação','Conjure Armor of Agathys 1× por descanso longo, sem gastar espaço.');
+  addEntry('invocList','Explosão Agonizante','Invocação','Adicione mod. de Carisma ao dano de cada raio da Rajada Mística.');
+  addEntry('invocList','Livro dos Segredos Antigos','Invocação','2 rituais de qualquer lista (nv 1). Atualize conforme aprende mais.');
+  makeAttack('Foco Arcano','+8','1d10+5 arcano');
+  document.getElementById('atkList').appendChild(makeAttack('Foco Arcano','+8','1d10+5 arcano'));
+  // spell0 = truques
+  document.getElementById('spell0').appendChild(makeSpell('Rajada Mística','1d10 de dano arcano por raio. Ataque mágico à distância (36 m). Padrão: 1 raio; +1 por nível.'));
+  document.getElementById('spell0').appendChild(makeSpell('Magia das Trevas','Cria escuridão mágica num raio de 4,5 m. Criaturas sem vis. no escuro ficam cegas. Concentração, 10 min.'));
+  document.getElementById('spell0').appendChild(makeSpell('Ilusão Menor','Cria um som ou imagem ilusória de objeto em área de até 1,5 m. Concentração, 1 min.'));
+  // spell1 = magias de pacto
+  document.getElementById('spell1').appendChild(makeSpell('Armadura de Agathys','PVs temporários + dano frio para atacantes corpo a corpo. Escalonável com o nível do espaço.'));
+  document.getElementById('spell1').appendChild(makeSpell('Sugestão','Planta uma ação razoável na mente de uma criatura (save Car). Concentração, 8 h.'));
+  document.getElementById('spell1').appendChild(makeSpell('Hipnotismo','Criatura com menos PV fica hipnotizada. Atk com vantagem contra ela.'));
+  // spellR = rituais
+  document.getElementById('spellR').appendChild(makeSpell('Compreender Idiomas (ritual)','Entende qualquer idioma falado ou escrito por 1 hora. Sem save.'));
+  document.getElementById('spellR').appendChild(makeSpell('Identificar (ritual)','Determina propriedades mágicas de um objeto ou efeito. Toque.'));
+}
+
+// ─── SUPABASE CONFIG ────────────────────────────────────────
+const SB_URL  = 'https://tvxxkvoamgxblaehnlhf.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2eHhrdm9hbWd4YmxhZWhubGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzODg5MTEsImV4cCI6MjA5NTk2NDkxMX0.hDEj28pF_4B8B6asQlfEuPcuVy-2u9dXlJrKlOw6API';
+const SHEET_ID = 'varakos-kos';
+
+function serial(id){return [...document.getElementById(id).children].map(e=>({t:e.querySelector('.title .edit')?.innerHTML||e.querySelector('.cname')?.innerHTML||'',tag:e.querySelector('.tag')?.innerHTML||'',d:e.querySelector('.desc')?.innerHTML||e.querySelector('.cseq')?.innerHTML||''}));}
+
+function collect(){
+  return {state,
+    name:document.querySelector('h1.name .edit').innerHTML,
+    sub:[...document.querySelectorAll('.subtitle .edit')].map(e=>e.innerHTML),
+    caEdit:document.querySelectorAll('#v-base .statline .v.edit')[0]?.innerHTML||'12',
+    race:document.querySelectorAll('#v-base .statline .v.edit')[1]?.innerHTML||'Yuan-Ti',
+    ant:document.querySelectorAll('#v-base .statline .v.edit')[2]?.innerHTML||'Viajante Distante',
+    ali:document.querySelectorAll('#v-base .statline .v.edit')[3]?.innerHTML||'Neutro',
+    speed:document.getElementById('speedInput').textContent,
+    xp:document.getElementById('xp').value,insp:document.getElementById('insp').value,
+    hpcur:document.getElementById('hpcur').value,hptmp:document.getElementById('hptmp').value,
+    pactcur:document.getElementById('pactcur').value,
+    atks:[...document.querySelectorAll('#atkList .atk-row')].map(r=>[...r.querySelectorAll('input')].map(i=>i.value)),
+    combos:[...document.querySelectorAll('#comboList .combo')].map(c=>[c.querySelector('.cname').innerHTML,c.querySelector('.cseq').innerHTML]),
+    bonus:serial('bonusList'),cabil:serial('cabilList'),classL:serial('classList'),
+    invoc:serial('invocList'),race_:serial('raceList'),inv:serial('invList'),
+    sp0:serial('spell0'),sp1:serial('spell1'),spR:serial('spellR'),
+    langs:[...document.querySelectorAll('#langChips .edit')].map(e=>e.innerHTML),
+    notes:document.querySelector('#v-base .panel:last-child .desc.edit')?.innerHTML||'',
+    feats:[...document.querySelectorAll('#featList .feat-item')].map(item=>({
+      n:item.querySelector('.feat-name')?.innerHTML||'',
+      s:item.querySelector('.feat-src')?.innerHTML||'',
+      d:item.querySelector('.feat-body')?.innerHTML||'',
+      open:item.classList.contains('open')
+    }))
+  };
+}
+
+function applyData(d){
+  if(!d)return false;
+  state=Object.assign(state,d.state||{});
+  document.getElementById('lvlBrx').value=state.lvlBrx;
+  buildAttrs();buildSaves();buildSkills();buildDeath();
+  if(d.name)document.querySelector('h1.name .edit').innerHTML=d.name;
+  if(d.sub){const s=document.querySelectorAll('.subtitle .edit');d.sub.forEach((v,i)=>{if(s[i])s[i].innerHTML=v;});}
+  const ed=document.querySelectorAll('#v-base .statline .v.edit');
+  if(d.caEdit&&ed[0])ed[0].innerHTML=d.caEdit;
+  if(d.race&&ed[1])ed[1].innerHTML=d.race;
+  if(d.ant&&ed[2])ed[2].innerHTML=d.ant;
+  if(d.ali&&ed[3])ed[3].innerHTML=d.ali;
+  if(d.speed)document.getElementById('speedInput').textContent=d.speed;
+  if(d.xp)document.getElementById('xp').value=d.xp;
+  if(d.insp)document.getElementById('insp').value=d.insp;
+  if(d.hptmp)document.getElementById('hptmp').value=d.hptmp;
+  if(d.pactcur){document.getElementById('pactcur').value=d.pactcur;}
+  document.getElementById('atkList').innerHTML='';
+  (d.atks||[]).forEach(a=>document.getElementById('atkList').appendChild(makeAttack(...a)));
+  document.getElementById('comboList').innerHTML='';
+  (d.combos||[]).forEach(c=>document.getElementById('comboList').appendChild(makeCombo(c[0],c[1])));
+  function rebuild(id,arr,fn){if(!arr)return;const c=document.getElementById(id);c.innerHTML='';arr.forEach(o=>c.appendChild(fn(o)));}
+  rebuild('bonusList',d.bonus,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('cabilList',d.cabil,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('classList',d.classL,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('invocList',d.invoc,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('raceList',d.race_,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('invList',d.inv,o=>makeEntry(o.t,o.tag,o.d));
+  rebuild('spell0',d.sp0,o=>makeSpell(o.t,o.d));
+  rebuild('spell1',d.sp1,o=>makeSpell(o.t,o.d));
+  rebuild('spellR',d.spR,o=>makeSpell(o.t,o.d));
+  if(d.langs){const c=document.getElementById('langChips');c.innerHTML='';d.langs.forEach(l=>{const s=document.createElement('span');s.className='chip';s.innerHTML=`<span class="edit" contenteditable="true">${l}</span><button class="del" onclick="this.parentElement.remove();saveSheet();">✕</button>`;c.appendChild(s);});}
+  if(d.feats){const fl=document.getElementById('featList');fl.innerHTML='';d.feats.forEach(f=>fl.appendChild(makeFeat(f.n,f.s,f.d,f.open)));}
+  if(d.notes){const n=document.querySelector('#v-base .panel:last-child .desc.edit');if(n)n.innerHTML=d.notes;}
+  if(d.hpcur){document.getElementById('hpcur').value=d.hpcur;document.getElementById('hpcur').dataset.synced='1';}
+  setBg(d.state?.bg||DEFAULT_BG);
+  return true;
+}
+
+// SAVE / LOAD
+let _saveTimer=null;
+function saveSheet(immediate=false){
+  const data=collect();
+  try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
+  if(immediate){_push(data);return;}
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(()=>_push(data),1200);
+}
+async function _push(data){
+  flash('Salvando…',false);
+  try{
+    const res=await fetch(`${SB_URL}/rest/v1/character_sheets`,{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({sheet_id:SHEET_ID,data,updated_at:new Date().toISOString()})
+    });
+    if(!res.ok)throw new Error(await res.text());
+    flash('Salvo ✓');
+  }catch(e){flash('⚠ Erro ao salvar');console.error('[SB]',e.message||e);}
+}
+async function loadSheet(){
+  try{
+    const rows=await (await fetch(`${SB_URL}/rest/v1/character_sheets?sheet_id=eq.${SHEET_ID}&select=data&limit=1`,{headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}})).json();
+    if(rows&&rows.length>0&&rows[0].data){applyData(rows[0].data);try{localStorage.setItem(KEY,JSON.stringify(rows[0].data));}catch(e){}return true;}
+  }catch(e){console.warn('SB offline, usando localStorage');}
+  try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d){applyData(d);return true;}}catch(e){}
+  return false;
+}
+function resetSheet(){if(confirm('Restaurar a ficha original?')){localStorage.removeItem(KEY);fetch(`${SB_URL}/rest/v1/character_sheets?sheet_id=eq.${SHEET_ID}`,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}}).catch(()=>{});location.reload();}}
+function flash(m,fade=true){const x=document.getElementById('savedmsg');x.textContent=m;if(fade)setTimeout(()=>x.textContent='',2500);}
+
+document.getElementById('lvlBrx').addEventListener('input',e=>{state.lvlBrx=parseInt(e.target.value)||0;recalc();});
+document.addEventListener('blur',e=>{if(e.target.closest&&e.target.closest('.sheet'))saveSheet();},true);
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveSheet(true);}});
+
+(async()=>{
+  buildAttrs();buildSaves();buildSkills();buildDeath();
+  const loaded=await loadSheet();
+  if(!loaded){seedDefaults();setBg(DEFAULT_BG);}
+  seedFeats();
+  recalc();
+})();
+</script>
+</body>
+</html>
