@@ -170,6 +170,13 @@ function makeEntry(t,tag,d){
 }
 function addEntry(id,t,tag,d){document.getElementById(id).appendChild(makeEntry(t,tag,d));}
 
+function addContact() {
+  addEntry('contactList', 'Nome do Contato', 'Facção/Cargo', 'Anotações sobre a relação...');
+}
+function addQuest() {
+  addEntry('questList', 'Nova Missão', 'Ativa', 'Descreva a missão...');
+}
+
 function makeSpell(t,d){
   const e=document.createElement('div');e.className='entry';
   e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${esc(t)}</span></div><div class="desc edit" contenteditable="true">${esc(d)}</div><button class="del" onclick="this.parentElement.remove();checkSpellSpace()">✕</button>`;
@@ -302,7 +309,14 @@ function collect(){
       n:item.querySelector('.feat-name')?.innerHTML||'',
       s:item.querySelector('.feat-src')?.innerHTML||'',
       d:item.querySelector('.feat-body')?.innerHTML||'',
-      open:item.classList.contains('open')
+      expanded:!item.classList.contains('collapsed')
+    })),
+    contacts:serial('contactList'),
+    quests:serial('questList'),
+    mapNodes:[...document.querySelectorAll('.map-node')].map(item=>({
+      id: item.classList[1],
+      name: item.querySelector('.node-name')?.innerHTML||'',
+      desc: item.querySelector('.node-desc')?.innerHTML||''
     }))
   };
 }
@@ -336,7 +350,28 @@ function applyData(d) {
   rebuild('spell2',d.sp2,o=>makeSpell(o.t,o.d));
   rebuild('spell3',d.sp3,o=>makeSpell(o.t,o.d));
   if(d.langs){const c=document.getElementById('langChips');c.innerHTML='';d.langs.forEach(l=>{const s=document.createElement('span');s.className='chip';s.innerHTML=`<span class="edit" contenteditable="true">${l}</span><button class="del" onclick="this.parentElement.remove()">✕</button>`;c.appendChild(s);});}
-  if(d.feats){const fl=document.getElementById('featList');fl.innerHTML='';d.feats.forEach(f=>fl.appendChild(makeFeat(f.n,f.s,f.d,f.open)));}
+  
+  document.getElementById('featList').innerHTML='';
+  (d.feats||[]).forEach(f=>{
+    const el = makeFeat(f.n, f.s, f.d, f.expanded);
+    if(f.expanded===false) el.classList.add('collapsed');
+    document.getElementById('featList').appendChild(el);
+  });
+
+  document.getElementById('contactList').innerHTML='';
+  (d.contacts||[]).forEach(c=>addEntry('contactList',c.t,c.tag,c.d));
+
+  document.getElementById('questList').innerHTML='';
+  (d.quests||[]).forEach(q=>addEntry('questList',q.t,q.tag,q.d));
+
+  (d.mapNodes||[]).forEach(n=>{
+    const el = document.querySelector('.'+n.id);
+    if(el) {
+      if(el.querySelector('.node-name')) el.querySelector('.node-name').innerHTML = n.name;
+      if(el.querySelector('.node-desc')) el.querySelector('.node-desc').innerHTML = n.desc;
+    }
+  });
+
   if(d.notes){const n=document.querySelector('#v-base .panel:last-child .desc.edit');if(n)n.innerHTML=d.notes;}
   if(d.hpcur){document.getElementById('hpcur').value=d.hpcur;}
   if(d.lohcur){document.getElementById('lohcur').value=d.lohcur;}
