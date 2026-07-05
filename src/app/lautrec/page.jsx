@@ -235,10 +235,6 @@ const htmlContent = `
     </div>
   </div>
 
-  <div class="footnote" id="foot">Lautrec Fahrenheit · Nível 5 · Vingança</div>
-
-</div>
-
   <div class="view" id="v-lore">
     <div class="grid1">
       <div class="panel" style="grid-column: 1 / -1;">
@@ -248,32 +244,32 @@ const htmlContent = `
             <h3 class="map-title">Ocidente</h3>
             <div class="map-grid">
                <div class="map-node node-dralmor">
-                 <div class="node-name edit" contenteditable="true">Dralmor (G�lido)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-name edit" contenteditable="true">Dralmor (Gélido)</div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
                <div class="map-node node-karzu">
                  <div class="node-name edit" contenteditable="true">Karzu (Deserto)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
                <div class="map-node node-velindar">
                  <div class="node-name edit" contenteditable="true">Velindar (Central)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
                <div class="map-node node-velferium">
                  <div class="node-name edit" contenteditable="true">Velferium</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
                <div class="map-node node-vales">
                  <div class="node-name edit" contenteditable="true">Vales Uivantes</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
                <div class="map-node node-aesmeril">
                  <div class="node-name edit" contenteditable="true">Aesmeril (Magocracia)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
                <div class="map-node node-jandora">
                  <div class="node-name edit" contenteditable="true">Jandora (Selva)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
             </div>
           </div>
@@ -282,7 +278,7 @@ const htmlContent = `
             <div class="map-grid">
                <div class="map-node node-oriente-unknown">
                  <div class="node-name edit" contenteditable="true">Terras Desconhecidas</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anota��es..."></div>
+                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
                </div>
             </div>
           </div>
@@ -292,22 +288,21 @@ const htmlContent = `
     
     <div class="grid2">
       <div class="panel">
-        <h2 style="display:flex;justify-content:space-between;align-items:center;">
-          Contatos
-          <button onclick="addContact()">+ Contato</button>
-        </h2>
+        <h2>Contatos <button class="addbtn" onclick="addContact()">+ contato</button></h2>
         <div id="contactList" class="feat-list"></div>
       </div>
 
       <div class="panel">
-        <h2 style="display:flex;justify-content:space-between;align-items:center;">
-          Miss�es
-          <button onclick="addQuest()">+ Miss�o</button>
-        </h2>
+        <h2>Missões <button class="addbtn" onclick="addQuest()">+ missão</button></h2>
         <div id="questList" class="feat-list"></div>
       </div>
     </div>
   </div>
+
+  <div class="footnote" id="foot">Lautrec Fahrenheit · Nível 5 · Vingança</div>
+
+</div>
+
 <div class="toolbar">
   <button onclick="saveSheet()">Salvar</button>
   <button onclick="resetSheet()">Restaurar</button>
