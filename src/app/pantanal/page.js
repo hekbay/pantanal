@@ -1,416 +1,617 @@
-import CustomCursor from "../../components/CustomCursor";
+import './pantanal.css';
+import { ManualNav, CopyHex } from './manual-client';
 
-export default function Home() {
+export const metadata = {
+  title: 'Manual de Identidade Visual — Pantanal Saúde',
+  description:
+    'Manual de identidade visual da Pantanal Saúde: logotipo, tipografia, cores, peças de aplicação e arquivos para download. Produzido por hekbay.',
+};
+
+const CHAPTERS = [
+  { id: 'capa', num: '00', label: 'Capa' },
+  { id: 'marca', num: '01', label: 'A marca' },
+  { id: 'logo', num: '02', label: 'Logotipo' },
+  { id: 'tipografia', num: '03', label: 'Tipografia' },
+  { id: 'paleta', num: '04', label: 'Cores' },
+  { id: 'aplicacoes', num: '05', label: 'Peças' },
+  { id: 'downloads', num: '06', label: 'Arquivos' },
+];
+
+const CORES = [
+  { nome: 'Azul Principal', hex: '#0c2b52', rgb: '12 · 43 · 82', cmyk: '85 · 48 · 0 · 68', uso: 'Cor dominante, tipografia e fundos', border: false },
+  { nome: 'Off-white', hex: '#f7f4ef', rgb: '247 · 244 · 239', cmyk: '0 · 1 · 3 · 3', uso: 'Fundo principal, respiro visual', border: true },
+  { nome: 'Azul Destaque', hex: '#0a4681', rgb: '10 · 70 · 129', cmyk: '92 · 46 · 0 · 49', uso: 'Links, destaques e Planos', border: false },
+  { nome: 'Verde NR1', hex: '#1b8b73', rgb: '27 · 139 · 115', cmyk: '81 · 0 · 17 · 45', uso: 'Saúde ocupacional, NR1', border: false },
+  { nome: 'Amarelo Plantão', hex: '#f2c52f', rgb: '242 · 197 · 47', cmyk: '0 · 19 · 81 · 5', uso: 'Plantão 24h, urgência', border: false },
+];
+
+const COMBOS = [
+  { nome: 'Azul / Off-white', fg: '#0c2b52', bg: '#f7f4ef', ratio: '12,9 : 1', nivel: 'AAA — qualquer texto', border: true },
+  { nome: 'Branco / Azul Principal', fg: '#ffffff', bg: '#0c2b52', ratio: '14,2 : 1', nivel: 'AAA — qualquer texto', border: false },
+  { nome: 'Branco / Azul Destaque', fg: '#ffffff', bg: '#0a4681', ratio: '9,5 : 1', nivel: 'AAA — qualquer texto', border: false },
+  { nome: 'Azul / Amarelo', fg: '#0c2b52', bg: '#f2c52f', ratio: '8,6 : 1', nivel: 'AAA — qualquer texto', border: false },
+  { nome: 'Branco / Verde', fg: '#ffffff', bg: '#1b8b73', ratio: '4,2 : 1', nivel: 'AA — só textos grandes', border: false },
+];
+
+function ChapterHead({ num, titulo, intro, entregavel }) {
   return (
-    <>
-      <CustomCursor />
-      <div className="cursor-dot"></div>
-      <div className="cursor-ring"></div>
-<nav>
-    <a href="#capa" className="nav-logo">hekbay</a>
-    <ul className="nav-links">
-      <li><a href="#marca">A marca</a></li>
-      <li><a href="#logo">Logo</a></li>
-      <li><a href="#paleta">Paleta</a></li>
-      <li><a href="#tipografia">Tipografia</a></li>
-      <li><a href="#downloads">Downloads</a></li>
-    </ul>
-  </nav>
-
-  {/* ── BLOCO DARK SUPERIOR ── */}
-  <div className="dark-wrap">
-    <div className="blob blob-dark-1"></div>
-    <div className="blob blob-dark-2"></div>
-    <div className="blob blob-dark-3"></div>
-
-    <section id="capa">
-      <div className="capa-sparkle">
-        <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
-          <path d="M50 0 C50 30 55 45 70 50 C55 55 50 70 50 100 C50 70 45 55 30 50 C45 45 50 30 50 0 Z" />
-          <path d="M28 25 C28 40 31 45 38 50 C31 55 28 60 28 75 C28 60 25 55 18 50 C25 45 28 40 28 25 Z" />
-          <path d="M72 25 C72 40 69 45 62 50 C69 55 72 60 72 75 C72 60 75 55 82 50 C75 45 72 40 72 25 Z" />
-        </svg>
+    <header>
+      <div className="mv-chap-head">
+        <span className="mv-chap-num" aria-hidden="true">{num}</span>
+        <h2>{titulo}</h2>
+        <span className="mv-chap-idx">
+          {entregavel ? `Entregável ${entregavel} / 05` : `Seção ${num} / 06`}
+        </span>
       </div>
-      <div className="capa-content">
-        <p className="capa-label">Manual de Identidade Visual</p>
-        <h1 className="capa-titulo">Pantanal<br/><span>Saúde.</span></h1>
-        <div className="capa-meta glass-dark">
-          <div className="capa-meta-item">
-            <span className="capa-meta-label">Cliente</span>
-            <span className="capa-meta-value">Pantanal Saúde</span>
+      {intro && <p className="mv-chap-intro">{intro}</p>}
+    </header>
+  );
+}
+
+export default function ManualPantanal() {
+  return (
+    <div className="mv">
+      <ManualNav chapters={CHAPTERS} />
+
+      <main className="mv-main">
+        {/* ── 00 · CAPA ── */}
+        <section id="capa" className="mv-cover">
+          <div className="mv-cover-top">
+            <span>Pantanal Saúde — Operadora de saúde B2B</span>
+            <span>1ª edição — 2026</span>
           </div>
-          <div className="capa-meta-item">
-            <span className="capa-meta-label">Produzido por</span>
-            <span className="capa-meta-value">hekbay · Henrique Corrêa da Costa</span>
+          <div className="mv-cover-center">
+            <img src="/pantanal/assets/vertical-branca.png" alt="Logo Pantanal Saúde" />
+            <h1>Manual de Identidade Visual.</h1>
           </div>
-          <div className="capa-meta-item">
-            <span className="capa-meta-label">Ano</span>
-            <span className="capa-meta-value">2026</span>
+          <div className="mv-cover-spec">
+            <div><span className="k">Cliente</span><span className="v">Pantanal Saúde</span></div>
+            <div><span className="k">Projeto</span><span className="v">Identidade visual</span></div>
+            <div><span className="k">Design</span><span className="v">hekbay · Henrique Corrêa da Costa</span></div>
+            <div><span className="k">Local · Ano</span><span className="v">Campo Grande, MS · 2026</span></div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section id="logo-full">
-      <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/logograd2.jpg" alt="Logo Pantanal Saúde" />
-    </section>
-  </div>
+        {/* ── SUMÁRIO ── */}
+        <section className="mv-sumario" aria-label="Sumário">
+          <div className="mv-wrap">
+            <span className="mv-label">Sumário</span>
+            <ol className="mv-sumario-list">
+              <li><a href="#marca"><span className="num">01</span><span className="titulo">A marca</span></a></li>
+              <li><a href="#logo"><span className="num">02</span><span className="titulo">Logotipo &amp; variações</span></a></li>
+              <li><a href="#tipografia"><span className="num">03</span><span className="titulo">Sistema tipográfico</span></a></li>
+              <li><a href="#paleta"><span className="num">04</span><span className="titulo">Paleta cromática</span></a></li>
+              <li><a href="#aplicacoes"><span className="num">05</span><span className="titulo">Peças de aplicação</span></a></li>
+              <li><a href="#downloads"><span className="num">06</span><span className="titulo">Arquivos da marca</span></a></li>
+            </ol>
+          </div>
+        </section>
 
-  {/* ── BLOCO LIGHT CENTRAL ── */}
-  <div className="light-wrap">
-    <div className="blob blob-light-1"></div>
-    <div className="blob blob-light-2"></div>
-    <div className="blob blob-light-3"></div>
+        {/* ── 01 · A MARCA ── */}
+        <section id="marca" className="mv-chapter">
+          <div className="mv-wrap">
+            <ChapterHead
+              num="01"
+              titulo="A marca"
+              intro="A Pantanal Saúde é uma operadora de saúde B2B que nasce com um compromisso diferente: cuidar das pessoas antes que o problema apareça. Saúde corporativa com a personalidade do Pantanal — próxima, resiliente e genuína. Este capítulo é a fundação: tudo o que os entregáveis seguintes materializam."
+            />
 
-    <section id="marca">
-      <div className="container">
-        <h2 className="section-titulo">Quem é a<br/>Pantanal Saúde</h2>
-        <p className="section-desc">Uma operadora de saúde B2B que nasce com um compromisso diferente: cuidar das pessoas
-          antes que o problema apareça. Saúde corporativa com a personalidade do Pantanal: próxima, resiliente e
-          genuína.</p>
-
-        <div className="marca-hero glass-light">
-          <span className="marca-hero-tag">Promessa Central</span>
-          <p className="marca-promessa">Excelência começa de dentro. Quando sua equipe está bem, seu negócio cresce.</p>
-        </div>
-
-        <div className="marca-masonry">
-          <div className="marca-bloco marca-card-large glass-light">
-            <h3>Personalidade</h3>
-            <div className="marca-palavras">
-              <span className="palavra-tag">Acolhedora</span>
-              <span className="palavra-tag">Segura</span>
-              <span className="palavra-tag">Direta</span>
-              <span className="palavra-tag">Atenciosa</span>
-              <span className="palavra-tag">Ágil</span>
-              <span className="palavra-tag">Confiável</span>
-              <span className="palavra-tag">Humana</span>
+            <div className="mv-pull">
+              <span className="mv-label">Promessa central</span>
+              <blockquote>Excelência começa de dentro. Quando sua equipe está bem, seu negócio cresce.</blockquote>
             </div>
-          </div>
 
-          <div className="marca-bloco marca-card-small glass-light">
-            <h3>Valores inegociáveis</h3>
-            <div className="marca-valores">
-              <div className="valor-item"><span className="valor-dot"></span>Comunicação clara</div>
-              <div className="valor-item"><span className="valor-dot"></span>Dignidade humana acima de tudo</div>
-              <div className="valor-item"><span className="valor-dot"></span>Sigilo e responsabilidade</div>
-            </div>
-          </div>
-
-          <div className="marca-bloco marca-card-large glass-light" style={{ gridColumn: '1 / -1' }}>
-            <h3>Diferenciais Reais</h3>
-            <div className="marca-valores" style={{ flexDirection: 'row', flexWrap: 'wrap', gap: '32px' }}>
-              <div className="valor-item"><span className="valor-dot"></span>Plantão psicológico 24h</div>
-              <div className="valor-item"><span className="valor-dot"></span>NR1 com acompanhamento</div>
-              <div className="valor-item"><span className="valor-dot"></span>Atendimento em até 1h</div>
-              <div className="valor-item"><span className="valor-dot"></span>Redução de turnover</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="logo">
-      <div className="container">
-        <h2 className="section-titulo">O símbolo<br/>da marca</h2>
-        <p className="section-desc">A arara canindé dentro da cruz médica. Identidade regional e saúde em uma forma única,
-          limpa e organizacional.</p>
-
-        <div className="logo-showcase">
-          <div className="logo-card-main glass-light">
-            <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/VERTICAL2.png" alt="Logo Principal" />
-            <span className="logo-card-label" style={{ color: 'var(--azul-principal)' }}>Versão Principal · Fundo Claro</span>
-          </div>
-          <div className="logo-card-sec glass-dark" style={{ borderRadius: '24px' }}>
-            <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/VERTICALB.png" alt="Logo Secundário" />
-            <span className="logo-card-label" style={{ color: '#fff' }}>Versão Clara · Fundo Escuro</span>
-          </div>
-        </div>
-
-        <h3 className="logo-produtos-titulo">Versões por produto</h3>
-        <div className="logo-produtos">
-          <div className="produto-card glass-light">
-            <div className="produto-mark"><img
-                src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/PLANTAO.png" alt="Plantão 24h" /></div>
-            <div className="produto-nome">Plantão 24h</div>
-            <div className="produto-cor"><span className="produto-cor-dot" style={{ background: '#f2c52f' }}></span>#f2c52f</div>
-          </div>
-          <div className="produto-card glass-light">
-            <div className="produto-mark"><img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/PLANOS.png"
-                alt="Planos" /></div>
-            <div className="produto-nome">Planos</div>
-            <div className="produto-cor"><span className="produto-cor-dot" style={{ background: '#0a4681' }}></span>#0a4681</div>
-          </div>
-          <div className="produto-card glass-light">
-            <div className="produto-mark"><img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/NR1.png"
-                alt="NR1" /></div>
-            <div className="produto-nome">NR1</div>
-            <div className="produto-cor"><span className="produto-cor-dot" style={{ background: '#1b8b73' }}></span>#1b8b73</div>
-          </div>
-        </div>
-
-        <div className="logo-naofaca">
-          <h3>Não faça isso</h3>
-          <div className="naofaca-grid">
-            <div className="naofaca-item glass-light">
-              <div className="naofaca-visual">
-                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-distorcer1.png"
-                  alt="Exemplo: logo distorcido"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
-                <span className="naofaca-ph"
-                  style={{display: "none"}}>Logo
-                  distorcido</span>
-              </div>
-              <div className="naofaca-desc">
-                <strong>✕ Não distorça</strong>
-                Nunca altere as proporções originais do logo.
-              </div>
-            </div>
-            <div className="naofaca-item glass-light">
-              <div className="naofaca-visual">
-                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-recolorir1.png"
-                  alt="Exemplo: cor fora do sistema"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
-                <span className="naofaca-ph"
-                  style={{display: "none"}}>Cor
-                  fora do sistema</span>
-              </div>
-              <div className="naofaca-desc">
-                <strong>✕ Não recolora</strong>
-                Use apenas as cores do sistema de identidade.
-              </div>
-            </div>
-            <div className="naofaca-item glass-light">
-              <div className="naofaca-visual">
-                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-sombra1.png"
-                  alt="Exemplo: logo com sombra"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
-                <span className="naofaca-ph"
-                  style={{display: "none"}}>Logo
-                  com sombra</span>
-              </div>
-              <div className="naofaca-desc">
-                <strong>✕ Sem sombras</strong>
-                O logo nunca recebe efeitos de sombra ou brilho.
-              </div>
-            </div>
-            <div className="naofaca-item glass-light">
-              <div className="naofaca-visual">
-                <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/nao-fundo1.png"
-                  alt="Exemplo: logo sobre foto"
-                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'" />
-                <span className="naofaca-ph"
-                  style={{display: "none"}}>Logo
-                  sobre foto</span>
-              </div>
-              <div className="naofaca-desc">
-                <strong>✕ Sem fundos complexos</strong>
-                Evite aplicar sobre texturas sem área de proteção.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="paleta">
-      <div className="container">
-        <h2 className="section-titulo">O sistema<br/>de cores</h2>
-        <p className="section-desc">Duas cores primárias formam a âncora institucional; duas cores de produto entram no
-          contexto de cada frente de serviço.</p>
-
-        <div className="paleta-circulos">
-          <div className="circulo-wrap">
-            <div className="swatch-circle" style={{ background: '#0c2b52' }}>
-              <span className="swatch-nome">Azul Principal</span>
-              <span className="swatch-hex">#0c2b52</span>
-            </div>
-            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Cor dominante, tipografia, fundos</span>
-          </div>
-          <div className="circulo-wrap">
-            <div className="swatch-circle light-text" style={{ background: '#f7f4ef', borderColor: 'rgba(12,43,82,0.1)' }}>
-              <span className="swatch-nome" style={{ color: '#0c2b52' }}>Off-white</span>
-              <span className="swatch-hex" style={{ color: '#0c2b52' }}>#f7f4ef</span>
-            </div>
-            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Fundo principal, respiro visual</span>
-          </div>
-          <div className="circulo-wrap">
-            <div className="swatch-circle" style={{ background: '#0a4681' }}>
-              <span className="swatch-nome">Azul Destaque</span>
-              <span className="swatch-hex">#0a4681</span>
-            </div>
-            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Links, destaques, Planos</span>
-          </div>
-          <div className="circulo-wrap">
-            <div className="swatch-circle" style={{ background: '#1b8b73' }}>
-              <span className="swatch-nome">Verde NR1</span>
-              <span className="swatch-hex">#1b8b73</span>
-            </div>
-            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Saúde ocupacional, NR1</span>
-          </div>
-          <div className="circulo-wrap">
-            <div className="swatch-circle" style={{ background: '#f2c52f' }}>
-              <span className="swatch-nome" style={{ color: '#0c2b52' }}>Amarelo Plantão</span>
-              <span className="swatch-hex" style={{ color: '#0c2b52' }}>#f2c52f</span>
-            </div>
-            <span className="swatch-uso" style={{ color: 'var(--azul-principal)' }}>Plantão 24h, urgência</span>
-          </div>
-        </div>
-
-        <div className="paleta-barras">
-          <div className="barra-cor" style={{ width: '42%', background: '#f7f4ef' }}><span style={{ color: '#6b6560' }}>42%</span></div>
-          <div className="barra-cor" style={{ width: '28%', background: '#0c2b52' }}><span style={{ color: '#fff' }}>28%</span></div>
-          <div className="barra-cor" style={{ width: '16%', background: '#0a4681' }}><span style={{ color: '#fff' }}>16%</span></div>
-          <div className="barra-cor" style={{ width: '7%', background: '#1b8b73' }}><span style={{ color: '#fff' }}>7%</span></div>
-          <div className="barra-cor" style={{ width: '7%', background: '#f2c52f' }}><span style={{ color: '#0c2b52' }}>7%</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tipografia">
-      <div className="container">
-        <h2 className="section-titulo">O sistema<br/>tipográfico</h2>
-        <p className="section-desc">Sora para display e títulos, transmitindo confiança e modernidade. Inter para o corpo do
-          texto, garantindo legibilidade perfeita.</p>
-
-        <div className="tipo-grid">
-          <div className="tipo-card glass-light">
-            <div className="tipo-head">
-              <h3>Sora</h3>
-              <span>Primária</span>
-            </div>
-            <div className="tipo-escala">
-              <div className="tipo-linha"><span className="tipo-label">Display</span><span className="tipo-exemplo"
-                  style={{ fontFamily: "'Sora', sans-serif", fontSize: '48px', fontWeight: 800 }}>SAÚDE</span></div>
-              <div className="tipo-linha"><span className="tipo-label">H1</span><span className="tipo-exemplo"
-                  style={{ fontFamily: "'Sora', sans-serif", fontSize: '32px', fontWeight: 700 }}>PANTANAL</span></div>
-              <div className="tipo-linha"><span className="tipo-label">H2</span><span className="tipo-exemplo"
-                  style={{ fontFamily: "'Sora', sans-serif", fontSize: '24px', fontWeight: 700 }}>Planos de saúde corporativos</span></div>
-            </div>
-          </div>
-
-          <div className="tipo-card glass-light">
-            <div className="tipo-head">
-              <h3>Inter</h3>
-              <span>Secundária</span>
-            </div>
-            <div className="tipo-escala">
-              <div className="tipo-linha"><span className="tipo-label">Body L</span><span className="tipo-exemplo"
-                  style={{ fontSize: '18px', fontWeight: 400, color: 'var(--text-light-muted)' }}>Quando sua equipe está bem
-                  cuidada.</span></div>
-              <div className="tipo-linha"><span className="tipo-label">Body</span><span className="tipo-exemplo"
-                  style={{ fontSize: '15px', fontWeight: 400, color: 'var(--text-light-muted)' }}>Plantão psicológico 24 horas,
-                  NR1.</span></div>
-              <div className="tipo-linha"><span className="tipo-label">Caption</span><span className="tipo-exemplo"
-                  style={{ fontSize: '12px', fontWeight: 500, color: 'var(--text-light-muted)' }}>Campo Grande, MS · Operadora
-                  B2B</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="aplicacoes">
-      <div className="container">
-        <h2 className="section-titulo">A marca<br/>em uso</h2>
-
-        <div className="app-wrap">
-          <div className="app-row">
-            <div className="app-img mockup-bg-1">
-              <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/mockup-cartao.png" alt="Cartão" />
-            </div>
-            <div className="app-text glass-light">
-              <p className="app-num">01 · Papelaria</p>
-              <h3 className="app-title">Cartão de visita</h3>
-              <p className="app-desc">Frente com o símbolo isolado, verso com dados de contato em layout limpo e espaço
-                negativo generoso.</p>
-              <div className="app-specs">
-                <div className="spec-item"><span className="spec-k">Formato</span><span className="spec-v">90 × 50 mm</span></div>
-                <div className="spec-item"><span className="spec-k">Papel</span><span className="spec-v">Off-white 300g</span></div>
-              </div>
-              <a href="#downloads" className="btn-outline">Baixar arquivo</a>
-            </div>
-          </div>
-
-          <div className="app-row">
-            <div className="app-text glass-light">
-              <p className="app-num">02 · Digital</p>
-              <h3 className="app-title">Banner de site</h3>
-              <p className="app-desc">Hero institucional para o site da Pantanal Saúde. Fundo flat com a cruz-arara como
-                elemento âncora.</p>
-              <div className="app-specs">
-                <div className="spec-item"><span className="spec-k">Desktop</span><span className="spec-v">1920 × 600 px</span>
+            <div className="mv-subhead"><span className="mv-label">1.1 — Personalidade e valores</span></div>
+            <div className="mv-grid-2">
+              <div>
+                <div className="mv-tags">
+                  <span className="mv-tag">Acolhedora</span>
+                  <span className="mv-tag">Segura</span>
+                  <span className="mv-tag">Direta</span>
+                  <span className="mv-tag">Atenciosa</span>
+                  <span className="mv-tag">Ágil</span>
+                  <span className="mv-tag">Confiável</span>
+                  <span className="mv-tag">Humana</span>
                 </div>
-                <div className="spec-item"><span className="spec-k">Mobile</span><span className="spec-v">768 × 800 px</span></div>
               </div>
-              <a href="#downloads" className="btn-outline">Baixar arquivo</a>
+              <ul className="mv-numlist">
+                <li><span className="num">01</span>Comunicação clara</li>
+                <li><span className="num">02</span>Dignidade humana acima de tudo</li>
+                <li><span className="num">03</span>Sigilo e responsabilidade</li>
+              </ul>
             </div>
-            <div className="app-img mockup-bg-2">
-              <img src="https://teacherana.com.br/wp-content/uploads/teste/assets/ps/mockup-banner.png" alt="Banner" />
+
+            <div className="mv-subhead"><span className="mv-label">1.2 — Diferenciais reais</span></div>
+            <div className="mv-difs">
+              <div><span className="num">01</span><span className="titulo">Plantão psicológico 24h</span></div>
+              <div><span className="num">02</span><span className="titulo">NR1 com acompanhamento</span></div>
+              <div><span className="num">03</span><span className="titulo">Atendimento em até 1h</span></div>
+              <div><span className="num">04</span><span className="titulo">Redução de turnover</span></div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  </div>
+        </section>
 
-  {/* ── BLOCO DARK INFERIOR ── */}
-  <div className="dark-wrap">
-    <div className="blob blob-dark-1" style={{ bottom: '-10%', top: 'auto' }}></div>
-    <div className="blob blob-dark-3" style={{ left: '10%', right: 'auto' }}></div>
+        {/* ── 02 · LOGOTIPO & VARIAÇÕES ── */}
+        <section id="logo" className="mv-chapter">
+          <div className="mv-wrap">
+            <ChapterHead
+              num="02"
+              titulo="Logotipo & variações"
+              entregavel="01"
+              intro="A arara canindé dentro da cruz médica: identidade regional e saúde em uma forma única, limpa e organizacional. Todas as versões estão disponíveis em vetor editável (.AI), SVG e PNG — baixe direto na legenda de cada figura ou o pacote completo na seção 06."
+            />
 
-    <section id="downloads">
-      <div className="container">
-        <h2 className="section-titulo">Arquivos<br/>da marca</h2>
-        <p className="section-desc">Todos os arquivos finais, prontos para uso digital e gráfica. Baixe item por item
-          conforme a necessidade.</p>
+            <div className="mv-subhead"><span className="mv-label">2.1 — Versões principais</span></div>
+            <div className="mv-figpair">
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas">
+                  <img src="/pantanal/assets/vertical.png" alt="Logo Pantanal Saúde, versão vertical para fundo claro" />
+                </div>
+                <figcaption className="mv-fig-caption">
+                  <span>Fig. 2.1 — Vertical · fundo claro</span>
+                  <span className="mv-fig-actions">
+                    <a className="mv-dl-link" href="/pantanal/assets/vertical.png" download="pantanal-saude-vertical.png">PNG ↓</a>
+                    <a className="mv-dl-link" href="/pantanal/assets/vertical.svg" download="pantanal-saude-vertical.svg">SVG ↓</a>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas mv-fig-canvas--navy">
+                  <img src="/pantanal/assets/vertical-branca.png" alt="Logo Pantanal Saúde, versão vertical branca para fundo escuro" />
+                </div>
+                <figcaption className="mv-fig-caption">
+                  <span>Fig. 2.2 — Vertical branca</span>
+                  <span className="mv-fig-actions">
+                    <a className="mv-dl-link" href="/pantanal/assets/vertical-branca.png" download="pantanal-saude-vertical-branca.png">PNG ↓</a>
+                    <a className="mv-dl-link" href="/pantanal/assets/vertical-branca.svg" download="pantanal-saude-vertical-branca.svg">SVG ↓</a>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <div className="mv-figpair mv-figpair--even">
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas">
+                  <img src="/pantanal/assets/horizontal.png" alt="Logo Pantanal Saúde, versão horizontal para fundo claro" style={{ maxHeight: '140px' }} />
+                </div>
+                <figcaption className="mv-fig-caption">
+                  <span>Fig. 2.3 — Horizontal · fundo claro</span>
+                  <span className="mv-fig-actions">
+                    <a className="mv-dl-link" href="/pantanal/assets/horizontal.png" download="pantanal-saude-horizontal.png">PNG ↓</a>
+                    <a className="mv-dl-link" href="/pantanal/assets/horizontal.svg" download="pantanal-saude-horizontal.svg">SVG ↓</a>
+                  </span>
+                </figcaption>
+              </figure>
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas mv-fig-canvas--navy">
+                  <img src="/pantanal/assets/horizontal-branca.png" alt="Logo Pantanal Saúde, versão horizontal branca para fundo escuro" style={{ maxHeight: '140px' }} />
+                </div>
+                <figcaption className="mv-fig-caption">
+                  <span>Fig. 2.4 — Horizontal · branca</span>
+                  <span className="mv-fig-actions">
+                    <a className="mv-dl-link" href="/pantanal/assets/horizontal-branca.png" download="pantanal-saude-horizontal-branca.png">PNG ↓</a>
+                    <a className="mv-dl-link" href="/pantanal/assets/horizontal-branca.svg" download="pantanal-saude-horizontal-branca.svg">SVG ↓</a>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
+            <figure className="mv-fig">
+              <div className="mv-fig-canvas mv-fig-canvas--navy">
+                <img src="/pantanal/assets/simbolo-branca.png" alt="Símbolo isolado Pantanal Saúde, versão monocromática branca" style={{ maxHeight: '200px' }} />
+              </div>
+              <figcaption className="mv-fig-caption">
+                <span>Fig. 2.5 — Símbolo isolado · monocromática branca</span>
+                <span className="mv-fig-actions">
+                  <a className="mv-dl-link" href="/pantanal/assets/simbolo-branca.png" download="pantanal-saude-simbolo-branca.png">PNG ↓</a>
+                  <a className="mv-dl-link" href="/pantanal/assets/simbolo-branca.svg" download="pantanal-saude-simbolo-branca.svg">SVG ↓</a>
+                </span>
+              </figcaption>
+            </figure>
 
-        <div className="downloads-grid">
-          <div className="download-card glass-dark">
-            <div className="dl-top"><span className="dl-format">SVG · AI</span><span className="dl-weight">Vetorial</span></div>
-            <h3 className="dl-title">Logo vetorial completo</h3>
-            <p className="dl-desc">Todas as versões em arquivo editável e escalável.</p>
-            <a href="#" className="btn-solid">Baixar ZIP</a>
+            <div className="mv-subhead"><span className="mv-label">2.2 — Versões por produto</span></div>
+            <div className="mv-prod-grid">
+              <div className="mv-prod">
+                <div className="mv-prod-canvas"><img src="/pantanal/assets/PLANTAO.png" alt="Símbolo do produto Plantão 24h" /></div>
+                <div className="mv-prod-info">
+                  <div className="nome">Plantão 24h</div>
+                  <div className="cor"><i style={{ background: '#f2c52f' }} />#f2c52f</div>
+                </div>
+              </div>
+              <div className="mv-prod">
+                <div className="mv-prod-canvas"><img src="/pantanal/assets/PLANOS.png" alt="Símbolo do produto Planos" /></div>
+                <div className="mv-prod-info">
+                  <div className="nome">Planos</div>
+                  <div className="cor"><i style={{ background: '#0a4681' }} />#0a4681</div>
+                </div>
+              </div>
+              <div className="mv-prod">
+                <div className="mv-prod-canvas"><img src="/pantanal/assets/NR1.png" alt="Símbolo do produto NR1" /></div>
+                <div className="mv-prod-info">
+                  <div className="nome">NR1</div>
+                  <div className="cor"><i style={{ background: '#1b8b73' }} />#1b8b73</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">2.3 — Como aplicar o logotipo</span></div>
+            <div className="mv-rules">
+              <div>
+                <span className="num">R.1</span>
+                <div>
+                  <h4>Área de proteção</h4>
+                  <p>Preserve ao redor do logo um respiro mínimo equivalente à altura da cruz do símbolo. Nenhum texto, imagem ou borda deve invadir essa área.</p>
+                </div>
+              </div>
+              <div>
+                <span className="num">R.2</span>
+                <div>
+                  <h4>Tamanho mínimo</h4>
+                  <p>Versão vertical: 80 px de altura no digital e 20 mm na impressão. Abaixo disso, prefira o símbolo isolado, que mantém a leitura em tamanhos reduzidos.</p>
+                </div>
+              </div>
+              <div>
+                <span className="num">R.3</span>
+                <div>
+                  <h4>Qual versão usar</h4>
+                  <p>Fundo claro pede a versão principal. Fundo azul-marinho ou fotografia escura pede a versão clara. Avatares, favicon e assinaturas de e-mail pedem o símbolo isolado. Materiais de produto usam a versão da cor correspondente.</p>
+                </div>
+              </div>
+              <div>
+                <span className="num">R.4</span>
+                <div>
+                  <h4>Sobre quais fundos</h4>
+                  <p>Aplique somente sobre as cores do sistema ou fotografias com área de descanso visual. Nunca sobre texturas ruidosas sem área de proteção.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">2.4 — Usos incorretos</span></div>
+            <div className="mv-no-grid">
+              <div className="mv-no">
+                <div className="mv-no-visual"><img src="/pantanal/assets/nao-distorcer1.png" alt="Exemplo de logo distorcido" /></div>
+                <span className="titulo">Não distorça</span>
+                <p>Nunca altere as proporções originais do logo.</p>
+              </div>
+              <div className="mv-no">
+                <div className="mv-no-visual"><img src="/pantanal/assets/nao-recolorir1.png" alt="Exemplo de logo com cor fora do sistema" /></div>
+                <span className="titulo">Não recolora</span>
+                <p>Use apenas as cores do sistema de identidade.</p>
+              </div>
+              <div className="mv-no">
+                <div className="mv-no-visual"><img src="/pantanal/assets/nao-sombra1.png" alt="Exemplo de logo com sombra" /></div>
+                <span className="titulo">Sem sombras</span>
+                <p>O logo nunca recebe efeitos de sombra ou brilho.</p>
+              </div>
+              <div className="mv-no">
+                <div className="mv-no-visual"><img src="/pantanal/assets/nao-fundo1.png" alt="Exemplo de logo sobre fundo complexo" /></div>
+                <span className="titulo">Sem fundos complexos</span>
+                <p>Evite aplicar sobre texturas sem área de proteção.</p>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="download-card glass-dark">
-            <div className="dl-top"><span className="dl-format">PNG</span><span className="dl-weight">Digital</span></div>
-            <h3 className="dl-title">Logo em alta resolução</h3>
-            <p className="dl-desc">PNG transparente em 2x e 3x. Fundos claro e escuro.</p>
-            <a href="#" className="btn-solid">Baixar ZIP</a>
+        {/* ── 03 · SISTEMA TIPOGRÁFICO ── */}
+        <section id="tipografia" className="mv-chapter">
+          <div className="mv-wrap">
+            <ChapterHead
+              num="03"
+              titulo="Sistema tipográfico"
+              entregavel="02"
+              intro="Duas famílias com papéis definidos: Sora para display e títulos, transmitindo confiança e modernidade; Inter para o corpo do texto, garantindo legibilidade perfeita em qualquer tamanho."
+            />
+
+            <div className="mv-subhead"><span className="mv-label">3.1 — Tipografia principal</span></div>
+            <div className="mv-type">
+              <div className="mv-type-head">
+                <h3>Sora</h3>
+                <span className="mv-label">Primária — Display &amp; títulos</span>
+              </div>
+              <div className="mv-type-glyphs">
+                <div className="aa" style={{ fontFamily: 'var(--font-display)', fontWeight: 800 }}>Aa Bb 09</div>
+                <div className="charset" style={{ fontFamily: 'var(--font-display)' }}>
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789
+                </div>
+              </div>
+              <div className="mv-type-row">
+                <span className="spec">Display<br />48px — 800</span>
+                <span className="sample" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 800, lineHeight: 1.1 }}>SAÚDE</span>
+              </div>
+              <div className="mv-type-row">
+                <span className="spec">H1<br />32px — 700</span>
+                <span className="sample" style={{ fontFamily: 'var(--font-display)', fontSize: '32px', fontWeight: 700, lineHeight: 1.15 }}>PANTANAL</span>
+              </div>
+              <div className="mv-type-row">
+                <span className="spec">H2<br />24px — 700</span>
+                <span className="sample" style={{ fontFamily: 'var(--font-display)', fontSize: '24px', fontWeight: 700, lineHeight: 1.25 }}>Planos de saúde corporativos</span>
+              </div>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">3.2 — Tipografia secundária</span></div>
+            <div className="mv-type">
+              <div className="mv-type-head">
+                <h3>Inter</h3>
+                <span className="mv-label">Secundária — Corpo de texto</span>
+              </div>
+              <div className="mv-type-row">
+                <span className="spec">Body L<br />18px — 400</span>
+                <span className="sample" style={{ fontSize: '18px', color: 'var(--ink-muted)' }}>Quando sua equipe está bem cuidada.</span>
+              </div>
+              <div className="mv-type-row">
+                <span className="spec">Body<br />15px — 400</span>
+                <span className="sample" style={{ fontSize: '15px', color: 'var(--ink-muted)' }}>Plantão psicológico 24 horas, NR1.</span>
+              </div>
+              <div className="mv-type-row">
+                <span className="spec">Caption<br />12px — 500</span>
+                <span className="sample" style={{ fontSize: '12px', fontWeight: 500, color: 'var(--ink-muted)' }}>Campo Grande, MS · Operadora B2B</span>
+              </div>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">3.3 — Como usar a tipografia</span></div>
+            <div className="mv-rules">
+              <div>
+                <span className="num">R.1</span>
+                <div>
+                  <h4>Papel de cada família</h4>
+                  <p>Sora assina títulos, números de destaque e chamadas. Inter cuida de parágrafos, legendas e interfaces. Não inverta os papéis: texto corrido nunca em Sora, títulos nunca em Inter.</p>
+                </div>
+              </div>
+              <div>
+                <span className="num">R.2</span>
+                <div>
+                  <h4>Hierarquia fixa</h4>
+                  <p>Respeite a escala do sistema: Display 48/800 · H1 32/700 · H2 24/700 · Body 15–18/400 · Caption 12/500. Um nível por função, sem tamanhos intermediários inventados.</p>
+                </div>
+              </div>
+              <div>
+                <span className="num">R.3</span>
+                <div>
+                  <h4>Composição</h4>
+                  <p>No máximo dois pesos tipográficos por peça. Alinhamento à esquerda como padrão; centralizado apenas em capas e convites.</p>
+                </div>
+              </div>
+              <div>
+                <span className="num">R.4</span>
+                <div>
+                  <h4>Onde obter as fontes</h4>
+                  <p>Ambas são gratuitas no Google Fonts: <a href="https://fonts.google.com/specimen/Sora" target="_blank" rel="noreferrer">fonts.google.com/specimen/Sora</a> e <a href="https://fonts.google.com/specimen/Inter" target="_blank" rel="noreferrer">fonts.google.com/specimen/Inter</a>. Qualquer equipe ou fornecedor pode instalá-las sem custo de licença.</p>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="download-card glass-dark">
-            <div className="dl-top"><span className="dl-format">PNG</span><span className="dl-weight">Produtos</span></div>
-            <h3 className="dl-title">Logos por produto</h3>
-            <p className="dl-desc">Plantão, Planos e NR1 recortados para uso.</p>
-            <a href="#" className="btn-solid">Baixar ZIP</a>
+        {/* ── 04 · PALETA CROMÁTICA ── */}
+        <section id="paleta" className="mv-chapter">
+          <div className="mv-wrap">
+            <ChapterHead
+              num="04"
+              titulo="Paleta cromática"
+              entregavel="03"
+              intro="Duas cores primárias formam a âncora institucional; duas cores de produto entram no contexto de cada frente de serviço. Códigos em HEX, RGB e CMYK — clique no HEX para copiar."
+            />
+
+            <div className="mv-subhead"><span className="mv-label">4.1 — Paleta</span></div>
+            <div className="mv-color-grid">
+              {CORES.map((c) => (
+                <div className="mv-color" key={c.hex}>
+                  <div className="mv-color-swatch" style={{ background: c.hex }} />
+                  <div className="mv-color-info">
+                    <div className="nome">{c.nome}</div>
+                    <div className="mv-color-line"><span className="k">HEX</span><CopyHex hex={c.hex} /></div>
+                    <div className="mv-color-line"><span className="k">RGB</span><span>{c.rgb}</span></div>
+                    <div className="mv-color-line"><span className="k">CMYK</span><span>{c.cmyk}</span></div>
+                    <div className="uso">{c.uso}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">4.2 — Proporção de uso</span></div>
+            <div className="mv-bar" role="img" aria-label="Proporção de uso das cores: off-white 42%, azul principal 28%, azul destaque 16%, verde NR1 7%, amarelo Plantão 7%">
+              <div style={{ width: '42%', background: '#f7f4ef' }} />
+              <div style={{ width: '28%', background: '#0c2b52' }} />
+              <div style={{ width: '16%', background: '#0a4681' }} />
+              <div style={{ width: '7%', background: '#1b8b73' }} />
+              <div style={{ width: '7%', background: '#f2c52f' }} />
+            </div>
+            <div className="mv-bar-legend">
+              <span><i style={{ background: '#f7f4ef' }} />42% Off-white</span>
+              <span><i style={{ background: '#0c2b52' }} />28% Azul Principal</span>
+              <span><i style={{ background: '#0a4681' }} />16% Azul Destaque</span>
+              <span><i style={{ background: '#1b8b73' }} />7% Verde NR1</span>
+              <span><i style={{ background: '#f2c52f' }} />7% Amarelo Plantão</span>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">4.3 — Combinações seguras de texto</span></div>
+            <div className="mv-combo-grid">
+              {COMBOS.map((c) => (
+                <div className="mv-combo" key={c.nome}>
+                  <div className="mv-combo-sample" style={{ background: c.bg, color: c.fg }}>Aa</div>
+                  <div className="mv-combo-info">
+                    {c.nome}<br />
+                    <span className="r">{c.ratio}</span> — {c.nivel}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+        </section>
 
-          <div className="download-card glass-dark">
-            <div className="dl-top"><span className="dl-format">PDF</span><span className="dl-weight">Impressão</span></div>
-            <h3 className="dl-title">Material Gráfico</h3>
-            <p className="dl-desc">Cartão, folders, tudo fechado com sangria e marcas.</p>
-            <a href="#" className="btn-solid">Baixar ZIP</a>
+        {/* ── 05 · PEÇAS DE APLICAÇÃO ── */}
+        <section id="aplicacoes" className="mv-chapter">
+          <div className="mv-wrap">
+            <ChapterHead
+              num="05"
+              titulo="Peças de aplicação"
+              entregavel="04"
+              intro="Quatro materiais prontos para uso comercial, desenhados a partir do sistema visual: cartão de visita, banner de site, folder institucional e modelo de documento."
+            />
+
+            <div className="mv-subhead"><span className="mv-label">5.1 — Cartão de visita</span></div>
+            <div className="mv-app">
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas mv-fig-canvas--flush">
+                  <img src="/pantanal/assets/mockup-cartao.png" alt="Mockup do cartão de visita Pantanal Saúde" />
+                </div>
+                <figcaption className="mv-fig-caption"><span>Fig. 5.1 — Cartão de visita</span></figcaption>
+              </figure>
+              <div className="mv-app-text">
+                <span className="mv-label">Peça 01 — Papelaria</span>
+                <h3>Cartão de visita</h3>
+                <p>Frente com o símbolo isolado, verso com dados de contato em layout limpo e espaço negativo generoso. Envie o arquivo fechado à gráfica sem alterações de cor ou fonte.</p>
+                <div className="mv-app-specs">
+                  <div><span className="k">Formato</span><span className="v">90 × 50 mm</span></div>
+                  <div><span className="k">Papel</span><span className="v">Off-white 300g</span></div>
+                </div>
+                <a className="mv-dl-link" href="#downloads">Ver arquivos ↓</a>
+              </div>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">5.2 — Banner de site</span></div>
+            <div className="mv-app mv-app--flip">
+              <div className="mv-app-text">
+                <span className="mv-label">Peça 02 — Digital</span>
+                <h3>Banner de site</h3>
+                <p>Hero institucional para o site da Pantanal Saúde. Fundo flat com a cruz-arara como elemento âncora. Use as versões desktop e mobile conforme o dispositivo — não recorte a arte manualmente.</p>
+                <div className="mv-app-specs">
+                  <div><span className="k">Desktop</span><span className="v">1920 × 600 px</span></div>
+                  <div><span className="k">Mobile</span><span className="v">768 × 800 px</span></div>
+                  <div><span className="k">Status</span><span className="v">Arquivos finais em preparação</span></div>
+                </div>
+                <a className="mv-dl-link" href="#downloads">Ver arquivos ↓</a>
+              </div>
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas mv-fig-canvas--flush">
+                  <img src="/pantanal/assets/mockup-banner.png" alt="Mockup do banner de site Pantanal Saúde" />
+                </div>
+                <figcaption className="mv-fig-caption"><span>Fig. 5.2 — Banner institucional</span></figcaption>
+              </figure>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">5.3 — Folder institucional</span></div>
+            <div className="mv-app">
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas mv-fig-canvas--flush">
+                  <img src="/pantanal/assets/mockup-folder.jpg" alt="Mockup do folder institucional Pantanal Saúde" />
+                </div>
+                <figcaption className="mv-fig-caption"><span>Fig. 5.3 — Folder institucional</span></figcaption>
+              </figure>
+              <div className="mv-app-text">
+                <span className="mv-label">Peça 03 — Impresso</span>
+                <h3>Folder institucional</h3>
+                <p>Tríptico com capa em Azul Principal e o símbolo em branco; painéis internos numerados apresentam os serviços para decisores de RH. Envie o PDF fechado à gráfica — o arquivo editável acompanha o pacote.</p>
+                <div className="mv-app-specs">
+                  <div><span className="k">Dobra</span><span className="v">Tríptico · 3 painéis</span></div>
+                  <div><span className="k">Entrega</span><span className="v">PDF fechado + AI editável</span></div>
+                </div>
+                <a className="mv-dl-link" href="#downloads">Ver arquivos ↓</a>
+              </div>
+            </div>
+
+            <div className="mv-subhead"><span className="mv-label">5.4 — Modelo de documento</span></div>
+            <div className="mv-app mv-app--flip">
+              <div className="mv-app-text">
+                <span className="mv-label">Peça 04 — Definida em briefing</span>
+                <h3>Modelo de documento</h3>
+                <p>Documento timbrado para propostas, comunicados e materiais internos: logotipo no cabeçalho, rodapé com paginação e aviso de confidencialidade. Basta substituir o conteúdo no Word — a estrutura já está pronta.</p>
+                <div className="mv-app-specs">
+                  <div><span className="k">Formato</span><span className="v">A4 · 210 × 297 mm</span></div>
+                  <div><span className="k">Entrega</span><span className="v">DOCX editável</span></div>
+                </div>
+                <a className="mv-dl-link" href="#downloads">Ver arquivos ↓</a>
+              </div>
+              <figure className="mv-fig">
+                <div className="mv-fig-canvas mv-fig-canvas--flush">
+                  <img src="/pantanal/assets/mockup-documento.jpg" alt="Mockup do modelo de documento timbrado Pantanal Saúde" />
+                </div>
+                <figcaption className="mv-fig-caption"><span>Fig. 5.4 — Modelo de documento</span></figcaption>
+              </figure>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <footer>
-      <div className="footer-inner">
-        <div className="footer-left">
-          <span className="footer-sparkle">✦</span>
-          <p>Produzido por <strong>hekbay</strong></p>
-          <p>OBRIGADO PELA CONFIANÇA</p>
-        </div>
-        <div className="footer-right">
-          <p>Manual de Identidade Visual</p>
-          <p>Pantanal Saúde · 2026</p>
-        </div>
-      </div>
-    </footer>
-  </div>
-    </>
+        {/* ── 06 · ARQUIVOS ── */}
+        <section id="downloads" className="mv-files">
+          <div className="mv-wrap">
+            <ChapterHead
+              num="06"
+              titulo="Arquivos da marca"
+              intro="Os arquivos finais da marca, organizados por entregável: vetores editáveis (.AI), versões finais em PNG e SVG e as peças fechadas para gráfica. Baixe o pacote completo ou item por item, conforme a necessidade."
+            />
+
+            <div className="mv-file-list">
+              <div className="mv-file-row">
+                <span className="num">6.1</span>
+                <div>
+                  <div className="titulo">Logotipo completo</div>
+                  <div className="desc">Master editável em .AI + PNG e SVG de todas as versões: vertical, horizontal, símbolo isolado, produtos e variações brancas.</div>
+                </div>
+                <span className="fmt">ZIP · AI · PNG · SVG — 2,2 MB</span>
+                <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-logo.zip" download>Baixar ↓</a>
+              </div>
+
+              <div className="mv-file-row">
+                <span className="num">6.2</span>
+                <div>
+                  <div className="titulo">Cartão de visita</div>
+                  <div className="desc">Arquivo editável para a gráfica preencher os dados de cada cartão — instruções no LEIA-ME incluso.</div>
+                </div>
+                <span className="fmt">ZIP · AI — 460 KB</span>
+                <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-cartao-de-visita.zip" download>Baixar ↓</a>
+              </div>
+
+              <div className="mv-file-row">
+                <span className="num">6.3</span>
+                <div>
+                  <div className="titulo">Folder institucional</div>
+                  <div className="desc">Tríptico: PDF fechado para gráfica, arquivo editável em .AI e mockup de apresentação.</div>
+                </div>
+                <span className="fmt">ZIP · AI · PDF — 11,3 MB</span>
+                <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-folder.zip" download>Baixar ↓</a>
+              </div>
+
+              <div className="mv-file-row">
+                <span className="num">6.4</span>
+                <div>
+                  <div className="titulo">Modelo de documento</div>
+                  <div className="desc">Template A4 timbrado, editável no Word, para propostas e comunicados.</div>
+                </div>
+                <span className="fmt">ZIP · DOCX — 3 MB</span>
+                <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-documento.zip" download>Baixar ↓</a>
+              </div>
+
+              <div className="mv-file-row">
+                <span className="num">6.5</span>
+                <div>
+                  <div className="titulo">Arte da capa</div>
+                  <div className="desc">Wallpaper institucional com o símbolo sobre gradiente, 1920 × 1080 px.</div>
+                </div>
+                <span className="fmt">JPG — 373 KB</span>
+                <a className="mv-btn" href="/pantanal/assets/logograd2.jpg" download="pantanal-saude-arte-capa.jpg">Baixar ↓</a>
+              </div>
+
+              <div className="mv-file-row">
+                <span className="num">6.6</span>
+                <div>
+                  <div className="titulo">Kit completo</div>
+                  <div className="desc">Todos os entregáveis acima em um único pacote.</div>
+                </div>
+                <span className="fmt">ZIP — 18,8 MB</span>
+                <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-kit-completo.zip" download>Baixar ↓</a>
+              </div>
+            </div>
+
+            <p className="mv-files-nota">
+              Em preparação: arquivos finais do banner de site, códigos Pantone e o manual em PDF interativo.
+            </p>
+
+            <div className="mv-colofao">
+              <span>Produzido por hekbay — obrigado pela confiança</span>
+              <span>Manual de Identidade Visual · Pantanal Saúde · 1ª edição — 2026</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }
