@@ -1,0 +1,368 @@
+/* ─────────────────────────────────────────────────────────────
+   ANTIGRAVITY PREMIUM OVERRIDES
+   Destruindo a "cara de Claude" e trazendo autenticidade absoluta
+   ───────────────────────────────────────────────────────────── */
+
+/* 1. Eviscerar a cara de documento (Eyebrows, numbers, borders secas) */
+.mv-label, .mv-chap-idx, .mv-chap-num, .mv-toc-foot, .mv-cover-top, .mv-bar-legend i {
+  display: none !important;
+}
+
+/* 2. Global Canvas & Sanduíche Magic */
+.mv {
+  --radius-huge: 40px;
+  --radius-large: 24px;
+  --radius-med: 16px;
+}
+
+.dark-wrap {
+  background: radial-gradient(120% 120% at 50% 0%, #061224 0%, #030811 100%) !important;
+  color: #fff !important;
+}
+
+.light-wrap {
+  background: radial-gradient(120% 120% at 50% 100%, #fcfbf9 0%, #ebe7de 100%) !important;
+  position: relative;
+}
+
+.mv-main * {
+  border-color: rgba(12, 43, 82, 0.06) !important;
+}
+.dark-wrap * {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 3. True Glassmorphism Cards (Premium UI) */
+.mv-fig, .mv-prod, .mv-no-visual, .mv-color, .mv-type, .mv-no, .mv-app, .mv-file-row {
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(40px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(150%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: var(--radius-large) !important;
+  box-shadow: 0 24px 48px rgba(12, 43, 82, 0.05), inset 0 1px 0 rgba(255,255,255,1) !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden;
+}
+
+/* Fix para a paleta de cores para se alinhar ao vidro */
+.mv-color-swatch { border-radius: var(--radius-large) var(--radius-large) 0 0 !important; }
+
+/* Variante Dark para os arquivos e capa */
+.dark-wrap .mv-file-row, .dark-wrap .mv-fig, .dark-wrap .mv-cover-spec {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(30px) saturate(120%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+/* Micro-interações flutuantes (Hover effects) */
+.mv-fig:hover, .mv-prod:hover, .mv-color:hover, .mv-type:hover, .mv-app:hover, .mv-file-row:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: 0 40px 80px rgba(12, 43, 82, 0.12), inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+.dark-wrap .mv-file-row:hover {
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+}
+
+/* 4. Canvas inside cards & Breathing room (Padding) */
+.mv-fig-canvas, .mv-prod-canvas {
+  border-bottom: 1px solid rgba(12, 43, 82, 0.08) !important;
+  background: transparent !important;
+  padding: 48px !important;
+}
+.mv-no-visual {
+  border-bottom: 1px solid rgba(12, 43, 82, 0.08) !important;
+  background: transparent !important;
+}
+.mv-fig-canvas--navy {
+  background: var(--azul-principal) !important;
+}
+.dark-wrap .mv-fig-canvas {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.mv-fig-caption, .mv-prod-info, .mv-color-info, .mv-type, .mv-app-text {
+  padding: 32px !important;
+}
+.mv-no {
+  padding: 32px !important;
+}
+
+/* 5. Tipografia Brutalista & Vibrante */
+.mv-chap-head h2 {
+  font-family: var(--font-display) !important;
+  font-size: clamp(48px, 6vw, 84px) !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, #0c2b52, #1b8b73);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.04em !important;
+  margin-bottom: 20px;
+}
+.dark-wrap .mv-chap-head h2, .mv-cover-center h1 {
+  background: linear-gradient(135deg, #ffffff, #9db2cf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.mv-cover-center h1 {
+  font-size: clamp(60px, 8vw, 120px) !important;
+  letter-spacing: -0.05em !important;
+  max-width: 100% !important;
+}
+
+.mv-chap-intro {
+  font-size: 22px !important;
+  line-height: 1.6 !important;
+  color: var(--ink-muted) !important;
+  max-width: 800px !important;
+}
+.dark-wrap .mv-chap-intro {
+  color: var(--navy-muted) !important;
+}
+
+/* 6. Hero / Cover (First Fold) */
+.mv-cover {
+  padding-top: 80px !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100vh !important;
+}
+.mv-cover-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(-40px);
+}
+.mv-cover-spec {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 60px !important;
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  padding: 24px 60px !important;
+  border-radius: 100px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mv-cover-spec .k { display: none !important; }
+.mv-cover-spec .v { font-size: 18px !important; font-weight: 500 !important; opacity: 0.9; }
+
+/* 7. Redesign TOC (Sidebar) -> Pill Glass Menu */
+.mv-toc {
+  background: rgba(247, 244, 239, 0.6) !important;
+  backdrop-filter: blur(40px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(150%) !important;
+  border-right: 1px solid rgba(255,255,255,0.6) !important;
+  box-shadow: 10px 0 40px rgba(12, 43, 82, 0.05) !important;
+  padding: 60px 30px !important;
+  width: 320px !important;
+}
+.mv-main { margin-left: 320px !important; }
+
+.mv-toc-brand {
+  font-family: 'UnifrakturMaguntia', cursive !important;
+  font-size: 40px !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.05em !important;
+  background: linear-gradient(135deg, var(--azul-principal), var(--verde-arara));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 40px !important;
+}
+
+.mv-toc-list a {
+  border-radius: var(--radius-med) !important;
+  padding: 16px 20px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  color: var(--ink-muted) !important;
+}
+.mv-toc-list a:hover {
+  background: rgba(255, 255, 255, 0.8) !important;
+  transform: translateX(8px) !important;
+  color: var(--azul-destaque) !important;
+  box-shadow: 0 4px 12px rgba(12, 43, 82, 0.05) !important;
+}
+.mv-toc-list a[aria-current="true"] {
+  background: var(--azul-principal) !important;
+  color: #fff !important;
+  transform: translateX(12px) !important;
+  box-shadow: 0 10px 20px rgba(12, 43, 82, 0.2) !important;
+}
+
+/* 8. Subheads & Pull Quotes (Wow effect) */
+.mv-subhead {
+  border: none !important;
+  margin-top: 100px !important;
+  margin-bottom: 40px !important;
+}
+.mv-subhead .mv-label { 
+  display: block !important; 
+  font-family: var(--font-display) !important;
+  font-size: 36px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  text-transform: none !important;
+  color: var(--azul-principal) !important;
+}
+
+.mv-pull {
+  border: none !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4)) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: var(--radius-huge) !important;
+  padding: 80px 100px !important;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(12, 43, 82, 0.05), inset 0 2px 0 #fff !important;
+  text-align: center;
+}
+.mv-pull::before {
+  content: "“";
+  position: absolute;
+  top: -20px;
+  left: 40px;
+  font-size: 240px;
+  font-family: var(--font-display);
+  color: rgba(12, 43, 82, 0.04);
+  line-height: 1;
+}
+.mv-pull blockquote {
+  font-size: clamp(32px, 4vw, 48px) !important;
+  line-height: 1.2 !important;
+  background: linear-gradient(135deg, var(--azul-principal), var(--azul-destaque));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 auto !important;
+  font-weight: 800 !important;
+}
+
+/* 9. Premium Buttons (High Contrast Pills) */
+.light-wrap .mv-btn, .light-wrap .mv-app-text > .mv-dl-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px !important;
+  background: var(--azul-principal) !important;
+  color: #fff !important;
+  border-radius: 100px !important;
+  text-decoration: none !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-shadow: 0 10px 20px rgba(12, 43, 82, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: none !important;
+}
+.light-wrap .mv-btn:hover, .light-wrap .mv-app-text > .mv-dl-link:hover {
+  transform: translateY(-4px) scale(1.05) !important;
+  box-shadow: 0 20px 40px rgba(12, 43, 82, 0.3) !important;
+  background: var(--verde-arara) !important;
+}
+
+.dark-wrap .mv-btn, .dark-wrap .mv-app-text > .mv-dl-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px !important;
+  background: #fff !important;
+  color: var(--azul-principal) !important;
+  border-radius: 100px !important;
+  text-decoration: none !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: none !important;
+}
+.dark-wrap .mv-btn:hover, .dark-wrap .mv-app-text > .mv-dl-link:hover {
+  transform: translateY(-4px) scale(1.05) !important;
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2) !important;
+  background: var(--verde-arara) !important;
+  color: #fff !important;
+}
+
+/* Base style catch-all */
+.mv-btn, .mv-app-text > .mv-dl-link {
+  display: inline-flex !important;
+  background: var(--azul-principal);
+  color: #fff;
+  border-radius: 100px !important;
+  padding: 16px 36px !important;
+}
+
+/* Inline text links reset */
+.mv-fig-caption .mv-dl-link {
+  background: transparent !important;
+  color: var(--azul-destaque) !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+}
+.mv-fig-caption .mv-dl-link:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 10. Tags Pop */
+.mv-tags { gap: 16px !important; }
+.mv-tag {
+  background: rgba(255,255,255,0.6) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.8) !important;
+  border-radius: 100px !important;
+  padding: 16px 28px !important;
+  box-shadow: 0 8px 24px rgba(12, 43, 82, 0.05) !important;
+  font-family: var(--font-display) !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  color: var(--azul-principal) !important;
+}
+
+/* 11. Files Row Clean-up */
+.mv-file-row {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px !important;
+  padding: 32px 40px !important;
+  margin-bottom: 24px;
+}
+.mv-file-row .num, .mv-file-row .fmt { display: none !important; }
+.mv-file-row .titulo {
+  font-size: 24px !important;
+  font-family: var(--font-display);
+  font-weight: 800 !important;
+  margin-bottom: 8px !important;
+}
+.mv-file-row .desc {
+  font-size: 16px !important;
+  opacity: 0.7;
+}
+
+/* 12. Fix proportions */
+.mv-chap-head { grid-template-columns: 1fr !important; border: none !important; padding-top: 0 !important; }
+.mv-sumario-list { grid-template-columns: 1fr !important; gap: 16px !important; }
+.mv-sumario-list a { 
+  border: none !important; 
+  background: rgba(255,255,255,0.4); 
+  border-radius: var(--radius-med); 
+  padding: 20px 24px !important; 
+  backdrop-filter: blur(10px);
+}
+.mv-sumario-list a:hover { transform: translateX(8px); background: rgba(255,255,255,0.8); }
+.mv-sumario-list .num { display: none !important; }
+.mv-sumario-list .titulo { font-size: 20px !important; font-family: var(--font-display); font-weight: 700; color: var(--azul-principal); }

@@ -26,6 +26,35 @@
   cursor: auto;
 }
 
+.dark-wrap {
+  --paper: #0c2b52;
+  --paper-raised: rgba(255, 255, 255, 0.03); /* Glass dark */
+  --ink: #f7f4ef;
+  --ink-muted: #9db2cf;
+  --hair: rgba(247, 244, 239, 0.12);
+  --hair-mid: rgba(247, 244, 239, 0.30);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.light-wrap {
+  --paper: #f7f4ef;
+  --paper-raised: rgba(255, 255, 255, 0.5); /* Glass light */
+  --ink: #0c2b52;
+  --ink-muted: #4a6486;
+  --hair: rgba(12, 43, 82, 0.12);
+  --hair-mid: rgba(12, 43, 82, 0.30);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.mv-fig, .mv-prod, .mv-no-visual, .mv-color, .mv-type {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 12px 40px rgba(12, 43, 82, 0.04);
+}
+
+
 .mv ::selection {
   background: var(--amarelo-arara);
   color: var(--ink);
