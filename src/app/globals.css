@@ -67,7 +67,6 @@ html {
 body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
   background: #040d1a;
 }
 

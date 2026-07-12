@@ -58,8 +58,8 @@ export default function ManualPantanal() {
       <main className="mv-main">
         {/* ── 00 · CAPA ── */}
         <div className="dark-wrap relative overflow-x-clip">
-          <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] bg-blue-500/20 rounded-full mix-blend-screen blur-[120px] blob-anim pointer-events-none"></div>
-          <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-teal-500/20 rounded-full mix-blend-screen blur-[120px] blob-anim pointer-events-none"></div>
+          <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] bg-blue-500/20 rounded-full mix-blend-screen blur-[80px] blob-anim will-change-transform pointer-events-none"></div>
+          <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-teal-500/20 rounded-full mix-blend-screen blur-[80px] blob-anim will-change-transform pointer-events-none"></div>
           
           <section id="capa" className="mv-cover relative z-10">
           <div className="mv-cover-top">
@@ -81,9 +81,9 @@ export default function ManualPantanal() {
 
         {/* ── SUMÁRIO ── */}
         <div className="light-wrap relative overflow-x-clip bg-[var(--paper)]">
-          <div className="absolute top-[5%] left-[-10%] w-[800px] h-[800px] bg-blue-600/10 rounded-full mix-blend-multiply blur-[140px] blob-anim pointer-events-none"></div>
-          <div className="absolute top-[40%] right-[-5%] w-[600px] h-[600px] bg-amber-400/10 rounded-full mix-blend-multiply blur-[120px] blob-anim pointer-events-none"></div>
-          <div className="absolute bottom-[10%] left-[10%] w-[700px] h-[700px] bg-teal-600/10 rounded-full mix-blend-multiply blur-[140px] blob-anim pointer-events-none"></div>
+          <div className="absolute top-[5%] left-[-10%] w-[800px] h-[800px] bg-blue-600/10 rounded-full mix-blend-multiply blur-[80px] blob-anim will-change-transform pointer-events-none"></div>
+          <div className="absolute top-[40%] right-[-5%] w-[600px] h-[600px] bg-amber-400/10 rounded-full mix-blend-multiply blur-[80px] blob-anim will-change-transform pointer-events-none"></div>
+          <div className="absolute bottom-[10%] left-[10%] w-[700px] h-[700px] bg-teal-600/10 rounded-full mix-blend-multiply blur-[80px] blob-anim will-change-transform pointer-events-none"></div>
 
           <section className="mv-sumario relative z-10" aria-label="Sumário">
           <div className="mv-wrap">
@@ -545,7 +545,7 @@ export default function ManualPantanal() {
 
         {/* ── 06 · ARQUIVOS ── */}
         <div className="dark-wrap relative overflow-x-clip">
-          <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-blue-400/10 rounded-full mix-blend-screen blur-[140px] blob-anim pointer-events-none"></div>
+          <div className="absolute top-1/4 left-1/4 w-[800px] h-[800px] bg-blue-400/10 rounded-full mix-blend-screen blur-[80px] blob-anim will-change-transform pointer-events-none"></div>
 
           <section id="downloads" className="mv-files relative z-10">
           <div className="mv-wrap">

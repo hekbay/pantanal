@@ -7,23 +7,18 @@ export default function Animations() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animates the chapters fading in and sliding up
-    const chapters = gsap.utils.toArray('.mv-chapter, .mv-sumario, .mv-files');
-    chapters.forEach((chap) => {
-      gsap.fromTo(chap, 
-        { y: 60, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 1.2, 
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: chap,
-            start: 'top 85%',
-          }
+    // IntersectionObserver para as seções (Fallback seguro e performático)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
         }
-      );
-    });
+      });
+    }, { rootMargin: '0px 0px -100px 0px', threshold: 0.1 });
+
+    const chapters = document.querySelectorAll('.mv-chapter, .mv-sumario, .mv-files');
+    chapters.forEach((chap) => observer.observe(chap));
 
     // Parallax effect on the background blobs
     const blobs = gsap.utils.toArray('.blob-anim');
