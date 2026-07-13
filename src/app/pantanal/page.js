@@ -484,19 +484,18 @@ export default function ManualPantanal() {
               <div className="mv-app-text">
                 <span className="mv-label">Peça 02 — Digital</span>
                 <h3>Banner de site</h3>
-                <p>Hero institucional para o site da Pantanal Saúde. Fundo flat com a cruz-arara como elemento âncora. Use as versões desktop e mobile conforme o dispositivo — não recorte a arte manualmente.</p>
+                <p>Hero institucional para o site da Pantanal Saúde, com fotografia tratada na atmosfera da marca. Quatro temas — Geral, Plantão 24h, Planos e NR1 — cada um com a arte finalizada e o fundo limpo para novas aplicações.</p>
                 <div className="mv-app-specs">
-                  <div><span className="k">Desktop</span><span className="v">1920 × 600 px</span></div>
-                  <div><span className="k">Mobile</span><span className="v">768 × 800 px</span></div>
-                  <div><span className="k">Status</span><span className="v">Arquivos finais em preparação</span></div>
+                  <div><span className="k">Formato</span><span className="v">1920 × 1080 px</span></div>
+                  <div><span className="k">Temas</span><span className="v">4 versões + fundos limpos</span></div>
                 </div>
                 <a className="mv-dl-link" href="#downloads">Ver arquivos ↓</a>
               </div>
               <figure className="mv-fig">
                 <div className="mv-fig-canvas mv-fig-canvas--flush">
-                  <img src="/pantanal/assets/mockup-banner.png" alt="Mockup do banner de site Pantanal Saúde" />
+                  <img src="/pantanal/assets/banner-geral.jpg" alt="Banner institucional Pantanal Saúde, tema geral" />
                 </div>
-                <figcaption className="mv-fig-caption"><span>Fig. 5.2 — Banner institucional</span></figcaption>
+                <figcaption className="mv-fig-caption"><span>Fig. 5.2 — Banner institucional · tema geral</span></figcaption>
               </figure>
             </div>
 
@@ -599,6 +598,16 @@ export default function ManualPantanal() {
               <div className="mv-file-row">
                 <span className="num">6.5</span>
                 <div>
+                  <div className="titulo">Banners de site</div>
+                  <div className="desc">Quatro temas em 1920 × 1080 px — Geral, Plantão 24h, Planos e NR1 — com artes finalizadas e fundos limpos.</div>
+                </div>
+                <span className="fmt">ZIP · PNG — 8,3 MB</span>
+                <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-banners.zip" download>Baixar ↓</a>
+              </div>
+
+              <div className="mv-file-row">
+                <span className="num">6.6</span>
+                <div>
                   <div className="titulo">Arte da capa</div>
                   <div className="desc">Wallpaper institucional com o símbolo sobre gradiente, 1920 × 1080 px.</div>
                 </div>
@@ -607,18 +616,18 @@ export default function ManualPantanal() {
               </div>
 
               <div className="mv-file-row">
-                <span className="num">6.6</span>
+                <span className="num">6.7</span>
                 <div>
                   <div className="titulo">Kit completo</div>
                   <div className="desc">Todos os entregáveis acima em um único pacote.</div>
                 </div>
-                <span className="fmt">ZIP — 18,8 MB</span>
+                <span className="fmt">ZIP — 27,1 MB</span>
                 <a className="mv-btn" href="/pantanal/downloads/pantanal-saude-kit-completo.zip" download>Baixar ↓</a>
               </div>
             </div>
 
             <p className="mv-files-nota">
-              Em preparação: arquivos finais do banner de site, códigos Pantone e o manual em PDF interativo.
+              Em preparação: códigos Pantone e o manual em PDF interativo.
             </p>
 
             <div className="mv-colofao">
