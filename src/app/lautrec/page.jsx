@@ -29,6 +29,7 @@ const htmlContent = `
     <div class="tab" data-v="combate">Combate</div>
     <div class="tab" data-v="magia">Magia</div>
     <div class="tab" data-v="lore">Lore</div>
+    <div class="tab" data-v="bag">Bag of Holding</div>
   </div>
 
   <!-- ============ FICHA BASE ============ -->
@@ -238,54 +239,11 @@ const htmlContent = `
   <div class="view" id="v-lore">
     <div class="grid1">
       <div class="panel" style="grid-column: 1 / -1;">
-        <h2>Mundo & Cidades</h2>
-        <div class="map-container">
-          <div class="map-region ocidente">
-            <h3 class="map-title">Ocidente</h3>
-            <div class="map-grid">
-               <div class="map-node node-dralmor">
-                 <div class="node-name edit" contenteditable="true">Dralmor (Gélido)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-               <div class="map-node node-karzu">
-                 <div class="node-name edit" contenteditable="true">Karzu (Deserto)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-               <div class="map-node node-velindar">
-                 <div class="node-name edit" contenteditable="true">Velindar (Central)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-               <div class="map-node node-velferium">
-                 <div class="node-name edit" contenteditable="true">Velferium</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-               <div class="map-node node-vales">
-                 <div class="node-name edit" contenteditable="true">Vales Uivantes</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-               <div class="map-node node-aesmeril">
-                 <div class="node-name edit" contenteditable="true">Aesmeril (Magocracia)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-               <div class="map-node node-jandora">
-                 <div class="node-name edit" contenteditable="true">Jandora (Selva)</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-            </div>
-          </div>
-          <div class="map-region oriente">
-            <h3 class="map-title">Oriente (?)</h3>
-            <div class="map-grid">
-               <div class="map-node node-oriente-unknown">
-                 <div class="node-name edit" contenteditable="true">Terras Desconhecidas</div>
-                 <div class="node-desc edit" contenteditable="true" data-empty="Anotações..."></div>
-               </div>
-            </div>
-          </div>
-        </div>
+        <h2>Mundo & Cidades <button class="addbtn" id="locToggleBtn" onclick="toggleLocTree()">Esconder</button> <button class="addbtn" onclick="addLocation()">+ local</button></h2>
+        <div class="loc-tree" id="locTree"></div>
       </div>
     </div>
-    
+
     <div class="grid2">
       <div class="panel">
         <h2>Contatos <button class="addbtn" onclick="addContact()">+ contato</button></h2>
@@ -295,6 +253,21 @@ const htmlContent = `
       <div class="panel">
         <h2>Missões <button class="addbtn" onclick="addQuest()">+ missão</button></h2>
         <div id="questList" class="feat-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view" id="v-bag">
+    <div class="grid1">
+      <div class="panel bag-panel" id="bagPanel" style="grid-column: 1 / -1;">
+        <h2>
+          Bag of Holding
+          <span class="bag-status" id="bagStatus">🔒 Somente visualização</span>
+          <button class="addbtn" id="bagLockBtn" onclick="toggleBagLock()">Destravar edição</button>
+          <button class="addbtn bag-only" onclick="addBagItem()">+ item</button>
+        </h2>
+        <div class="hp-note" style="margin-bottom:10px">Compartilhada com o grupo — atualiza sozinha para todo mundo, sem precisar recarregar a página.</div>
+        <div id="bagList" class="feat-list"></div>
       </div>
     </div>
   </div>

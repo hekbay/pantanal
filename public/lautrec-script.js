@@ -163,9 +163,81 @@ function makeAttack(nm='',hit='',dmg=''){
 }
 function addAttack(){document.getElementById('atkList').appendChild(makeAttack());}
 
+function makeLocationNode(name,desc,children,open){
+  const node=document.createElement('div');node.className='loc-node'+(open?' open':'');
+  node.innerHTML=`<div class="loc-head"><button class="loc-toggle" onclick="toggleLocNode(this)" title="Expandir/recolher">▶</button><span class="loc-name edit" contenteditable="true" data-empty="Nome do local">${name||''}</span><span class="loc-btns"><button class="loc-addchild" onclick="addSubLocation(this)">+ sub-local</button><button class="del" onclick="removeLocNode(this)">✕</button></span></div><div class="loc-desc edit" contenteditable="true" data-empty="Anotações...">${desc||''}</div><div class="loc-children"></div>`;
+  const wrap=node.querySelector(':scope > .loc-children');
+  (children||[]).forEach(c=>wrap.appendChild(makeLocationNode(c.name,c.desc,c.children,c.open)));
+  updateLocState(node);
+  return node;
+}
+function updateLocState(node){
+  const wrap=node.querySelector(':scope > .loc-children');
+  if(wrap) node.classList.toggle('has-children',wrap.children.length>0);
+}
+function toggleLocNode(btn){
+  btn.closest('.loc-node').classList.toggle('open');
+  saveSheet();
+}
+function addLocation(){
+  const l=document.getElementById('locTree');
+  const n=makeLocationNode('Novo Local','',[],false);
+  l.appendChild(n);
+  n.querySelector('.loc-name').focus();
+  saveSheet();
+}
+function addSubLocation(btn){
+  const parent=btn.closest('.loc-node');
+  const wrap=parent.querySelector(':scope > .loc-children');
+  const n=makeLocationNode('Novo Sub-local','',[],false);
+  wrap.appendChild(n);
+  parent.classList.add('open');
+  updateLocState(parent);
+  n.querySelector('.loc-name').focus();
+  saveSheet();
+}
+function removeLocNode(btn){
+  const node=btn.closest('.loc-node');
+  const parentWrap=node.parentElement;
+  const parentNode=parentWrap.closest('.loc-node');
+  node.remove();
+  if(parentNode) updateLocState(parentNode);
+  saveSheet();
+}
+function serializeLocTree(container){
+  if(!container) return [];
+  return [...container.children].filter(n=>n.classList.contains('loc-node')).map(n=>({
+    name:n.querySelector(':scope > .loc-head .loc-name')?.innerHTML||'',
+    desc:n.querySelector(':scope > .loc-desc')?.innerHTML||'',
+    open:n.classList.contains('open'),
+    children:serializeLocTree(n.querySelector(':scope > .loc-children'))
+  }));
+}
+function toggleLocTree(){
+  const t=document.getElementById('locTree');
+  const btn=document.getElementById('locToggleBtn');
+  const willCollapse = t.style.display!=='none';
+  t.style.display = willCollapse ? 'none' : '';
+  btn.textContent = willCollapse ? 'Mostrar' : 'Esconder';
+  state.locCollapsed = willCollapse;
+  saveSheet();
+}
+function applyLocCollapse(){
+  const t=document.getElementById('locTree');
+  const btn=document.getElementById('locToggleBtn');
+  if(!t||!btn) return;
+  t.style.display = state.locCollapsed ? 'none' : '';
+  btn.textContent = state.locCollapsed ? 'Mostrar' : 'Esconder';
+}
+function seedLocations(){
+  const l=document.getElementById('locTree');
+  if(!l||l.children.length>0)return;
+  [['Dralmor (Gélido)',''],['Karzu (Deserto)',''],['Velindar (Central)',''],['Velferium',''],['Vales Uivantes',''],['Aesmeril (Magocracia)',''],['Jandora (Selva)',''],['Terras Desconhecidas (Oriente)','']].forEach(([n,d])=>l.appendChild(makeLocationNode(n,d,[],false)));
+}
+
 function makeEntry(t,tag,d){
   const e=document.createElement('div');e.className='entry';
-  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${esc(t)}</span>${tag?`<span class="tag edit" contenteditable="true">${esc(tag)}</span>`:''}</div><div class="desc edit" contenteditable="true">${esc(d)}</div><button class="del" onclick="this.parentElement.remove()">✕</button>`;
+  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${t||''}</span>${tag?`<span class="tag edit" contenteditable="true">${tag}</span>`:''}</div><div class="desc edit" contenteditable="true">${d||''}</div><button class="del" onclick="this.parentElement.remove()">✕</button>`;
   return e;
 }
 function addEntry(id,t,tag,d){document.getElementById(id).appendChild(makeEntry(t,tag,d));}
@@ -179,7 +251,7 @@ function addQuest() {
 
 function makeSpell(t,d){
   const e=document.createElement('div');e.className='entry';
-  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${esc(t)}</span></div><div class="desc edit" contenteditable="true">${esc(d)}</div><button class="del" onclick="this.parentElement.remove();checkSpellSpace()">✕</button>`;
+  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${t||''}</span></div><div class="desc edit" contenteditable="true">${d||''}</div><button class="del" onclick="this.parentElement.remove();checkSpellSpace()">✕</button>`;
   return e;
 }
 function addSpell(){
@@ -191,7 +263,7 @@ function addSpell(){
 
 function makeCombo(name,seq){
   const d=document.createElement('div');d.className='combo';
-  d.innerHTML=`<div class="cname edit" contenteditable="true">${esc(name)}</div><div class="cseq edit" contenteditable="true">${esc(seq)}</div><button class="del" style="position:static;opacity:0.5;float:right" onclick="this.parentElement.remove()">✕ remover</button>`;
+  d.innerHTML=`<div class="cname edit" contenteditable="true">${name||''}</div><div class="cseq edit" contenteditable="true">${seq||''}</div><button class="del" style="position:static;opacity:0.5;float:right" onclick="this.parentElement.remove()">✕ remover</button>`;
   return d;
 }
 function addCombo(){document.getElementById('comboList').appendChild(makeCombo('Novo Combo','ação 1 → ação 2 → ação 3'));}
@@ -212,15 +284,16 @@ document.getElementById('bgInput').addEventListener('change',e=>{
   r.readAsDataURL(f);
 });
 
-// tabs
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('v-'+t.dataset.v).classList.add('active');
-    if(t.dataset.v==='combate') recalc();
-  });
+// tabs (delegado em document, funciona mesmo se a árvore de tabs for recriada)
+document.addEventListener('click', e=>{
+  const t = e.target.closest('.tab');
+  if(!t) return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  const view = document.getElementById('v-'+t.dataset.v);
+  if(view) view.classList.add('active');
+  if(t.dataset.v==='combate') recalc();
 });
 
 // seed
@@ -313,11 +386,7 @@ function collect(){
     })),
     contacts:serial('contactList'),
     quests:serial('questList'),
-    mapNodes:[...document.querySelectorAll('.map-node')].map(item=>({
-      id: item.classList[1],
-      name: item.querySelector('.node-name')?.innerHTML||'',
-      desc: item.querySelector('.node-desc')?.innerHTML||''
-    }))
+    locTree:serializeLocTree(document.getElementById('locTree'))
   };
 }
 
@@ -364,13 +433,16 @@ function applyData(d) {
   document.getElementById('questList').innerHTML='';
   (d.quests||[]).forEach(q=>addEntry('questList',q.t,q.tag,q.d));
 
-  (d.mapNodes||[]).forEach(n=>{
-    const el = document.querySelector('.'+n.id);
-    if(el) {
-      if(el.querySelector('.node-name')) el.querySelector('.node-name').innerHTML = n.name;
-      if(el.querySelector('.node-desc')) el.querySelector('.node-desc').innerHTML = n.desc;
-    }
-  });
+  document.getElementById('locTree').innerHTML='';
+  if(d.locTree && d.locTree.length){
+    d.locTree.forEach(n=>document.getElementById('locTree').appendChild(makeLocationNode(n.name,n.desc,n.children,n.open)));
+  } else if(d.locations && d.locations.length){
+    // migração do formato masonry (sem hierarquia)
+    d.locations.forEach(l=>document.getElementById('locTree').appendChild(makeLocationNode(l.name,l.desc,[],false)));
+  } else if(d.mapNodes && d.mapNodes.length){
+    // migração do formato antigo (mapa Ocidente/Oriente com nós fixos)
+    d.mapNodes.forEach(n=>document.getElementById('locTree').appendChild(makeLocationNode(n.name,n.desc,[],false)));
+  }
 
   if(d.notes){const n=document.querySelector('#v-base .panel:last-child .desc.edit');if(n)n.innerHTML=d.notes;}
   if(d.hpcur){document.getElementById('hpcur').value=d.hpcur;}
@@ -455,8 +527,120 @@ function flash(m, fade=true) {
 
 document.getElementById('lvlPal').addEventListener('input',e=>{state.lvlPal=parseInt(e.target.value)||0;recalc();});
 document.getElementById('lvlFig').addEventListener('input',e=>{state.lvlFig=parseInt(e.target.value)||0;recalc();});
-document.addEventListener('blur',e=>{if(e.target.closest&&e.target.closest('.sheet'))saveSheet();},true);
+document.addEventListener('blur',e=>{if(e.target.closest&&e.target.closest('.sheet')&&!e.target.closest('#v-bag'))saveSheet();},true);
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveSheet(true);}});
+
+// ─── BAG OF HOLDING (compartilhada, edição travada por PIN, sincroniza sozinha) ──
+const BAG_PIN = '1517';
+const BAG_SHEET_ID = 'bag-of-holding-shared';
+const BAG_UNLOCK_KEY = 'bag_unlocked_v1';
+let bagUnlocked = localStorage.getItem(BAG_UNLOCK_KEY) === '1';
+let bagUpdatedAt = null;
+let bagPollTimer = null;
+
+function makeBagItem(t,tag,d){
+  const e=document.createElement('div');e.className='entry';
+  e.innerHTML=`<div class="title"><span class="edit" contenteditable="true">${t||''}</span>${tag?`<span class="tag edit" contenteditable="true">${tag}</span>`:''}</div><div class="desc edit" contenteditable="true">${d||''}</div><button class="del" onclick="removeBagItem(this)">✕</button>`;
+  return e;
+}
+function addBagItem(){
+  if(!bagUnlocked) return;
+  const l=document.getElementById('bagList');
+  const item=makeBagItem('Novo Item','','Descrição....');
+  l.appendChild(item);
+  item.querySelector('.edit').focus();
+  saveBagSheet(true);
+}
+function removeBagItem(btn){
+  if(!bagUnlocked) return;
+  btn.closest('.entry').remove();
+  saveBagSheet(true);
+}
+function renderBagItems(items){
+  const l=document.getElementById('bagList');
+  l.innerHTML='';
+  (items||[]).forEach(o=>l.appendChild(makeBagItem(o.t,o.tag,o.d)));
+}
+function collectBagItems(){
+  return [...document.getElementById('bagList').children].map(e=>({
+    t:e.querySelector('.title .edit')?.innerHTML||'',
+    tag:e.querySelector('.tag')?.innerHTML||'',
+    d:e.querySelector('.desc')?.innerHTML||''
+  }));
+}
+
+function updateBagLockUI(){
+  const panel=document.getElementById('bagPanel');
+  const status=document.getElementById('bagStatus');
+  const btn=document.getElementById('bagLockBtn');
+  panel.classList.toggle('unlocked',bagUnlocked);
+  status.textContent = bagUnlocked ? '🔓 Modo edição' : '🔒 Somente visualização';
+  btn.textContent = bagUnlocked ? 'Travar edição' : 'Destravar edição';
+}
+function toggleBagLock(){
+  if(bagUnlocked){
+    bagUnlocked=false;
+    localStorage.removeItem(BAG_UNLOCK_KEY);
+    updateBagLockUI();
+    return;
+  }
+  const pin=prompt('PIN de edição da Bag of Holding:');
+  if(pin===null) return;
+  if(pin===BAG_PIN){
+    bagUnlocked=true;
+    localStorage.setItem(BAG_UNLOCK_KEY,'1');
+    updateBagLockUI();
+  } else {
+    alert('PIN incorreto.');
+  }
+}
+
+let _bagSaveTimer=null;
+function saveBagSheet(immediate=false){
+  if(!bagUnlocked) return;
+  const items=collectBagItems();
+  if(immediate){ _pushBag(items); return; }
+  clearTimeout(_bagSaveTimer);
+  _bagSaveTimer=setTimeout(()=>_pushBag(items),1000);
+}
+async function _pushBag(items){
+  try{
+    const now=new Date().toISOString();
+    const res=await fetch(`${SB_URL}/rest/v1/character_sheets`,{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify({sheet_id:BAG_SHEET_ID,data:{items},updated_at:now})
+    });
+    if(!res.ok) throw new Error(await res.text());
+    bagUpdatedAt=now;
+  }catch(e){ console.error('[Bag] erro ao salvar', e.message||e); }
+}
+async function loadBag(){
+  try{
+    const rows=await sbFetch(`character_sheets?sheet_id=eq.${BAG_SHEET_ID}&select=data,updated_at&limit=1`);
+    if(rows && rows.length>0){
+      renderBagItems(rows[0].data?.items||[]);
+      bagUpdatedAt=rows[0].updated_at;
+    }
+  }catch(e){ console.warn('[Bag] offline ao carregar', e); }
+}
+async function pollBag(){
+  // não atualiza se alguém estiver digitando dentro da bag agora
+  if(document.activeElement && document.activeElement.closest && document.activeElement.closest('#bagList')) return;
+  try{
+    const rows=await sbFetch(`character_sheets?sheet_id=eq.${BAG_SHEET_ID}&select=data,updated_at&limit=1`);
+    if(rows && rows.length>0 && rows[0].updated_at!==bagUpdatedAt){
+      bagUpdatedAt=rows[0].updated_at;
+      renderBagItems(rows[0].data?.items||[]);
+    }
+  }catch(e){ /* silencioso, tenta de novo no próximo ciclo */ }
+}
+function initBag(){
+  updateBagLockUI();
+  loadBag();
+  bagPollTimer=setInterval(pollBag,4000);
+  document.addEventListener('blur',e=>{if(e.target.closest&&e.target.closest('#bagList'))saveBagSheet();},true);
+}
 
 // TALENTOS — accordion editável
 const FEATS_DEFAULT = [
@@ -505,6 +689,9 @@ buildAttrs(); buildSaves(); buildSkills(); buildDeath();
   const loaded = await loadSheet();
   if (!loaded) { seedDefaults(); setBg(DEFAULT_BG); }
   seedFeats();
+  seedLocations();
+  applyLocCollapse();
+  initBag();
   recalc();
 })();
 

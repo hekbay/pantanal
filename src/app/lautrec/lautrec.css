@@ -200,36 +200,37 @@
 
 .sheet-container, .sheet-container *, .sheet-wrapper { cursor: auto !important; }
 
-/* === LORE TAB: MAP & NODES === */
-.map-container { display:flex; gap:20px; flex-wrap:wrap; margin-top:10px; }
-.map-region { flex:1; min-width:300px; background:rgba(0,0,0,0.3); border:1px solid var(--line); border-radius:8px; padding:15px; position:relative; }
-.map-title { text-align:center; color:var(--gold); border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:20px; font-family:'Cinzel', serif; }
+/* === LORE TAB: ÁRVORE DE LOCAIS EM CASCATA === */
+.loc-tree{margin-top:10px;display:flex;flex-direction:column;gap:16px;}
+.loc-node{position:relative;}
+.loc-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.loc-name{font-family:'Cinzel',serif;font-weight:600;color:var(--gold);font-size:0.98rem;outline:none;border-radius:1px;}
+.loc-name:hover{background:rgba(205,168,96,0.05);}
+.loc-name:focus{background:rgba(205,168,96,0.09);box-shadow:0 0 0 1px var(--gold-dim);}
+.loc-btns{margin-left:auto;display:flex;gap:6px;opacity:0;transition:opacity .15s;}
+.loc-node:hover>.loc-head .loc-btns{opacity:1;}
+.loc-addchild{font-family:'Cormorant SC',serif;font-size:0.6rem;letter-spacing:0.1em;background:transparent;border:1px solid var(--gold-dim);color:var(--gold);padding:3px 8px;cursor:pointer;text-transform:uppercase;transition:all .15s;white-space:nowrap;}
+.loc-addchild:hover{background:var(--gold-dim);color:var(--bg-void);}
+.loc-node>.loc-head .del{background:transparent;border:none;color:var(--ash-dim);cursor:pointer;font-size:0.85rem;padding:2px 6px;}
+.loc-node>.loc-head .del:hover{color:var(--blood-bright);}
+.loc-desc{font-size:0.86rem;line-height:1.5;color:var(--ash);outline:none;margin:3px 0 0;border-radius:1px;}
+.loc-desc:hover{background:rgba(205,168,96,0.03);}
+.loc-desc:focus{background:rgba(205,168,96,0.07);}
+.loc-desc[data-empty]:empty::before{content:attr(data-empty);color:var(--ash-dim);font-style:italic;opacity:0.5;}
+.loc-toggle{background:transparent;border:none;cursor:pointer;color:var(--gold-dim);font-size:0.65rem;transition:transform .2s ease;flex-shrink:0;padding:0;line-height:1;visibility:hidden;order:-1;}
+.loc-node.has-children>.loc-head .loc-toggle{visibility:visible;}
+.loc-node.open>.loc-head .loc-toggle{transform:rotate(90deg);}
+.loc-children{display:none;margin:8px 0 0 10px;padding-left:16px;border-left:1px dashed var(--line);flex-direction:column;gap:12px;}
+.loc-node.open>.loc-children{display:flex;}
+.loc-children>.loc-node>.loc-head::before{content:"•";color:var(--gold-dim);margin-right:2px;}
 
-.map-grid { display:grid; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: 100px; gap: 15px; position: relative; }
-.map-node { 
-  background:var(--bg-panel); border:1px solid var(--gold-dim); padding:10px; border-radius:6px; 
-  display:flex; flex-direction:column; justify-content:flex-start; text-align:center; z-index:2; 
-}
-.map-node:hover { border-color:var(--gold-bright); box-shadow:0 0 10px rgba(205,168,96,0.2); }
-.node-name { font-weight:bold; color:var(--gold); font-size:14px; margin-bottom:5px; }
-.node-desc { font-size:12px; color:var(--ash-dim); flex:1; text-align:left; overflow-y:auto; }
-.node-desc:empty:before { content: attr(data-empty); opacity: 0.5; }
-
-/* Grid placement for Ocidente based on image */
-.ocidente .map-grid { grid-template-areas: 
-  ". dralmor ."
-  "karzu velindar ."
-  "aesmeril velferium vales"
-  ". jandora ."; 
-  grid-auto-rows: auto; min-height: 400px;
-}
-.node-dralmor { grid-area: dralmor; border-color: #a8d5e2 !important; }
-.node-karzu { grid-area: karzu; border-color: #f4d35e !important; }
-.node-velindar { grid-area: velindar; border-color: #8ac926 !important; }
-.node-velferium { grid-area: velferium; border-color: #8ac926 !important; }
-.node-vales { grid-area: vales; border-color: #8ac926 !important; }
-.node-aesmeril { grid-area: aesmeril; border-color: #0077b6 !important; }
-.node-jandora { grid-area: jandora; border-color: #2a9d8f !important; }
-
-.oriente .map-grid { display: flex; flex-direction:column; }
-.node-oriente-unknown { width:100%; height:100%; min-height: 200px; border-style:dashed; }
+/* === BAG OF HOLDING === */
+.bag-status{font-family:'EB Garamond',serif;font-size:0.7rem;font-style:italic;color:var(--ash-dim);text-transform:none;letter-spacing:0;font-weight:400;}
+.bag-only{display:none;}
+.bag-panel.unlocked .bag-only{display:inline-block;}
+.bag-panel.unlocked #bagList .del{display:inline-block;}
+#bagList .del{display:none;}
+.bag-panel.unlocked #bagList .entry .edit{pointer-events:auto;}
+#bagList .entry .edit{pointer-events:none;}
+#bagList .entry{transition:opacity .15s;}
+.bag-panel.syncing #bagList{opacity:0.6;}
