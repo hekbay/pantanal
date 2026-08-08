@@ -39,6 +39,7 @@
 }
 .dg-toolbar button:hover{background:#8a7239;color:#0a0807;}
 .dg-toolbar button.active{background:#cda860;color:#0a0807;border-color:#cda860;}
+.dg-sync{font-style:italic;font-size:0.75rem;color:#756b56;}
 
 .dg-hint{
   color:#756b56;
