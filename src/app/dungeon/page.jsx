@@ -176,6 +176,7 @@ export default function DungeonPage() {
       <div className="dg-toolbar">
         <h1>Dungeon</h1>
         <span className="dg-sync">{syncStatus}</span>
+        <button onClick={() => setNotesOpen(o => !o)}>{notesOpen ? 'Esconder notas' : 'Mostrar notas'}</button>
         <button onClick={clearGrid}>Limpar grid</button>
       </div>
       <div className="dg-hint">Compartilhado — atualiza sozinho para todo mundo. Clique (ou clique e arraste) para pintar/apagar quadrados conforme você explora.</div>
@@ -185,10 +186,6 @@ export default function DungeonPage() {
           {cells}
         </div>
       </div>
-
-      <button className="dg-notes-toggle" onClick={() => setNotesOpen(o => !o)}>
-        {notesOpen ? 'Esconder notas' : 'Mostrar notas'}
-      </button>
 
       {notesOpen && (
         <div className="dg-notes-overlay">
