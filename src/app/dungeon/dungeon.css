@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+.dungeon-page{
+  min-height:100vh;
+  background:#0a0807;
+  color:#c2b79f;
+  font-family:'EB Garamond',serif;
+  padding:20px;
+  -webkit-font-smoothing:antialiased;
+}
+
+.dg-toolbar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.dg-toolbar h1{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  color:#cda860;
+  font-size:1.5rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-right:auto;
+}
+.dg-toolbar button{
+  font-family:'Cinzel',serif;
+  background:transparent;
+  border:1px solid #8a7239;
+  color:#cda860;
+  padding:8px 14px;
+  cursor:pointer;
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  transition:all .15s;
+}
+.dg-toolbar button:hover{background:#8a7239;color:#0a0807;}
+.dg-toolbar button.active{background:#cda860;color:#0a0807;border-color:#cda860;}
+
+.dg-hint{
+  color:#756b56;
+  font-style:italic;
+  font-size:0.82rem;
+  margin-bottom:14px;
+}
+
+.dg-grid-wrap{
+  overflow:auto;
+  max-height:78vh;
+  border:1px solid #3a3022;
+  background:#14110e;
+  display:inline-block;
+  max-width:100%;
+}
+.dg-grid{
+  display:grid;
+  width:max-content;
+}
+.dg-cell{
+  width:22px;
+  height:22px;
+  border:1px solid #241f18;
+  cursor:pointer;
+  transition:background .08s;
+  box-sizing:border-box;
+}
+.dg-cell:hover{background:rgba(205,168,96,0.18);}
+.dg-cell.painted{background:#cda860;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.3);}
+
+.dg-notes-toggle{position:fixed;top:20px;right:20px;z-index:101;}
+
+.dg-notes-overlay{
+  position:fixed;
+  top:70px;
+  right:20px;
+  width:340px;
+  max-width:88vw;
+  background:rgba(10,8,7,0.94);
+  border:1px solid #8a7239;
+  border-radius:2px;
+  padding:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.75);
+  z-index:100;
+  backdrop-filter:blur(4px);
+}
+.dg-notes-overlay .lbl{
+  font-family:'Cinzel',serif;
+  color:#cda860;
+  font-size:0.72rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  display:block;
+}
+.dg-notes-overlay textarea{
+  width:100%;
+  min-height:320px;
+  max-height:60vh;
+  background:transparent;
+  border:none;
+  color:#c2b79f;
+  font-family:'EB Garamond',serif;
+  font-size:0.92rem;
+  line-height:1.6;
+  resize:vertical;
+  outline:none;
+}
+
+@media(max-width:640px){
+  .dg-cell{width:18px;height:18px;}
+  .dg-notes-overlay{width:calc(100vw - 40px);right:20px;left:20px;}
+}
