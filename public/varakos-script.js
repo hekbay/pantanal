@@ -461,7 +461,13 @@ function saveBagSheet(immediate=false){
   clearTimeout(_bagSaveTimer);
   _bagSaveTimer=setTimeout(()=>_pushBag(items),1000);
 }
-async function _pushBag(items){
+let _bagPushChain=Promise.resolve();
+function _pushBag(items){
+  // encadeia os pushes para garantirem chegar ao servidor na mesma ordem em que foram disparados
+  _bagPushChain=_bagPushChain.then(()=>_pushBagNow(items));
+  return _bagPushChain;
+}
+async function _pushBagNow(items){
   try{
     const now=new Date().toISOString();
     const res=await fetch(`${SB_URL}/rest/v1/character_sheets`,{
@@ -486,7 +492,11 @@ async function pollBag(){
   if(document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#bagList')) return;
   try{
     const rows=await(await fetch(`${SB_URL}/rest/v1/character_sheets?sheet_id=eq.${BAG_SHEET_ID}&select=data,updated_at&limit=1`,{headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}})).json();
-    if(rows&&rows.length>0&&rows[0].updated_at!==bagUpdatedAt){
+    if(!rows||rows.length===0) return;
+    const incoming=new Date(rows[0].updated_at).getTime();
+    const known=bagUpdatedAt?new Date(bagUpdatedAt).getTime():0;
+    // só aplica se for realmente mais novo — evita que uma resposta atrasada sobrescreva uma mudança mais recente já salva
+    if(incoming>known){
       bagUpdatedAt=rows[0].updated_at;
       renderBagItems(rows[0].data?.items||[]);
     }
